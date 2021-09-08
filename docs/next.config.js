@@ -6,5 +6,4 @@ const withNextra = require("nextra")({
 /** @type {import('next').NextConfig} */
 module.exports = withNextra({
   reactStrictMode: true,
-  basePath: "/docs",
 });
