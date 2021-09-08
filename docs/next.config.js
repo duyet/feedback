@@ -6,4 +6,14 @@ const withNextra = require("nextra")({
 /** @type {import('next').NextConfig} */
 module.exports = withNextra({
   reactStrictMode: true,
+  basePath: "/docs",
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        destination: "/docs/:path*",
+        permanent: true,
+      },
+    ];
+  },
 });
