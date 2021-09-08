@@ -42,8 +42,9 @@ const Dashboard: NextPage = () => {
       if (project) {
         setProject("" + project);
       } else if (projects?.length) {
-        setProject(projects[0].projectId);
-        router.push(`/dashboard?project=${currentProject}`);
+        const first = projects[0].projectId;
+        setProject(first);
+        router.push(`/dashboard?project=${first}`);
       }
     }
   }, [projects, currentProject, router]);

@@ -7,10 +7,7 @@ import {
   Stack,
   Image,
   Text,
-  Icon,
 } from "@chakra-ui/react";
-
-const { DOCS_URL = '/docs' } = process.env;
 
 export const Heros: React.FC = () => {
   return (
@@ -47,8 +44,8 @@ export const Heros: React.FC = () => {
           color={useColorModeValue("gray.600", "gray.300")}
         >
           feedback.okie.one allows your users to raise issues, ideas and
-          compliments with a simple widget. Learn how to add feedback plugin 
-          to your project or dive deep with the dashboard to see the feedback.
+          compliments with a simple widget. Learn how to add feedback plugin to
+          your project or dive deep with the dashboard to see the feedback.
         </chakra.p>
         <Stack
           direction={{ base: "column", sm: "row" }}
@@ -81,7 +78,7 @@ export const Heros: React.FC = () => {
             mb={{ base: 2, sm: 0 }}
             size="lg"
             cursor="pointer"
-            href={DOCS_URL}
+            href="/docs"
           >
             Documentation
           </Button>
@@ -93,12 +90,7 @@ export const Heros: React.FC = () => {
         mt={20}
         textAlign="center"
       >
-        <Image
-          w="full"
-          rounded="lg"
-          src="/landing.png"
-          alt=""
-        />
+        <Image w="full" rounded="lg" src="/landing.png" alt="" />
       </Box>
     </Box>
   );

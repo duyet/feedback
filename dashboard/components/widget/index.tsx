@@ -39,6 +39,8 @@ export type WidgetProps = {
   children?: ReactNode;
 };
 
+const API = "/api/feedback";
+
 type WidgetState = "submit" | "submitting" | "success" | "error";
 
 export const Widget: React.FC<WidgetProps> = ({
@@ -104,7 +106,7 @@ export const Widget: React.FC<WidgetProps> = ({
     console.log(JSON.stringify(data));
 
     try {
-      const res = await fetch("/api/feedback/post", {
+      const res = await fetch(API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
