@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getSession } from "next-auth/react";
 import { Flex, Heading, Grid, GridItem, Select } from "@chakra-ui/react";
 
+import { prisma } from "../lib/prisma";
 import Layout from "../components/layout";
 import Filter from "../components/dashboard/filter";
 import InitProject from "../components/dashboard/init-project";
