@@ -1,0 +1,39 @@
+{
+  "name": "cit-feedback",
+  "version": "0.1.0",
+  "private": true,
+  "contributors": ["Duyet <me@duyet.net>"],
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "prisma:generate": "prisma generate"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^1.0.15",
+    "@chakra-ui/react": "^1.6.7",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@next-auth/prisma-adapter": "^0.5.2-next.5",
+    "@prisma/client": "^2.30.3",
+    "framer-motion": "^4.1.17",
+    "html2canvas": "^1.3.2",
+    "lodash": "^4.17.21",
+    "next": "11.1.0",
+    "next-auth": "^4.0.0-beta.2",
+    "prism-react-renderer": "^1.2.1",
+    "react": "17.0.2",
+    "react-device-detect": "^1.17.0",
+    "react-dom": "17.0.2",
+    "swr": "^1.0.0",
+    "unique-names-generator": "^4.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.19",
+    "eslint": "7.32.0",
+    "eslint-config-next": "11.1.0",
+    "typescript": "4.3.5"
+  }
+}
