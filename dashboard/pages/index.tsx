@@ -15,7 +15,7 @@ import LinkBox from "../components/landing/link-box";
 const Home: NextPage = () => {
   return (
     <ChakraProvider>
-      <Box>
+      <Box width="100%">
         <Head>
           <title>Feedback</title>
         </Head>
@@ -24,6 +24,7 @@ const Home: NextPage = () => {
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
+          width="100%"
         >
           <Flex
             align="center"
@@ -33,10 +34,14 @@ const Home: NextPage = () => {
               xl: "space-between",
             }}
             direction={{ base: "column-reverse", md: "row" }}
+            alignItems="center"
             px={8}
             mb={16}
           >
-            <Stack w={{ base: "80%", md: "40%" }} textAlign="center">
+            <Stack
+              textAlign="center"
+              pt={20}
+            >
               <Heading size={"2xl"}>
                 okie.one
                 <Text as={"span"} color="#0070f3">
@@ -47,7 +52,7 @@ const Home: NextPage = () => {
                 Collect issues, ideas and compliments with a simple widget.
               </Text>
 
-              <Box p={10}>
+              <Box d="flex"  p={10} flexDirection={{ lg: "row", sm: "column" }} justifyContent="center">
                 <LinkBox
                   href="/docs"
                   text="Documentation &rarr;"
@@ -60,12 +65,6 @@ const Home: NextPage = () => {
                 />
               </Box>
             </Stack>
-            <Box
-              w={{ base: "80%", sm: "60%", md: "50%" }}
-              mb={{ base: 12, md: 0 }}
-            >
-              <Image src="/landing.svg" size="100%" rounded="1rem" />
-            </Box>
           </Flex>
         </Flex>
       </Box>
