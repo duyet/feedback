@@ -1,0 +1,30 @@
+# Feedback
+
+**Feedback** is a [Next.js](https://nextjs.org) based feedback widget and dashboard.
+
+## Usage on React App
+
+We have an npm package that exposes our feedback form as a React component. To use it, first install the package:
+
+```
+yarn add @fossil-cloud/feedback
+```
+
+Then import the component in your React app and wrap whatever button you want to trigger the widget with it. 
+Pass the email of the currently authenticated user to the `user` prop:
+
+```tsx
+// ...
+import { Feedback } from '@fossil-cloud/feedback';
+
+const App = () => {
+    
+  return (
+    <Layout>
+      <Feedback user={currentUser.email} />
+    </Layout>
+  );
+}
+```
+
+
