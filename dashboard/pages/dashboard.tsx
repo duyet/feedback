@@ -1,36 +1,81 @@
+import useSWR from "swr";
 import type { NextPage } from "next";
-import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { getSession } from "next-auth/react";
-import { Flex, Heading, Grid, GridItem, Select } from "@chakra-ui/react";
-
-import { prisma } from "../lib/prisma";
-import Layout from "../components/layout";
-import Filter from "../components/dashboard/filter";
-import InitProject from "../components/dashboard/init-project";
-import AddNewProjectButton from "../components/dashboard/add-new-project-button";
-import FeedbackList from "../components/dashboard/feedback-list";
 import {
-  Domain,
-  Feedback as FeedbackProps,
-  ProjectUserPopulated,
-} from "../types/prisma";
+  Flex,
+  Heading,
+  Grid,
+  GridItem,
+  Select,
+  Alert,
+  AlertIcon,
+  Link,
+} from "@chakra-ui/react";
 
-export type DashboardPageProps = {
-  projects: ProjectUserPopulated[];
-  domains: string[];
-  feedbacks: Record<string, FeedbackProps[]>;
-  session: any;
-};
+import fetcher from "../lib/fetcher";
+import Layout from "../components/layout";
+import Loading from "../components/common/loading";
+import Filter from "../components/dashboard/filter";
+import { ProjectUserPopulated } from "../types/prisma";
+import InitProject from "../components/dashboard/init-project";
+import FeedbackList from "../components/dashboard/feedback-list";
+import ProjectSettingButton from "../components/dashboard/project-setting-button";
+import AddNewProjectButton from "../components/dashboard/add-new-project-button";
 
-const Dashboard: NextPage<DashboardPageProps> = ({ projects, domains }) => {
-  const [currentDomain, setDomain] = useState<string>();
+const Dashboard: NextPage = () => {
   const [currentProject, setProject] = useState<string>();
+  const [currentDomain, setDomain] = useState<string>();
+  const router = useRouter();
+
+  // Fetch project and domain information
+  const { data: projects, error: errProject } = useSWR("/api/project", fetcher);
+  const { data: domains, error: errDomain } = useSWR(
+    currentProject ? `/api/domain?projectId=${currentProject}` : null,
+    fetcher
+  );
 
   useEffect(() => {
-    setDomain(domains?.[0]);
-    setProject(projects?.[0]?.projectId);
-  }, [domains, projects]);
+    const project = router?.query?.project;
+
+    if (!currentProject) {
+      if (project) {
+        setProject("" + project);
+      } else if (projects?.length) {
+        setProject(projects[0].projectId);
+        router.push(`/dashboard?project=${currentProject}`);
+      }
+    }
+  }, [projects, currentProject, router]);
+
+  if (errProject?.status === 401 || errDomain?.status === 401) {
+    router.push("/api/auth/signin");
+    return (
+      <Layout>
+        <Loading />
+        <Link href="/api/auth/signin">Sign in now</Link>
+      </Layout>
+    );
+  }
+
+  if (errProject || errDomain) {
+    return (
+      <Layout>
+        <Alert status="error">
+          <AlertIcon />
+          Cannot load the list of projects!
+        </Alert>
+      </Layout>
+    );
+  }
+
+  if (!projects) {
+    return (
+      <Layout>
+        <Loading />
+      </Layout>
+    );
+  }
 
   if (!projects?.length) {
     return (
@@ -40,17 +85,35 @@ const Dashboard: NextPage<DashboardPageProps> = ({ projects, domains }) => {
     );
   }
 
+  const handleChangeProject = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setProject(e.currentTarget.value);
+    router.push(`/dashboard?project=${currentProject}`);
+  };
+
   return (
     <Layout maxW="container.lg">
       <Flex mb={10} justifyContent="space-between">
         <Heading mr={5}>Feedbacks</Heading>
         <Flex>
-          <Select maxW={250} mr={3}>
+          <Select maxW={250} mr={3} onChange={handleChangeProject}>
             {projects.map((project: ProjectUserPopulated) => {
               const { projectId } = project;
-              return <option key={projectId}>{project.project.name}</option>;
+              return (
+                <option
+                  key={projectId}
+                  value={projectId}
+                  selected={projectId === currentProject}
+                >
+                  {project.project.name}
+                </option>
+              );
             })}
           </Select>
+
+          {currentProject && (
+            <ProjectSettingButton projectId={currentProject} />
+          )}
+
           <AddNewProjectButton />
         </Flex>
       </Flex>
@@ -70,51 +133,6 @@ const Dashboard: NextPage<DashboardPageProps> = ({ projects, domains }) => {
       </Grid>
     </Layout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/api/auth/signin",
-        permanent: false,
-      },
-    };
-  }
-
-  const projects = await prisma.projectUser.findMany({
-    where: {
-      userId: session.userId,
-    },
-    include: {
-      project: true,
-    },
-  });
-
-  const domains = await prisma.domain.findMany({
-    where: {
-      project: {
-        is: {
-          id: {
-            in: projects.map((project) => project.projectId),
-          },
-        },
-      },
-    },
-    include: {
-      project: true,
-    },
-  });
-
-  return {
-    props: {
-      projects: JSON.parse(JSON.stringify(projects)),
-      domains: domains.map((domain: Domain) => domain.domain),
-      session,
-    },
-  };
 };
 
 export default Dashboard;

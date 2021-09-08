@@ -15,3 +15,14 @@ const projectUserPopulated = Prisma.validator<Prisma.ProjectUserArgs>()({
 export type ProjectUserPopulated = Prisma.ProjectUserGetPayload<
   typeof projectUserPopulated
 >;
+
+const projectUserSettingPopulated = Prisma.validator<Prisma.ProjectArgs>()({
+  include: {
+    users: true,
+    setting: true,
+  },
+});
+
+export type ProjectUserSettingPopulated = Prisma.ProjectGetPayload<
+  typeof projectUserSettingPopulated
+>;

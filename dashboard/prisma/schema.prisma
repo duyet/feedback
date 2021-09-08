@@ -68,7 +68,7 @@ model Project {
   users     ProjectUser[]
   feedbacks Feedback[]
   setting   ProjectSetting?
-  Domain    Domain[]
+  domains   Domain[]
 }
 
 model ProjectUser {
