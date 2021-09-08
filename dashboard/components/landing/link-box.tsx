@@ -1,6 +1,5 @@
 import React from "react";
-import Link from "next/link";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Link, Text } from "@chakra-ui/react";
 
 export type LinkBoxProps = {
   href: string;
@@ -9,7 +8,7 @@ export type LinkBoxProps = {
 };
 
 const LinkBox: React.FC<LinkBoxProps> = ({ href, text, desc }) => (
-  <Link href={href}>
+  <Link href={href} textDecoration="none">
     <Box
       border={"1px solid #eaeaea"}
       p={5}
