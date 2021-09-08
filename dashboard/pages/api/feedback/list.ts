@@ -3,6 +3,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../lib/prisma";
 import { getSession } from "next-auth/react";
 
+type Where = {
+  projectId?: string;
+  domainId?: string;
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -16,7 +21,7 @@ export default async function handler(
     return res.status(401).end("project is required");
   }
 
-  let where = {
+  let where: Where = {
     projectId: `${req.query.project}`,
   };
 

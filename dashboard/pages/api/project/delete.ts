@@ -1,6 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../../lib/prisma";
 import { getSession } from "next-auth/react";
+import type { NextApiRequest, NextApiResponse } from "next";
+
+import { prisma } from "../../../lib/prisma";
 import { prismaErrorResponse } from "../../../lib/error-response";
 
 export default async function handler(
@@ -18,7 +19,7 @@ export default async function handler(
 
   try {
     const result = await prisma.project.delete({
-      where: { id: req.query.id },
+      where: { id: `${req.query.id}` },
     });
 
     res.json(result);
