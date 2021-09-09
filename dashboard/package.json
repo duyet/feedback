@@ -36,7 +36,7 @@
     "unique-names-generator": "4.6.0"
   },
   "devDependencies": {
-    "@types/react": "17.0.19",
+    "@types/react": "17.0.20",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.0",
     "prisma": "3.0.1",
