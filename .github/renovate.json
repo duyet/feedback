@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "packageRules": [
+    {
+      "packagePatterns": ["^eslint"],
+      "groupName": "eslint"
+    },
+    {
+      "packageNames": ["react", "react-dom"],
+      "groupName": "react"
+    }
+  ],
+  "labels": ["renovate"],
+  "semanticCommits": true,
+  "automerge": false
+}
