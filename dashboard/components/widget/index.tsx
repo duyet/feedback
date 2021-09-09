@@ -26,6 +26,7 @@ import {
 import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
 
 import ScreenshotIcon from './screenshot-icon';
+import Loading from '../common/loading';
 
 export type WidgetProps = {
   projectId?: string;
@@ -131,8 +132,6 @@ export const Widget: React.FC<WidgetProps> = ({
       console.error(err);
 
       setState('error');
-    } finally {
-      setState('submit');
     }
   };
 
@@ -184,6 +183,12 @@ export const Widget: React.FC<WidgetProps> = ({
     </>
   );
 
+  const submittingContent = (
+    <PopoverBody>
+      <Loading />
+    </PopoverBody>
+  );
+
   const successContent = (
     <>
       <PopoverCloseButton onClick={handleResetState} />
@@ -216,6 +221,7 @@ export const Widget: React.FC<WidgetProps> = ({
       <PopoverTrigger>{trigger}</PopoverTrigger>
       <PopoverContent>
         {state === 'submit' ? submitContent : null}
+        {state === 'submitting' ? submittingContent : null}
         {state === 'success' ? successContent : null}
         {state === 'error' ? errorContent : null}
       </PopoverContent>
