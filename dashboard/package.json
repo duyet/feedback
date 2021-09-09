@@ -17,8 +17,8 @@
   "dependencies": {
     "@chakra-ui/icons": "1.0.15",
     "@chakra-ui/react": "1.6.7",
-    "@emotion/react": "^11.4.1",
-    "@emotion/styled": "^11.3.0",
+    "@emotion/react": "11.4.1",
+    "@emotion/styled": "11.3.0",
     "@next-auth/prisma-adapter": "^0.5.2-next.5",
     "@prisma/client": "^2.30.3",
     "framer-motion": "^4.1.17",
