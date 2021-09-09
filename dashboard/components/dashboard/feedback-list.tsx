@@ -1,11 +1,12 @@
 import useSWR from 'swr';
 import React from 'react';
-import { Alert, Spinner } from '@chakra-ui/react';
+import { Alert } from '@chakra-ui/react';
 
 import Feedback from './feedback-item';
+import Loading from '../common/loading';
 import fetcher from '../../lib/fetcher';
-import { Feedback as FeedbackProps } from '../../types/prisma';
 import EmptyFeedback from './empty-feedback';
+import { Feedback as FeedbackProps } from '../../types/prisma';
 
 export type Props = {
   project: string;
@@ -19,7 +20,7 @@ export const FeedbackList: React.FC<Props> = ({ project, domain }) => {
   console.log('err', error);
 
   if (error) return <Alert status="error">Error ...</Alert>;
-  if (!data) return <Spinner />;
+  if (!data) return <Loading />;
 
   if (!data.length) {
     return <EmptyFeedback />;

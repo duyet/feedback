@@ -23,7 +23,7 @@ export const ProjectSettingButton: React.FC<Props> = ({ projectId }) => {
       <Button onClick={onOpen} mr={3}>
         <SettingsIcon />
       </Button>
-      <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+      <Modal size="3xl" blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />

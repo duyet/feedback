@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Text,
   Alert,
   AlertIcon,
   Button,
@@ -14,9 +15,10 @@ import {
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 
 import useSWR, { useSWRConfig } from 'swr';
-import fetcher from '../../lib/fetcher';
-import Loading from '../common/loading';
+import fetcher from '../../../lib/fetcher';
+import Loading from '../../common/loading';
 import DomainList from './domain-list';
+import { UserList } from './user-list';
 
 export type Props = {
   projectId: string;
@@ -25,6 +27,7 @@ export type Props = {
 export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
   const [name, setProjectName] = useState<string>();
   const [domains, setDomains] = useState<string[]>([]);
+  const [users, setUsers] = useState<string[]>([]);
 
   const toast = useToast();
   const { mutate } = useSWRConfig();
@@ -41,6 +44,10 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
     setDomains(domains);
   };
 
+  const onChangeUsers = (users: string[]) => {
+    setUsers(users);
+  };
+
   const handleSaveSettingGeneral = async () => {
     const data = {
       ...{ name },
@@ -54,7 +61,7 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
         body: JSON.stringify(data),
       });
 
-      const json = await res.json()
+      const json = await res.json();
 
       if (!res?.ok) {
         throw Error(json.err || res?.statusText || 'Something went wrong');
@@ -71,7 +78,7 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
         isClosable: true,
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       return toast({
         title: 'Error',
         description: `${err}`,
@@ -98,7 +105,7 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
   return (
     <>
       <ModalBody>
-        <Heading size="lg" mb={5}>
+        <Heading size="md" mb={5} mt={5}>
           Project Settings
         </Heading>
 
@@ -148,7 +155,16 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
               </FormControl>
             </TabPanel>
 
-            <TabPanel>TODO</TabPanel>
+            <TabPanel>
+              <Text fontWeight={700}>Team</Text>
+              <Text color="gray" mb={5}>
+                Add or remove users that have access to this project! The user
+                should login once before they can be added.
+              </Text>
+              <FormControl id="email" mb={5}>
+                <UserList defaultValue={data.users} onChange={onChangeUsers} />
+              </FormControl>
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </ModalBody>

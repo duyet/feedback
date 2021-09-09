@@ -111,6 +111,8 @@ export const Widget: React.FC<WidgetProps> = ({
     console.log(JSON.stringify(data));
 
     try {
+      setState('submitting');
+
       const res = await fetch(api, {
         method: 'POST',
         headers: {
@@ -129,6 +131,8 @@ export const Widget: React.FC<WidgetProps> = ({
       console.error(err);
 
       setState('error');
+    } finally {
+      setState('submit');
     }
   };
 
@@ -200,7 +204,9 @@ export const Widget: React.FC<WidgetProps> = ({
           <CloseIcon color="red" w={10} h={10} />
         </Box>
         <Text pb={2}>Sorry! We can&apos;t received your feedback.</Text>
-        <Text cursor="pointer" color="gray" onClick={handleSubmitFeedback}>Retry?</Text>
+        <Text cursor="pointer" color="gray" onClick={handleSubmitFeedback}>
+          Retry?
+        </Text>
       </PopoverBody>
     </>
   );

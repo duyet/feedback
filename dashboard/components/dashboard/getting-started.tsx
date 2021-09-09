@@ -30,7 +30,7 @@ const App = () => {
   return (
       <Feedback
         user={currentUser.email} 
-        project={'${projectId || '...'}'} />
+        project="${projectId || '...'}" />
   );
 }
   `.trim();

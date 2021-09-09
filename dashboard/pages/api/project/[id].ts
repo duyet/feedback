@@ -24,7 +24,11 @@ export default async function handler(
       id: `${id}`,
     },
     include: {
-      users: true,
+      users: {
+        include: {
+          user: true,
+        },
+      },
       setting: true,
       domains: true,
     },

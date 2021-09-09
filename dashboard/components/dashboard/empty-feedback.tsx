@@ -2,9 +2,11 @@ import { Flex, Image, Text } from '@chakra-ui/react';
 
 export const EmptyFeedback = () => {
   return (
-    <Flex textAlign="center" p={20} flexDirection="column" justifyItems="center">
+    <Flex textAlign="center" p={20} flexDirection="column">
+      <Flex justifyContent="center">
       <Image src="/empty.svg" width="50%" alt="" />
-      <Text mt={5} color="gray">Your customer feedbacks will be here ...</Text>
+      </Flex>
+      <Text mt={5} color="gray">Can't wait to see the feedback goes here</Text>
     </Flex>
   );
 };

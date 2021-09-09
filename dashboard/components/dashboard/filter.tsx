@@ -1,4 +1,15 @@
-import { Box, Heading, List, ListItem, Text, Flex } from '@chakra-ui/react';
+import React from 'react';
+import {
+  Box,
+  Heading,
+  List,
+  ListItem,
+  Text,
+  Flex,
+  Alert,
+  AlertIcon,
+  AlertDescription,
+} from '@chakra-ui/react';
 
 import { Domain } from '../../types/prisma';
 
@@ -14,7 +25,14 @@ export const Filter: React.FC<FilterProps> = ({
   onSelected,
 }) => {
   if (!domains?.length) {
-    return null;
+    return (
+      <Alert status="success">
+        <AlertIcon />{' '}
+        <AlertDescription>
+          Add your domains to this project via the project setting.
+        </AlertDescription>
+      </Alert>
+    );
   }
 
   const current = selected || domains[0].domain;

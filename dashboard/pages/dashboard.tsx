@@ -20,9 +20,10 @@ import Filter from '../components/dashboard/filter';
 import { ProjectUserPopulated } from '../types/prisma';
 import InitProject from '../components/dashboard/init-project';
 import FeedbackList from '../components/dashboard/feedback-list';
-import AddNewProjectButton from '../components/dashboard/add-new-project-button';
-import ProjectSettingButton from '../components/dashboard/project-setting-button';
+import EmptyFeedback from '../components/dashboard/empty-feedback';
 import GettingStarted from '../components/dashboard/getting-started';
+import AddNewProjectButton from '../components/dashboard/add-new-project-button';
+import ProjectSettingButton from '../components/dashboard/project-setting/project-setting-button';
 
 const Dashboard: NextPage = () => {
   const [currentProject, setProject] = useState<string>();
@@ -135,7 +136,9 @@ const Dashboard: NextPage = () => {
         <GridItem colSpan={[6, 6, 4]}>
           {currentProject && currentDomain ? (
             <FeedbackList project={currentProject} domain={currentDomain} />
-          ) : null}
+          ) : (
+            <EmptyFeedback />
+          )}
         </GridItem>
       </Grid>
     </Layout>

@@ -10,7 +10,7 @@ import {
   Link,
 } from '@chakra-ui/react';
 
-import { Domain } from '../../types/prisma';
+import { Domain } from '../../../types/prisma';
 
 export type DomainListProps = {
   defaultValue: Domain[];
@@ -73,7 +73,7 @@ export const DomainList: React.FC<DomainListProps> = ({
           return (
             <ListItem key={index}>
               {item}{' '}
-              <Link colorScheme="gray" onClick={() => handleRemoveItem(item)}>
+              <Link color="gray" onClick={() => handleRemoveItem(item)}>
                 (remove)
               </Link>
             </ListItem>
