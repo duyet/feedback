@@ -7,13 +7,4 @@ const withNextra = require("nextra")({
 module.exports = withNextra({
   reactStrictMode: true,
   basePath: "/docs",
-  async redirects() {
-    return [
-      {
-        source: "/:path*",
-        destination: "/docs/:path*",
-        permanent: true,
-      },
-    ];
-  },
 });
