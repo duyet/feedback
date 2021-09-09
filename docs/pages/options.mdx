@@ -1,5 +1,22 @@
 # Options
 
+## Install without `projectId`
+
+You can skip the `projectId`. You must to add your domain name from the Project setting on dashboard.
+
+```tsx
+// ...
+import { Feedback } from '@okie/feedback';
+
+const App = () => {
+  return (
+    <Layout>
+      <Feedback />
+    </Layout>
+  );
+}
+```
+
 ## Custom the Feedback Button
 
 Wrap whatever button or item you want to trigger the widget:
@@ -9,6 +26,13 @@ Wrap whatever button or item you want to trigger the widget:
   <button>Send Feedback</button>
 </Feedback>
 ```
+
+```tsx
+<Feedback>
+  <Link>Send Feedback</Link>
+</Feedback>
+```
+
 
 ## Submitters email
 

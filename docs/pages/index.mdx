@@ -11,6 +11,24 @@ yarn add @okie/feedback
 ```
 
 Then import the component in your React app and wrap whatever button you want to trigger the widget with it. 
+
+```tsx
+// ...
+import { Feedback } from '@okie/feedback';
+
+const App = () => {
+  return (
+    <Layout>
+      <Feedback projectId="cktbdp9y900200wjr7519..." />
+    </Layout>
+  );
+}
+```
+
+Get the `projectId` from your dashboard.
+
+## Collect email address
+
 Pass the email of the currently authenticated user to the `user` prop:
 
 ```tsx
@@ -18,7 +36,6 @@ Pass the email of the currently authenticated user to the `user` prop:
 import { Feedback } from '@okie/feedback';
 
 const App = () => {
-    
   return (
     <Layout>
       <Feedback user={currentUser.email} />
@@ -26,4 +43,3 @@ const App = () => {
   );
 }
 ```
-
