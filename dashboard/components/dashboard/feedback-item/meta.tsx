@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Link, Text } from "@chakra-ui/react";
+import React from 'react';
+import { Box, Link, Text } from '@chakra-ui/react';
 
 export type MetaProps = {
   name: string;
@@ -13,7 +13,7 @@ export const Meta: React.FC<MetaProps> = ({ name, value, isLink }) => {
   return (
     <Box>
       <Text fontSize="sm">
-        {name}{" "}
+        {name}{' '}
         {!!isLink ? (
           <Link color="teal.500" href={value} isExternal={true}>
             {value}

@@ -1,8 +1,8 @@
-import Head from "next/head";
-import type { NextPage } from "next";
-import { ChakraProvider } from "@chakra-ui/react";
+import Head from 'next/head';
+import type { NextPage } from 'next';
+import { ChakraProvider } from '@chakra-ui/react';
 
-import Heros from "../components/landing/hero";
+import Heros from '../components/landing/hero';
 
 const Home: NextPage = () => {
   return (

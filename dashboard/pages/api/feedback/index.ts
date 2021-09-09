@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../../lib/prisma";
-import { getDomain } from "../../../lib/url-parse";
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { prisma } from '../../../lib/prisma';
+import { getDomain } from '../../../lib/url-parse';
 
 export default async function handler(
   req: NextApiRequest,
@@ -31,7 +31,7 @@ export default async function handler(
   } catch (err) {
     console.error(err);
     const { code, message, meta } = err;
-    const messages = message.split("\n").filter((line: string) => !!line);
+    const messages = message.split('\n').filter((line: string) => !!line);
     return res.status(500).json({ code, message, meta, messages });
   }
 }

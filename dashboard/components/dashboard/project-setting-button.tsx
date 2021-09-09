@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Modal,
@@ -6,10 +6,10 @@ import {
   ModalContent,
   ModalOverlay,
   useDisclosure,
-} from "@chakra-ui/react";
-import { SettingsIcon } from "@chakra-ui/icons";
+} from '@chakra-ui/react';
+import { SettingsIcon } from '@chakra-ui/icons';
 
-import ProjectSettingPanel from "./project-setting-panel";
+import ProjectSettingPanel from './project-setting-panel';
 
 export type Props = {
   projectId: string;

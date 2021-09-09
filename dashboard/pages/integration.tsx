@@ -1,6 +1,6 @@
-import React from "react";
-import type { NextPage } from "next";
-import { GetServerSideProps } from "next";
+import React from 'react';
+import type { NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import {
   Box,
   FormControl,
@@ -12,9 +12,9 @@ import {
   Checkbox,
   Input,
   Button,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
-import Layout from "../components/layout";
+import Layout from '../components/layout';
 
 type Props = {
   domains: string[];
@@ -69,7 +69,7 @@ const Page: NextPage<Props> = ({ domains }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch("http://localhost:3000/api/feedback/by-domain");
+  const res = await fetch('http://localhost:3000/api/feedback/by-domain');
   const feedbacks = await res.json();
   const domains = Object.keys(feedbacks);
 

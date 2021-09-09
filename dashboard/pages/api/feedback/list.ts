@@ -1,7 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { prisma } from "../../../lib/prisma";
-import { getSession } from "next-auth/react";
+import { prisma } from '../../../lib/prisma';
+import { getSession } from 'next-auth/react';
 
 type Where = {
   projectId?: string;
@@ -18,7 +18,7 @@ export default async function handler(
   }
 
   if (!req.query.project) {
-    return res.status(401).end("project is required");
+    return res.status(401).end('project is required');
   }
 
   let where: Where = {
@@ -32,7 +32,7 @@ export default async function handler(
 
   const feedbacks = await prisma.feedback.findMany({
     where,
-    orderBy: [{ createdAt: "desc" }],
+    orderBy: [{ createdAt: 'desc' }],
   });
 
   res.status(200).json(feedbacks);

@@ -1,9 +1,9 @@
-import Head from "next/head";
-import React, { ReactNode } from "react";
-import { ChakraProvider, Container } from "@chakra-ui/react";
+import Head from 'next/head';
+import React, { ReactNode } from 'react';
+import { ChakraProvider, Container } from '@chakra-ui/react';
 
-import Header from "./header";
-import Widget from "../widget";
+import Header from './header';
+import Widget from '../widget';
 
 type Props = {
   title?: string;
@@ -18,7 +18,7 @@ const Layout: React.FC<Props> = ({ title, maxW, children }) => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     <Header />
-    <Container maxW={maxW || "container.lg"} marginTop={10}>
+    <Container maxW={maxW || 'container.lg'} marginTop={10}>
       {children}
     </Container>
     <Widget />

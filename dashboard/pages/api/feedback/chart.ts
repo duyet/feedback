@@ -1,19 +1,19 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import groupBy from "lodash/groupBy";
+import type { NextApiRequest, NextApiResponse } from 'next';
+import groupBy from 'lodash/groupBy';
 
-import { prisma } from "../../../lib/prisma";
-import { getDomain } from "../../../lib/url-parse";
+import { prisma } from '../../../lib/prisma';
+import { getDomain } from '../../../lib/url-parse';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const feedbacks = await prisma.feedback.findMany({
-    orderBy: [{ createdAt: "desc" }],
+    orderBy: [{ createdAt: 'desc' }],
     select: {
       url: true,
-      createdAt: true
-    }
+      createdAt: true,
+    },
   });
 
   // Additional information
@@ -21,7 +21,7 @@ export default async function handler(
     feedback.domain = getDomain(feedback.url);
   });
 
-  const byDomain = groupBy(feedbacks, "domain");
+  const byDomain = groupBy(feedbacks, 'domain');
 
   res.status(200).json(byDomain);
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Image,
   Modal,
@@ -6,7 +6,7 @@ import {
   ModalContent,
   ModalCloseButton,
   useDisclosure,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 export type ScreenshotProps = {
   screenshot: string;
@@ -28,7 +28,7 @@ export const Screenshot: React.FC<ScreenshotProps> = ({ screenshot }) => {
         alt="Screenshot"
       />
 
-      <Modal onClose={onClose} size={"full"} isOpen={isOpen}>
+      <Modal onClose={onClose} size={'full'} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />

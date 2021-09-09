@@ -1,8 +1,8 @@
-import NextAuth from "next-auth";
-import GithubProdider from "next-auth/providers/github";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import NextAuth from 'next-auth';
+import GithubProdider from 'next-auth/providers/github';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
-import { prisma } from "../../../lib/prisma";
+import { prisma } from '../../../lib/prisma';
 
 // TODO: waiting for upgrades to next version
 // https://github.com/nextauthjs/adapters/tree/main/packages/prisma

@@ -1,5 +1,5 @@
-import html2canvas from "html2canvas";
-import React, { ReactNode, useState } from "react";
+import html2canvas from 'html2canvas';
+import React, { ReactNode, useState } from 'react';
 import {
   Box,
   Image,
@@ -15,17 +15,17 @@ import {
   PopoverTrigger,
   Text,
   Textarea,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import {
   osVersion,
   osName,
   deviceType,
   fullBrowserVersion,
   browserName,
-} from "react-device-detect";
-import { CheckCircleIcon, CloseIcon } from "@chakra-ui/icons";
+} from 'react-device-detect';
+import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
 
-import ScreenshotIcon from "./screenshot-icon";
+import ScreenshotIcon from './screenshot-icon';
 
 export type WidgetProps = {
   url?: string;
@@ -39,24 +39,24 @@ export type WidgetProps = {
   children?: ReactNode;
 };
 
-const API = "/api/feedback";
+const API = '/api/feedback';
 
-type WidgetState = "submit" | "submitting" | "success" | "error";
+type WidgetState = 'submit' | 'submitting' | 'success' | 'error';
 
 export const Widget: React.FC<WidgetProps> = ({
   url,
-  title = "Give us feedback",
-  email = "me@duyet.net",
+  title = 'Give us feedback',
+  email = 'me@duyet.net',
   name,
-  placeholder = "I noticed that ...",
-  triggerButtonText = "Feedback",
-  sendFeedbackText = "Send Feedback",
+  placeholder = 'I noticed that ...',
+  triggerButtonText = 'Feedback',
+  sendFeedbackText = 'Send Feedback',
   disableScreenshot = false,
   children,
 }) => {
   const [message, setMessage] = useState<string>();
   const [screenshot, setScrenshot] = useState<string>();
-  const [state, setState] = useState<WidgetState>("submit");
+  const [state, setState] = useState<WidgetState>('submit');
 
   const trigger = children ?? (
     <Button position="fixed" right={0} bottom={0}>
@@ -71,19 +71,19 @@ export const Widget: React.FC<WidgetProps> = ({
   // TODO: using another screenshot library
   const handleCaptureScreenshot = () => {
     html2canvas(document.body).then((canvas) => {
-      const base64image = canvas.toDataURL("image/png");
+      const base64image = canvas.toDataURL('image/png');
       console.log(base64image);
       setScrenshot(base64image);
     });
   };
 
   const handleClickOnCapturedScreenshot = () => {
-    setScrenshot("");
+    setScrenshot('');
   };
 
   const handleResetState = () => {
-    setScrenshot("");
-    setState("submit");
+    setScrenshot('');
+    setState('submit');
   };
 
   // Handle submit
@@ -107,23 +107,23 @@ export const Widget: React.FC<WidgetProps> = ({
 
     try {
       const res = await fetch(API, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       });
 
       if (!res.ok) {
-        throw new Error("Something went wrong!");
+        throw new Error('Something went wrong!');
       }
 
       console.log(res);
-      setState("success");
+      setState('success');
     } catch (err) {
       console.error(err);
 
-      setState("error");
+      setState('error');
     }
   };
 
@@ -144,7 +144,7 @@ export const Widget: React.FC<WidgetProps> = ({
         alignItems="center"
         justifyContent="space-between"
       >
-        {""}
+        {''}
         <Box>
           <IconButton
             aria-label="Capture Screenshot"
@@ -169,7 +169,7 @@ export const Widget: React.FC<WidgetProps> = ({
           ) : null}
         </Box>
         <Button onClick={handleSubmitFeedback}>
-          {state == "submitting" ? "Loading ..." : sendFeedbackText}
+          {state == 'submitting' ? 'Loading ...' : sendFeedbackText}
         </Button>
       </PopoverFooter>
     </>
@@ -203,9 +203,9 @@ export const Widget: React.FC<WidgetProps> = ({
     <Popover closeOnBlur={true} autoFocus={true} closeOnEsc={true}>
       <PopoverTrigger>{trigger}</PopoverTrigger>
       <PopoverContent>
-        {state === "submit" ? submitContent : null}
-        {state === "success" ? successContent : null}
-        {state === "error" ? errorContent : null}
+        {state === 'submit' ? submitContent : null}
+        {state === 'success' ? successContent : null}
+        {state === 'error' ? errorContent : null}
       </PopoverContent>
     </Popover>
   );

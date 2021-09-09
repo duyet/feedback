@@ -1,4 +1,4 @@
-import { Box, Heading, List, ListItem, Text, Flex } from "@chakra-ui/react";
+import { Box, Heading, List, ListItem, Text, Flex } from '@chakra-ui/react';
 
 export type FilterProps = {
   domains: string[];
@@ -32,8 +32,8 @@ export const Filter: React.FC<FilterProps> = ({
               padding={2}
               fontWeight={isSelected ? 700 : 300}
               borderRadius={5}
-              bg={isSelected ? "#ebf8ff" : ""}
-              color={isSelected ? "#4187ff" : ""}
+              bg={isSelected ? '#ebf8ff' : ''}
+              color={isSelected ? '#4187ff' : ''}
               cursor="pointer"
               overflow="hidden"
               mb={3}

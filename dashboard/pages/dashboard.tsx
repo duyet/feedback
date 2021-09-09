@@ -1,7 +1,7 @@
-import useSWR from "swr";
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import useSWR from 'swr';
+import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
   Flex,
   Heading,
@@ -11,17 +11,17 @@ import {
   Alert,
   AlertIcon,
   Link,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
-import fetcher from "../lib/fetcher";
-import Layout from "../components/layout";
-import Loading from "../components/common/loading";
-import Filter from "../components/dashboard/filter";
-import { ProjectUserPopulated } from "../types/prisma";
-import InitProject from "../components/dashboard/init-project";
-import FeedbackList from "../components/dashboard/feedback-list";
-import ProjectSettingButton from "../components/dashboard/project-setting-button";
-import AddNewProjectButton from "../components/dashboard/add-new-project-button";
+import fetcher from '../lib/fetcher';
+import Layout from '../components/layout';
+import Loading from '../components/common/loading';
+import Filter from '../components/dashboard/filter';
+import { ProjectUserPopulated } from '../types/prisma';
+import InitProject from '../components/dashboard/init-project';
+import FeedbackList from '../components/dashboard/feedback-list';
+import ProjectSettingButton from '../components/dashboard/project-setting-button';
+import AddNewProjectButton from '../components/dashboard/add-new-project-button';
 
 const Dashboard: NextPage = () => {
   const [currentProject, setProject] = useState<string>();
@@ -29,7 +29,7 @@ const Dashboard: NextPage = () => {
   const router = useRouter();
 
   // Fetch project and domain information
-  const { data: projects, error: errProject } = useSWR("/api/project", fetcher);
+  const { data: projects, error: errProject } = useSWR('/api/project', fetcher);
   const { data: domains, error: errDomain } = useSWR(
     currentProject ? `/api/domain?projectId=${currentProject}` : null,
     fetcher
@@ -40,7 +40,7 @@ const Dashboard: NextPage = () => {
 
     if (!currentProject) {
       if (project) {
-        setProject("" + project);
+        setProject('' + project);
       } else if (projects?.length) {
         const first = projects[0].projectId;
         setProject(first);
@@ -50,7 +50,7 @@ const Dashboard: NextPage = () => {
   }, [projects, currentProject, router]);
 
   if (errProject?.status === 401 || errDomain?.status === 401) {
-    router.push("/api/auth/signin");
+    router.push('/api/auth/signin');
     return (
       <Layout>
         <Loading />

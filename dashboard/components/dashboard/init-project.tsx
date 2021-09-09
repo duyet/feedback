@@ -1,14 +1,14 @@
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { Box, Spinner, Text } from "@chakra-ui/react";
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import { Box, Spinner, Text } from '@chakra-ui/react';
 
 export const InitProject: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
     async function initProject() {
-      await fetch("/api/project/create");
-      router.push("/dashboard");
+      await fetch('/api/project/create');
+      router.push('/dashboard');
     }
 
     initProject();

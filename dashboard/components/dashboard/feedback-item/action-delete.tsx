@@ -8,8 +8,8 @@ import {
   PopoverFooter,
   PopoverTrigger,
   useToast,
-} from "@chakra-ui/react";
-import React from "react";
+} from '@chakra-ui/react';
+import React from 'react';
 
 type Props = {
   id: number;
@@ -21,15 +21,15 @@ export const ActionDelete: React.FC<Props> = ({ id }) => {
   const handleDelete = async () => {
     try {
       const res = await fetch(`/api/feedback/delete?id=${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
       });
       console.log(res);
-      toast({ title: "Deleted", status: "info", isClosable: true });
+      toast({ title: 'Deleted', status: 'info', isClosable: true });
     } catch (e) {
       console.error(e);
       toast({
-        title: "Something went wrong!",
-        status: "error",
+        title: 'Something went wrong!',
+        status: 'error',
         isClosable: true,
       });
     }

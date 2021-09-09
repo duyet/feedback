@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Alert,
   AlertIcon,
@@ -11,12 +11,12 @@ import {
   ModalFooter,
   Spinner,
   useToast,
-} from "@chakra-ui/react";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+} from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 
-import useSWR, { useSWRConfig } from "swr";
-import fetcher from "../../lib/fetcher";
-import Loading from "../common/loading";
+import useSWR, { useSWRConfig } from 'swr';
+import fetcher from '../../lib/fetcher';
+import Loading from '../common/loading';
 
 export type Props = {
   projectId: string;
@@ -41,29 +41,29 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
 
     try {
       const res = await fetch(url, {
-        method: "PATCH",
-        headers: { "Content-type": "application/json" },
+        method: 'PATCH',
+        headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(data),
       });
 
       if (!res?.ok) {
-        throw Error(res?.statusText || "Something went wrong");
+        throw Error(res?.statusText || 'Something went wrong');
       }
 
       // Tell SWRs with these key to revalidate
       mutate(url);
-      mutate("/api/project");
+      mutate('/api/project');
 
       return toast({
-        description: "Successfully",
-        status: "success",
+        description: 'Successfully',
+        status: 'success',
         isClosable: true,
       });
     } catch (err) {
       return toast({
-        title: "Error",
+        title: 'Error',
         description: err,
-        status: "error",
+        status: 'error',
         isClosable: true,
       });
     }

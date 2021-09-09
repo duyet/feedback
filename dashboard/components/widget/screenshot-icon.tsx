@@ -1,8 +1,8 @@
-import { createIcon } from "@chakra-ui/icons";
+import { createIcon } from '@chakra-ui/icons';
 
 export const ScreenshotIcon = createIcon({
-  displayName: "ScreenshotIcon",
-  viewBox: "0 0 20 17",
+  displayName: 'ScreenshotIcon',
+  viewBox: '0 0 20 17',
   path: [
     <path
       key="1"
