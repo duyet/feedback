@@ -1,25 +1,30 @@
 import React from 'react';
-import { Box, Link, Text } from '@chakra-ui/react';
+import { Box, BoxProps, Link, Text } from '@chakra-ui/react';
 
-export type MetaProps = {
+export type MetaProps = BoxProps & {
   name: string;
   value?: string;
   isLink?: boolean;
 };
 
-export const Meta: React.FC<MetaProps> = ({ name, value, isLink }) => {
+export const Meta: React.FC<MetaProps> = ({
+  name,
+  value,
+  isLink,
+  ...props
+}) => {
   if (!value) return null;
 
   return (
-    <Box>
+    <Box {...props}>
       <Text fontSize="sm">
         {name}{' '}
         {!!isLink ? (
-          <Link color="teal.500" href={value} isExternal={true}>
+          <Link color="blue.500" fontWeight={500} href={value} isExternal={true}>
             {value}
           </Link>
         ) : (
-          <Text color="teal.500">{value}</Text>
+          <Text color="blue">{value}</Text>
         )}
       </Text>
     </Box>

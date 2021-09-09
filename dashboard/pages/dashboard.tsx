@@ -20,8 +20,9 @@ import Filter from '../components/dashboard/filter';
 import { ProjectUserPopulated } from '../types/prisma';
 import InitProject from '../components/dashboard/init-project';
 import FeedbackList from '../components/dashboard/feedback-list';
-import ProjectSettingButton from '../components/dashboard/project-setting-button';
 import AddNewProjectButton from '../components/dashboard/add-new-project-button';
+import ProjectSettingButton from '../components/dashboard/project-setting-button';
+import GettingStarted from '../components/dashboard/getting-started';
 
 const Dashboard: NextPage = () => {
   const [currentProject, setProject] = useState<string>();
@@ -118,7 +119,12 @@ const Dashboard: NextPage = () => {
           <AddNewProjectButton />
         </Flex>
       </Flex>
-      <Grid templateColumns="repeat(6, 1fr)" gap={5}>
+
+      <Flex mb={10}>
+        <GettingStarted projectId={currentProject} />
+      </Flex>
+
+      <Grid templateColumns="repeat(6, 1fr)" gap={5} mb={20}>
         <GridItem colSpan={[6, 6, 2]}>
           <Filter
             domains={domains}

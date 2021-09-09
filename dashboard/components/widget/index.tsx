@@ -28,6 +28,7 @@ import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
 import ScreenshotIcon from './screenshot-icon';
 
 export type WidgetProps = {
+  projectId?: string;
   url?: string;
   title?: string;
   email?: string;
@@ -36,6 +37,7 @@ export type WidgetProps = {
   triggerButtonText?: string;
   sendFeedbackText?: string;
   disableScreenshot?: boolean;
+  api?: string;
   children?: ReactNode;
 };
 
@@ -44,14 +46,16 @@ const API = '/api/feedback';
 type WidgetState = 'submit' | 'submitting' | 'success' | 'error';
 
 export const Widget: React.FC<WidgetProps> = ({
+  projectId,
   url,
   title = 'Give us feedback',
-  email = 'me@duyet.net',
+  email = 'anonymous',
   name,
   placeholder = 'I noticed that ...',
   triggerButtonText = 'Feedback',
   sendFeedbackText = 'Send Feedback',
   disableScreenshot = false,
+  api = API,
   children,
 }) => {
   const [message, setMessage] = useState<string>();
@@ -89,6 +93,7 @@ export const Widget: React.FC<WidgetProps> = ({
   // Handle submit
   const handleSubmitFeedback = async () => {
     const data = {
+      ...{ projectId },
       url: url ?? window.location.href,
       email,
       name,
@@ -106,7 +111,7 @@ export const Widget: React.FC<WidgetProps> = ({
     console.log(JSON.stringify(data));
 
     try {
-      const res = await fetch(API, {
+      const res = await fetch(api, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -194,7 +199,8 @@ export const Widget: React.FC<WidgetProps> = ({
         <Box p={5}>
           <CloseIcon color="red" w={10} h={10} />
         </Box>
-        <Text pb={5}>Sorry! We can&apos;t received your feedback.</Text>
+        <Text pb={2}>Sorry! We can&apos;t received your feedback.</Text>
+        <Text cursor="pointer" color="gray" onClick={handleSubmitFeedback}>Retry?</Text>
       </PopoverBody>
     </>
   );

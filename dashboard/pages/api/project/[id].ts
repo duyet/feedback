@@ -2,7 +2,12 @@ import { getSession } from 'next-auth/react';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { prisma } from '../../../lib/prisma';
-import { prismaErrorResponse, unauthorized } from '../../../lib/error-response';
+import { Domain } from '../../../types/prisma';
+import {
+  prismaErrorResponse,
+  unauthorized,
+  _409,
+} from '../../../lib/error-response';
 
 export default async function handler(
   req: NextApiRequest,
@@ -50,16 +55,66 @@ export default async function handler(
 
 // Handle PATCH
 const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
+  const { id: projectId } = req.query;
+
+  let { name, domains } = req.body;
+
+  if (domains) {
+    const domainsOnDB = await prisma.domain.findMany({
+      where: {
+        domain: {
+          in: domains,
+        },
+      },
+    });
+
+    // Check if these domain are already exists or not?
+    if (domainsOnDB && domainsOnDB.length) {
+      const domainOnAnotherProject = domainsOnDB
+        .filter((domain: Domain) => domain.projectId !== projectId)
+        .map((domain: Domain): string => domain.domain);
+
+      if (domainOnAnotherProject.length) {
+        return _409(res, `Domain already exists: ${domainOnAnotherProject}`);
+      }
+
+      const domainThisProject = domainsOnDB
+        .filter((domain: Domain) => domain.projectId === projectId)
+        .map((domain: Domain): string => domain.domain);
+
+      const newDomains = domains.filter(
+        (domain: string) => !domainThisProject.includes(domain)
+      );
+
+      const removedDomain = domainThisProject.filter(
+        (domain: string) => !domains.includes(domain)
+      );
+
+      // TODO: remove removed domain from database
+      removedDomain;
+
+      domains = newDomains;
+    }
+
+    // Okie, go ahead
+    domains = {
+      createMany: {
+        data: domains.map((domain: string) => ({ domain })),
+      },
+    };
+  }
+
+  const data = {
+    ...{ name },
+    ...{ domains },
+  };
 
   try {
     const result = await prisma.project.update({
       where: {
-        id: `${id}`,
+        id: `${projectId}`,
       },
-      data: {
-        ...req.body,
-      },
+      data,
     });
 
     res.json(result);

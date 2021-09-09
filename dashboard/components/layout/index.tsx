@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React, { ReactNode } from 'react';
-import { ChakraProvider, Container } from '@chakra-ui/react';
+import { ChakraProvider, Container, Portal } from '@chakra-ui/react';
 
 import Header from './header';
 import Widget from '../widget';

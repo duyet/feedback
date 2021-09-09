@@ -1,7 +1,9 @@
 import { Box, Heading, List, ListItem, Text, Flex } from '@chakra-ui/react';
 
+import { Domain } from '../../types/prisma';
+
 export type FilterProps = {
-  domains: string[];
+  domains: Domain[];
   selected?: string;
   onSelected: (domain: string) => void;
 };
@@ -15,7 +17,7 @@ export const Filter: React.FC<FilterProps> = ({
     return null;
   }
 
-  const current = selected || domains[0];
+  const current = selected || domains[0].domain;
 
   return (
     <Box>
@@ -23,7 +25,8 @@ export const Filter: React.FC<FilterProps> = ({
         Domains
       </Heading>
       <List>
-        {domains.map((domain: string) => {
+        {domains.map((obj: Domain) => {
+          const { domain } = obj;
           const isSelected = current === domain;
 
           return (

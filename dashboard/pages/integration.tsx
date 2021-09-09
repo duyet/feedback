@@ -69,12 +69,8 @@ const Page: NextPage<Props> = ({ domains }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch('http://localhost:3000/api/feedback/by-domain');
-  const feedbacks = await res.json();
-  const domains = Object.keys(feedbacks);
-
   return {
-    props: { domains },
+    props: { domains: [] },
   };
 };
 export default Page;

@@ -5,6 +5,7 @@ import { Alert, Spinner } from '@chakra-ui/react';
 import Feedback from './feedback-item';
 import fetcher from '../../lib/fetcher';
 import { Feedback as FeedbackProps } from '../../types/prisma';
+import EmptyFeedback from './empty-feedback';
 
 export type Props = {
   project: string;
@@ -19,6 +20,10 @@ export const FeedbackList: React.FC<Props> = ({ project, domain }) => {
 
   if (error) return <Alert status="error">Error ...</Alert>;
   if (!data) return <Spinner />;
+
+  if (!data.length) {
+    return <EmptyFeedback />;
+  }
 
   return (
     <>
