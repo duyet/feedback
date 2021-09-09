@@ -44,10 +44,6 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
     setDomains(domains);
   };
 
-  const onChangeUsers = (users: string[]) => {
-    setUsers(users);
-  };
-
   const handleSaveSettingGeneral = async () => {
     const data = {
       ...{ name },
@@ -162,7 +158,7 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
                 should login once before they can be added.
               </Text>
               <FormControl id="email" mb={5}>
-                <UserList defaultValue={data.users} onChange={onChangeUsers} />
+                <UserList defaultValue={data.users} />
               </FormControl>
             </TabPanel>
           </TabPanels>

@@ -3,7 +3,6 @@ import {
   ListItem,
   Input,
   FormHelperText,
-  useToast,
   Text,
   WrapItem,
   Avatar,
@@ -11,18 +10,16 @@ import {
   List,
   Badge,
 } from '@chakra-ui/react';
-import { CUIAutoComplete } from 'chakra-ui-autocomplete';
 
 import { ProjectUserPopulated } from '../../../types/prisma';
 
 export type Props = {
   defaultValue: ProjectUserPopulated[];
-  onChange: (users: ProjectUserPopulated[]) => void;
+  onChange?: (users: ProjectUserPopulated[]) => void;
 };
 
-export const UserList: React.FC<Props> = ({ defaultValue = [], onChange }) => {
-  const toast = useToast();
-  const [list, setList] = useState<ProjectUser[]>(defaultValue);
+export const UserList: React.FC<Props> = ({ defaultValue = [] }) => {
+  const [list] = useState<ProjectUserPopulated[]>(defaultValue);
 
   return (
     <>
@@ -38,8 +35,15 @@ export const UserList: React.FC<Props> = ({ defaultValue = [], onChange }) => {
                     <Avatar name="User" />
                   )}
                   {JSON.stringify(item.user)}
-                  <Text>{item.user.name} {item.user.email ? `(${item.user.email})` : null}</Text>
-                  <Badge colorScheme={item.role === 'owner' ? 'green': undefined}>{item.role}</Badge>
+                  <Text>
+                    {item.user.name}{' '}
+                    {item.user.email ? `(${item.user.email})` : null}
+                  </Text>
+                  <Badge
+                    colorScheme={item.role === 'owner' ? 'green' : undefined}
+                  >
+                    {item.role}
+                  </Badge>
                 </HStack>
               </WrapItem>
             </ListItem>

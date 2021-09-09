@@ -50,7 +50,7 @@ export const InitProject: React.FC = () => {
     >
       <AlertIcon boxSize="40px" mr={0} />
       <AlertTitle mt={4} mb={1} fontSize="lg">
-        You're all set!
+        You&apos;re all set!
       </AlertTitle>
       <AlertDescription maxWidth="sm">
         Please reload this page to see your project!
