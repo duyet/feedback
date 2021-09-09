@@ -6,6 +6,8 @@ Collect issues, ideas and compliments with a simple widget.
 
 Project information and milestone: [link](https://duyet.notion.site/feedback-okie-one-235f310b198946b184d3617cf3d50de6)
 
+![Screenshot](./dashboard/public/landing.png)
+
 # Getting Started
 
 ## The Dashboard
