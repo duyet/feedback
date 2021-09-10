@@ -93,6 +93,10 @@ export const Widget: React.FC<WidgetProps> = ({
 
   // Handle submit
   const handleSubmitFeedback = async () => {
+    if (!message) {
+      return alert('Hmm, please input your feedback!');
+    }
+
     const data = {
       ...{ projectId },
       url: url ?? window.location.href,
