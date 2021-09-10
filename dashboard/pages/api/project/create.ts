@@ -1,15 +1,12 @@
-import {
-  uniqueNamesGenerator,
-  adjectives,
-  colors,
-  animals,
-} from 'unique-names-generator';
-
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../lib/prisma';
+import isValidDomain from 'is-valid-domain';
 import { getSession } from 'next-auth/react';
-import { prismaErrorResponse } from '../../../lib/error-response';
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+import { prisma } from '../../../lib/prisma';
+import { badRequest, prismaErrorResponse, required } from '../../../lib/error-response';
 import { ProjectRole } from '../../../types/role';
+
+const DEFAULT_PROJECT_ROLE: ProjectRole = 'owner';
 
 export default async function handler(
   req: NextApiRequest,
@@ -20,17 +17,29 @@ export default async function handler(
     return res.status(401).end();
   }
 
-  let projectName: string = uniqueNamesGenerator({
-    dictionaries: [adjectives, animals, colors],
-    separator: ' ',
-    style: 'capital',
-    length: 2,
-  });
+  if (!req.query.name) {
+    return required(res, 'name');
+  }
 
-  const projectUser = {
-    role: 'owner' as ProjectRole,
+  // ?name
+  const projectName = `${req.query.name}`;
+  const createProjectName = { name: projectName }
+
+  // ?domain
+  const domain = req.query.domain ? `${req.query.domain}` : null;
+  if (domain && !isValidDomain(domain)) {
+    return badRequest(res, 'Invalid domain name')
+  }
+
+  // TODO: support multiple domains
+  const createDomain = domain
+    ? { domains: { create: { domain: domain } } }
+    : {};
+
+  const data = {
+    role: DEFAULT_PROJECT_ROLE,
     project: {
-      create: { name: projectName },
+      create: { ...createProjectName, ...createDomain },
     },
     user: {
       connect: { id: session.userId },
@@ -39,9 +48,9 @@ export default async function handler(
 
   try {
     const result = await prisma.projectUser.create({
-      data: projectUser,
+      data,
       include: {
-        project: true,
+        project: { include: { domains: true } },
         user: true,
       },
     });

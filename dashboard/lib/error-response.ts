@@ -6,6 +6,15 @@ export const prismaErrorResponse = (
   err: PrismaClientKnownRequestError
 ) => {
   const { code, message, meta } = err;
+
+  if (code === 'P2002' && meta) {
+    if (meta.hasOwnProperty('target')) {
+      // TODO: Access to the meta.target for better error message
+      const target = JSON.stringify(meta);
+      return res.status(409).json({ code, err: `Already exists: ${target}` });
+    }
+  }
+
   const messages = message.split('\n').filter((line: string) => !!line);
   return res.status(500).json({ code, message, meta, messages });
 };
@@ -16,8 +25,11 @@ export const unauthorized = (res: NextApiResponse) =>
 export const required = (res: NextApiResponse, query: string) =>
   res.status(401).json({ code: 400, err: `${query} is required` });
 
+export const badRequest = (res: NextApiResponse, err: string) =>
+  res.status(400).json({ code: 400, err });
+
 export const _400 = (res: NextApiResponse, err: string) =>
   res.status(400).json({ code: 400, err });
 
 export const _409 = (res: NextApiResponse, err: string) =>
-  res.status(409).json({ code: 409, err});
+  res.status(409).json({ code: 409, err });
