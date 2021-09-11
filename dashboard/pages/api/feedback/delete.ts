@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { prismaErrorResponse } from '../../../lib/error-response';
 import { prisma } from '../../../lib/prisma';
 
 export default async function handler(
@@ -15,8 +16,6 @@ export default async function handler(
 
     res.json(result);
   } catch (err) {
-    const { code, message, meta } = err;
-    const messages = message.split('\n').filter((line: string) => !!line);
-    return res.status(500).json({ code, message, meta, messages });
+    return prismaErrorResponse(res, err);
   }
 }

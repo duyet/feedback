@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { _400 } from '../../../lib/error-response';
+import { prismaErrorResponse, _400 } from '../../../lib/error-response';
 import { prisma } from '../../../lib/prisma';
 import { getDomain } from '../../../lib/url-parse';
 
@@ -38,10 +38,7 @@ export default async function handler(
 
     res.json(result);
   } catch (err) {
-    console.error(err);
-    const { code, message, meta } = err;
-    const messages = message.split('\n').filter((line: string) => !!line);
-    return res.status(500).json({ code, message, meta, messages });
+    return prismaErrorResponse(res, err);
   }
 }
 
@@ -57,4 +54,16 @@ const getProjectIdFromDomain = async (domain: string) => {
   if (!data) return false;
 
   return data.projectId;
+};
+
+/**
+ * Increase the body size limit to 10MB
+ * to submit base64 image
+ */
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
 };

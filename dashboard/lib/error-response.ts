@@ -3,20 +3,27 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
 export const prismaErrorResponse = (
   res: NextApiResponse,
-  err: PrismaClientKnownRequestError
+  err: PrismaClientKnownRequestError | unknown
 ) => {
-  const { code, message, meta } = err;
+  if (err instanceof PrismaClientKnownRequestError) {
+    const { code, message, meta } = err;
 
-  if (code === 'P2002' && meta) {
-    if (meta.hasOwnProperty('target')) {
-      // TODO: Access to the meta.target for better error message
-      const target = JSON.stringify(meta);
-      return res.status(409).json({ code, err: `Already exists: ${target}` });
+    if (code === 'P2002' && meta) {
+      if (meta.hasOwnProperty('target')) {
+        // TODO: Access to the meta.target for better error message
+        const target = JSON.stringify(meta);
+        return res.status(409).json({ code, err: `Already exists: ${target}` });
+      }
     }
+
+    const messages = message.split('\n').filter((line: string) => !!line);
+    return res.status(500).json({ code, message, meta, messages });
   }
 
-  const messages = message.split('\n').filter((line: string) => !!line);
-  return res.status(500).json({ code, message, meta, messages });
+  console.error(err);
+  return res
+    .status(500)
+    .json({ err: `Something went wrong`, detail: `${err}` });
 };
 
 export const unauthorized = (res: NextApiResponse) =>

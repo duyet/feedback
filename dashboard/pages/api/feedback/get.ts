@@ -3,7 +3,7 @@ import { prisma } from '../../../lib/prisma';
 import { getDomain } from '../../../lib/url-parse';
 
 export default async function handler(
-  req: NextApiRequest,
+  _req: NextApiRequest,
   res: NextApiResponse
 ) {
   const feedbacks = await prisma.feedback.findMany({
