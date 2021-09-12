@@ -14,5 +14,6 @@
   ],
   "labels": ["renovate"],
   "semanticCommits": true,
-  "automerge": false
+  "automerge": false,
+  "schedule": ["after 10pm and before 5am every weekday", "every weekend"]
 }
