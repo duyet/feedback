@@ -9,11 +9,11 @@
     "react-dom": "^16.0.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
+    "@types/react": "16.14.15",
+    "@types/react-dom": "16.9.14",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "typescript": "^4.0.2"
+    "typescript": "4.4.3"
   },
   "scripts": {
     "build": "yarn build:esm && yarn build:cjs",
