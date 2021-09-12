@@ -3,14 +3,12 @@ import React from 'react';
 import {
   chakra,
   Box,
-  Flex,
-  useColorModeValue,
-  SimpleGrid,
   Button,
   VStack,
   Text,
   Grid,
   GridItem,
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 import CodeHighLight from '../common/code-highlight';
