@@ -55,7 +55,9 @@ export const UserList: React.FC<Props> = ({ projectId, defaultValue = [] }) => {
 
     try {
       setLoading(true);
-      const url = `${API_INVITATION}?project=${projectId}&to=${encodeURIComponent(inviteEmail)}`;
+      const url = `${API_INVITATION}?project=${projectId}&to=${encodeURIComponent(
+        inviteEmail
+      )}`;
       const res = await fetch(url);
       const json = await res.json();
 
@@ -112,20 +114,19 @@ export const UserList: React.FC<Props> = ({ projectId, defaultValue = [] }) => {
           </ListItem>
         ))}
 
-        {invitationList &&
-          invitationList.map((item: Invitation) => (
-            <ListItem key={item.email} mb={3} opacity={0.5}>
-              <WrapItem>
-                <HStack>
-                  <Avatar name={item.email} />
-                  <Text>{item.email} </Text>
-                  <Badge>{item.status}</Badge>
-                  <Link onClick={handleRevokeInvitation}>(revoke)</Link>
-                  <Link onClick={handleResendInvitation}>(resend)</Link>
-                </HStack>
-              </WrapItem>
-            </ListItem>
-          ))}
+        {invitationList?.map((item: Invitation) => (
+          <ListItem key={item.email} mb={3} opacity={0.5}>
+            <WrapItem>
+              <HStack>
+                <Avatar name={item.email} />
+                <Text>{item.email} </Text>
+                <Badge>{item.status}</Badge>
+                <Link onClick={handleRevokeInvitation}>(revoke)</Link>
+                <Link onClick={handleResendInvitation}>(resend)</Link>
+              </HStack>
+            </WrapItem>
+          </ListItem>
+        ))}
       </List>
 
       <Input
