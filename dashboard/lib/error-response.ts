@@ -1,12 +1,24 @@
 import { NextApiResponse } from 'next';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
+export type CustomPrismaErrorResponse = {
+  code: number;
+  err: string;
+};
+
 export const prismaErrorResponse = (
   res: NextApiResponse,
-  err: PrismaClientKnownRequestError | unknown
+  err: PrismaClientKnownRequestError | unknown,
+  custom?: Record<string, CustomPrismaErrorResponse>
 ) => {
   if (err instanceof PrismaClientKnownRequestError) {
     const { code, message, meta } = err;
+
+    if (custom && code in custom) {
+      const respCode = custom[code].code;
+      const err = custom[code].err;
+      return res.status(respCode).json({ code: respCode, err });
+    }
 
     if (code === 'P2002' && meta) {
       if (meta.hasOwnProperty('target')) {
@@ -26,17 +38,23 @@ export const prismaErrorResponse = (
     .json({ err: `Something went wrong`, detail: `${err}` });
 };
 
+export const withCode = (code: number) => (res: NextApiResponse, err: any) =>
+  res.status(code).json({ code, err });
+
 export const unauthorized = (res: NextApiResponse) =>
-  res.status(401).json({ code: 401, err: 'unauthorized' });
+  withCode(401)(res, 'unauthorized');
 
 export const required = (res: NextApiResponse, query: string) =>
-  res.status(401).json({ code: 400, err: `${query} is required` });
+  withCode(401)(res, `\`${query}\` is required`);
 
 export const badRequest = (res: NextApiResponse, err: string) =>
-  res.status(400).json({ code: 400, err });
+  withCode(400)(res, err);
 
 export const _400 = (res: NextApiResponse, err: string) =>
-  res.status(400).json({ code: 400, err });
+  withCode(400)(res, err);
 
 export const _409 = (res: NextApiResponse, err: string) =>
-  res.status(409).json({ code: 409, err });
+  withCode(409)(res, err);
+
+export const _500 = (res: NextApiResponse, err: string) =>
+  withCode(500)(res, err);

@@ -41,29 +41,29 @@ export const DomainList: React.FC<DomainListProps> = ({
   };
 
   const handleOnEnterKey = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && current) {
-      if (!current.startsWith('localhost') && !isValidDomain(current)) {
-        return toast({
-          status: 'error',
-          description: 'Invalid domain name',
-          isClosable: true,
-        });
-      }
+    if (e.key !== 'Enter' || !current) return;
 
-      // Local duplicated
-      if (list.includes(current)) {
-        return setCurrent('');
-      }
-
-      const appended = [...list, current];
-      setList(appended);
-
-      // Notify outside that the domain list has changed
-      onChange(appended);
-
-      // Clear the input
-      setCurrent('');
+    if (!current.startsWith('localhost') && !isValidDomain(current)) {
+      return toast({
+        status: 'error',
+        description: 'Invalid domain name',
+        isClosable: true,
+      });
     }
+
+    // Local duplicated
+    if (list.includes(current)) {
+      return setCurrent('');
+    }
+
+    const appended = [...list, current];
+    setList(appended);
+
+    // Notify outside that the domain list has changed
+    onChange(appended);
+
+    // Clear the input
+    setCurrent('');
   };
 
   return (
@@ -84,7 +84,7 @@ export const DomainList: React.FC<DomainListProps> = ({
         type="url"
         value={current}
         onChange={handleOnChange}
-        onKeyDown={handleOnEnterKey}
+        onKeyPress={handleOnEnterKey}
         placeholder="domain.com"
       />
       <FormHelperText>

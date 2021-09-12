@@ -1,5 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -64,10 +64,11 @@ model Project {
   createdAt DateTime  @default(now())
   updatedAt DateTime?
 
-  users     ProjectUser[]
-  feedbacks Feedback[]
-  setting   ProjectSetting?
-  domains   Domain[]
+  users      ProjectUser[]
+  feedbacks  Feedback[]
+  setting    ProjectSetting?
+  domains    Domain[]
+  Invitation Invitation[]
 }
 
 model ProjectUser {
@@ -110,5 +111,17 @@ model Domain {
   domain    String     @id @unique
   project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId String
-  feedbacks  Feedback[]
+  feedbacks Feedback[]
+}
+
+model Invitation {
+  id               String   @id @default(cuid())
+  email            String   @unique
+  status           String?
+  error            String?
+  invitedAt        DateTime @default(now())
+  invitedToProject Project  @relation(fields: [projectId], references: [id])
+  projectId        String
+
+  @@unique([email, projectId])
 }

@@ -158,7 +158,7 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
                 should login once before they can be added.
               </Text>
               <FormControl id="email" mb={5}>
-                <UserList defaultValue={data.users} />
+                <UserList defaultValue={data.users} projectId={projectId} />
               </FormControl>
             </TabPanel>
           </TabPanels>
