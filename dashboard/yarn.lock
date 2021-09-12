@@ -3138,10 +3138,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
-next-auth@4.0.0-beta.2:
-  version "4.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.0.0-beta.2.tgz#b4a84c70f7a77a20447352748fa395647441047c"
-  integrity sha512-WuY3T+9NhwZMKlq4y/YOLa1PUl+IgIfIcmhLLCxP7mSsB9b7VrlN5x4AwrY7oymUEFiCjNaLBQ2DU8/Rhhat/Q==
+next-auth@4.0.0-next.26:
+  version "4.0.0-next.26"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.0.0-next.26.tgz#e5634ec262908d07740014c2b0f7ff2703ea19b6"
+  integrity sha512-P5S1Yh4AOTShXLIq51hb44ikC6+nSWn0nqJk9B4/LHHE7p0wvEQ/xclDST0xGKwDaX32btoXY+Y9WSJKF/5PYw==
   dependencies:
     "@babel/runtime" "^7.14.6"
     futoin-hkdf "^1.3.3"
