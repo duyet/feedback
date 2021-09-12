@@ -85,7 +85,7 @@ const Dashboard: NextPage = () => {
         router.push(`/dashboard?project=${first}`);
       }
     }
-  }, [projects, currentProject, router]);
+  }, [projects, currentProject, router, mutate, toast]);
 
   if (errProject?.status === 401 || errDomain?.status === 401) {
     router.push(API_SIGNIN);

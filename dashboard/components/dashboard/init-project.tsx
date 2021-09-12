@@ -16,10 +16,13 @@ export const InitProject: React.FC = () => {
         </Heading>
         <Text color="gray" mb={5}>
           Create your first project by enter your domain in the{' '}
-          <Text as="span" fontWeight={700}>Domain Name</Text> field. Refer to{' '}
-          <Link href="/docs">the document</Link> if you have any concerns.
+          <Text as="span" fontWeight={700}>
+            Domain Name
+          </Text>{' '}
+          field. Refer to <Link href="/docs">the document</Link> if you have any
+          concerns.
         </Text>
-        <Image src="https://source.unsplash.com/daily" />
+        <Image src="https://source.unsplash.com/daily" alt="" />
       </Box>
     </SimpleGrid>
   );
