@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Invitation, Project, Prisma } from '@prisma/client';
 
 export * from '@prisma/client';
 
@@ -26,3 +26,7 @@ const projectUserSettingPopulated = Prisma.validator<Prisma.ProjectArgs>()({
 export type ProjectUserSettingPopulated = Prisma.ProjectGetPayload<
   typeof projectUserSettingPopulated
 >;
+
+export type InvitationWithProject = Invitation & {
+  invitedToProject: Project;
+};

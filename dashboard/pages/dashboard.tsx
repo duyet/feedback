@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR, { mutate, useSWRConfig } from 'swr';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ import {
   Alert,
   AlertIcon,
   Link,
+  useToast,
 } from '@chakra-ui/react';
 
 import fetcher from '../lib/fetcher';
@@ -25,38 +26,73 @@ import GettingStarted from '../components/dashboard/getting-started';
 import AddNewProjectButton from '../components/dashboard/add-new-project-button';
 import ProjectSettingButton from '../components/dashboard/project-setting/project-setting-button';
 
+const API_PROJECT = '/api/project';
+const API_DOMAIN = '/api/domain';
+const API_SIGNIN = '/api/auth/signin';
+
 const Dashboard: NextPage = () => {
+  const toast = useToast();
+  const router = useRouter();
+  const { mutate } = useSWRConfig();
   const [currentProject, setProject] = useState<string>();
   const [currentDomain, setDomain] = useState<string>();
-  const router = useRouter();
 
   // Fetch project and domain information
-  const { data: projects, error: errProject } = useSWR('/api/project', fetcher);
+  const { data: projects, error: errProject } = useSWR(API_PROJECT, fetcher);
   const { data: domains, error: errDomain } = useSWR(
-    currentProject ? `/api/domain?projectId=${currentProject}` : null,
+    currentProject ? `${API_DOMAIN}?projectId=${currentProject}` : null,
     fetcher
   );
 
   useEffect(() => {
-    const project = router?.query?.project;
+    const project = router?.query?.project as string;
+    const invitation = router?.query?.invitation as string;
+
+    // Setup invitation
+    if (invitation && project) {
+      const setupInvitation = async (project: string, invitation: string) => {
+        const url = `/api/project/invitation-accept?project=${project}&invitation=${invitation}`;
+        const res = await fetch(url);
+        const json = await res.json();
+
+        if (!res.ok || !json) {
+          toast({
+            status: 'warning',
+            description: `Cannot accept the invitation: ${json.err}`,
+          });
+        } else {
+          mutate(API_PROJECT);
+          setProject(project);
+          toast({
+            status: 'success',
+            description: `You're joined to project ${json?.project?.name}`,
+            isClosable: true,
+          });
+          router.push(`/dashboard?project=${project}`);
+        }
+      };
+
+      setupInvitation(project, invitation);
+      return;
+    }
 
     if (!currentProject) {
       if (project) {
-        setProject('' + project);
+        setProject(project);
       } else if (projects?.length) {
         const first = projects[0].projectId;
         setProject(first);
         router.push(`/dashboard?project=${first}`);
       }
     }
-  }, [projects, currentProject, router]);
+  }, [projects, currentProject, router, mutate, toast]);
 
   if (errProject?.status === 401 || errDomain?.status === 401) {
-    router.push('/api/auth/signin');
+    router.push(API_SIGNIN);
     return (
       <Layout>
         <Loading />
-        <Link href="/api/auth/signin">Sign in now</Link>
+        <Link href={API_SIGNIN}>Sign in now</Link>
       </Layout>
     );
   }
