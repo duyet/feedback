@@ -32,7 +32,7 @@ export const UserList: React.FC<Props> = ({ projectId, defaultValue = [] }) => {
   const { mutate } = useSWRConfig();
 
   const invitationListUrl = `${API_INVITATION_LIST}?project=${projectId}`;
-  const { data: invitationList } = useSWR(invitationListUrl, fetcher);
+  const { data: invitationList, error: invitationListError } = useSWR(invitationListUrl, fetcher);
 
   const [list] = useState<ProjectUserPopulated[]>(defaultValue);
   const [inviteEmail, setInviteEmail] = useState<string>();
@@ -114,7 +114,7 @@ export const UserList: React.FC<Props> = ({ projectId, defaultValue = [] }) => {
           </ListItem>
         ))}
 
-        {invitationList?.map((item: Invitation) => (
+        {!invitationListError && invitationList?.map((item: Invitation) => (
           <ListItem key={item.email} mb={3} opacity={0.5}>
             <WrapItem>
               <HStack>
