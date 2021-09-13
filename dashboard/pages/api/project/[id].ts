@@ -6,6 +6,7 @@ import { Domain } from '../../../types/prisma';
 import {
   prismaErrorResponse,
   unauthorized,
+  _404,
   _409,
 } from '../../../lib/error-response';
 
@@ -35,9 +36,7 @@ export default async function handler(
   });
 
   // Do not exists
-  if (!project) {
-    return res.status(404).end();
-  }
+  if (!project) return _404(res, 'project does not exists');
 
   // Do you have permission on this project?
   if (!project.users.map((user) => user.userId).includes(userId)) {
@@ -60,7 +59,6 @@ export default async function handler(
 // Handle PATCH
 const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id: projectId } = req.query;
-
   let { name, domains } = req.body;
 
   if (domains) {

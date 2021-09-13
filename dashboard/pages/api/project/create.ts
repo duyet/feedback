@@ -2,8 +2,13 @@ import isValidDomain from 'is-valid-domain';
 import { getSession } from 'next-auth/react';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import {
+  badRequest,
+  prismaErrorResponse,
+  required,
+  unauthorized,
+} from '../../../lib/error-response';
 import { prisma } from '../../../lib/prisma';
-import { badRequest, prismaErrorResponse, required } from '../../../lib/error-response';
 import { ProjectRole } from '../../../types/role';
 
 const DEFAULT_PROJECT_ROLE: ProjectRole = 'owner';
@@ -13,9 +18,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-  if (!session?.userId) {
-    return res.status(401).end();
-  }
+  if (!session?.userId) return unauthorized(res);
 
   if (!req.query.name) {
     return required(res, 'name');
@@ -23,12 +26,12 @@ export default async function handler(
 
   // ?name
   const projectName = `${req.query.name}`;
-  const createProjectName = { name: projectName }
+  const createProjectName = { name: projectName };
 
   // ?domain
   const domain = req.query.domain ? `${req.query.domain}` : null;
   if (domain && !isValidDomain(domain)) {
-    return badRequest(res, 'Invalid domain name')
+    return badRequest(res, 'Invalid domain name');
   }
 
   // TODO: support multiple domains

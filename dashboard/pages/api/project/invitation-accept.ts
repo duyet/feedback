@@ -1,14 +1,13 @@
-import { Prisma } from '@prisma/client';
 import { getSession } from 'next-auth/react';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import {
   prismaErrorResponse,
   required,
-  _500,
+  unauthorized,
   _400,
 } from '../../../lib/error-response';
-import { InvitationWithProject } from '../../../types/prisma';
+import { prisma } from '../../../lib/prisma';
 import { InvitationStatus } from '../../../types/invitation';
 
 export default async function handler(
@@ -16,9 +15,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-  if (!session?.userId) {
-    return res.status(401).end();
-  }
+  if (!session?.userId) return unauthorized(res);
 
   // TODO: Validate the `project` param
   const project = req.query.project as string;
@@ -60,10 +57,10 @@ export default async function handler(
 
     return res.json(project);
   } catch (err) {
+    await updateStatus(invitation, 'AcceptError', `${err}`);
     return prismaErrorResponse(res, err, {
       P2002: { code: 409, err: 'User is already in project' },
     });
-    await updateStatus(invitation, 'AcceptError', `${err}`);
   }
 }
 

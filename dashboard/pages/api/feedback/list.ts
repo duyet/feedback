@@ -2,9 +2,10 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { prisma } from '../../../lib/prisma';
 import { getSession } from 'next-auth/react';
+import { required, unauthorized } from '../../../lib/error-response';
 
 type Where = {
-  projectId?: string;
+  projectId: string;
   domainId?: string;
 };
 
@@ -13,22 +14,17 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-  if (!session?.userId) {
-    return res.status(401).end();
-  }
+  if (!session?.userId) return unauthorized(res);
 
-  if (!req.query.project) {
-    return res.status(401).end('project is required');
-  }
+  const projectId = req.query.project as string;
+  if (!projectId) return required(res, 'project');
 
-  let where: Where = {
-    projectId: `${req.query.project}`,
-  };
+  // Where clause
+  let where: Where = { projectId };
 
   // Filter by domain
-  if (req.query.domain) {
-    where.domainId = `${req.query.domain}`;
-  }
+  const domain = req.query.domain as string;
+  if (domain) where.domainId = `${domain}`;
 
   const feedbacks = await prisma.feedback.findMany({
     where,

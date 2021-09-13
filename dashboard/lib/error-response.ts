@@ -53,6 +53,9 @@ export const badRequest = (res: NextApiResponse, err: string) =>
 export const _400 = (res: NextApiResponse, err: string) =>
   withCode(400)(res, err);
 
+export const _404 = (res: NextApiResponse, err: string) =>
+  withCode(404)(res, err);
+
 export const _409 = (res: NextApiResponse, err: string) =>
   withCode(409)(res, err);
 

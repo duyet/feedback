@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+
 import { prismaErrorResponse, _400 } from '../../../lib/error-response';
 import { prisma } from '../../../lib/prisma';
 import { getDomain } from '../../../lib/url-parse';
@@ -7,36 +8,35 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { projectId, ...rest } = req.body;
+  const { url } = rest;
+
+  const domain = getDomain(url);
+  const project = projectId ? projectId : await getProjectIdFromDomain(domain);
+
+  if (!project) {
+    return _400(res, 'projectId is invalid or domain does not exist');
+  }
+
+  const data = {
+    ...rest,
+    project: {
+      connect: { id: project },
+    },
+    domain: {
+      connectOrCreate: {
+        create: { domain, project: { connect: { id: project } } },
+        where: { domain },
+      },
+    },
+  };
+
   try {
-    const { projectId, ...rest } = req.body;
-
-    const domain = getDomain(req.body.url);
-    const project = projectId
-      ? projectId
-      : await getProjectIdFromDomain(domain);
-
-    if (!project) {
-      return _400(res, 'projectId is invalid or domain does not exist');
-    }
-
-    const data = {
-      ...rest,
-      project: {
-        connect: { id: project },
-      },
-      domain: {
-        connectOrCreate: {
-          create: { domain, project: { connect: { id: project } } },
-          where: { domain },
-        },
-      },
-    };
-
     const result = await prisma.feedback.create({
       data,
     });
 
-    res.json(result);
+    return res.json(result);
   } catch (err) {
     return prismaErrorResponse(res, err);
   }
