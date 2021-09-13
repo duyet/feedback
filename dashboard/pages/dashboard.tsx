@@ -1,9 +1,10 @@
-import useSWR, { mutate, useSWRConfig } from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import {
   Flex,
+  Text,
   Heading,
   Grid,
   GridItem,
@@ -36,6 +37,7 @@ const Dashboard: NextPage = () => {
   const { mutate } = useSWRConfig();
   const [currentProject, setProject] = useState<string>();
   const [currentDomain, setDomain] = useState<string>();
+  const [isInvitation, setIsInvatation] = useState<boolean>(false);
 
   // Fetch project and domain information
   const { data: projects, error: errProject } = useSWR(API_PROJECT, fetcher);
@@ -49,7 +51,8 @@ const Dashboard: NextPage = () => {
     const invitation = router?.query?.invitation as string;
 
     // Setup invitation
-    if (invitation && project) {
+    if (invitation && project && !isInvitation) {
+      setIsInvatation(true);
       const setupInvitation = async (project: string, invitation: string) => {
         const url = `/api/project/invitation-accept?project=${project}&invitation=${invitation}`;
         const res = await fetch(url);
@@ -70,6 +73,8 @@ const Dashboard: NextPage = () => {
           });
           router.push(`/dashboard?project=${project}`);
         }
+
+        setIsInvatation(false);
       };
 
       setupInvitation(project, invitation);
@@ -86,6 +91,15 @@ const Dashboard: NextPage = () => {
       }
     }
   }, [projects, currentProject, router, mutate, toast]);
+
+  if (isInvitation) {
+    return (
+      <Layout>
+        <Loading />
+        <Text textAlign="center">Setting up ...</Text>
+      </Layout>
+    );
+  }
 
   if (errProject?.status === 401 || errDomain?.status === 401) {
     router.push(API_SIGNIN);
