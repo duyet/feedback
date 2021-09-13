@@ -1,14 +1,14 @@
-import { Prisma } from '@prisma/client';
 import { getSession } from 'next-auth/react';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import { prisma } from '../../../lib/prisma';
 import { sendInvitationRequest } from '../../../lib/mailer';
 import {
   prismaErrorResponse,
   required,
   _500,
 } from '../../../lib/error-response';
-import { InvitationWithProject } from '../../../types/prisma';
+import { InvitationWithProject, Prisma } from '../../../types/prisma';
 import { InvitationStatus } from '../../../types/invitation';
 
 export default async function handler(
