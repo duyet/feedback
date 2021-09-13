@@ -1,16 +1,15 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../lib/prisma';
 import { getSession } from 'next-auth/react';
-import { prismaErrorResponse } from '../../../lib/error-response';
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+import { prisma } from '../../../lib/prisma';
+import { prismaErrorResponse, unauthorized } from '../../../lib/error-response';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-  if (!session?.userId) {
-    return res.status(401).end();
-  }
+  if (!session?.userId) return unauthorized(res);
 
   const { userId } = session;
 

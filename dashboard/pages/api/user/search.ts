@@ -1,22 +1,22 @@
 import { getSession } from 'next-auth/react';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import {
+  prismaErrorResponse,
+  required,
+  unauthorized,
+} from '../../../lib/error-response';
 import { prisma } from '../../../lib/prisma';
-import { prismaErrorResponse, required } from '../../../lib/error-response';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-  if (!session?.userId) {
-    return res.status(401).end();
-  }
+  if (!session?.userId) return unauthorized(res);
 
-  const { q } = req.query;
-  if (!q) {
-    return required(res, 'q');
-  }
+  const q = req.query.q as string;
+  if (!q) return required(res, 'q');
 
   try {
     const users = await prisma.user.findMany({

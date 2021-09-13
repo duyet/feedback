@@ -6,6 +6,7 @@ import { sendInvitationRequest } from '../../../lib/mailer';
 import {
   prismaErrorResponse,
   required,
+  unauthorized,
   _500,
 } from '../../../lib/error-response';
 import { InvitationWithProject, Prisma } from '../../../types/prisma';
@@ -16,9 +17,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-  if (!session?.userId) {
-    return res.status(401).end();
-  }
+  if (!session?.userId) return unauthorized(res);
 
   // TODO: Validate the `project` param
   const project = req.query.project as string;
