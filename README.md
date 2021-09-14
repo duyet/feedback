@@ -1,6 +1,6 @@
 # Feedback
 
-Collect issues, ideas and compliments with a simple widget.
+🤙Feedback is a platform built with Next.js, TypeScript & Prisma to collect issues, ideas, and compliments.
 
 > Please take note that this project is still under heavy development.
 
