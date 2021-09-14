@@ -12,6 +12,8 @@ Project information and milestone: [link](https://duyet.notion.site/feedback-oki
 
 ## The Dashboard
 
+[![Deploy Dashboard with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fduyet%2Ffeedback%2Ftree%2Fmain%2Fdashboard&env=GITHUB_ID,GITHUB_SECRET,GOOGLE_ID,GOOGLE_SECRET,DATABASE_URL,DOCS_URL,NEXTAUTH_URL,SENDGRID_API_KEY,EMAIL_SERVER,EMAIL_FROM)
+
 Change the directory to `./dashboard` and install dependencies:
 
 ```bash
@@ -50,6 +52,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 > Please start the dashboard and the docs at the same time.
 
 ## The Docs
+
+[![Deploy Docs with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fduyet%2Ffeedback%2Ftree%2Fmain%2Fdocs)
 
 Change the directory to `./docs` and install dependencies:
 
