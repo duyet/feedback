@@ -39,7 +39,7 @@
     "unique-names-generator": "4.6.0"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.172",
+    "@types/lodash": "4.14.173",
     "@types/nodemailer-sendgrid": "1.0.0",
     "@types/react": "17.0.21",
     "eslint": "7.32.0",
