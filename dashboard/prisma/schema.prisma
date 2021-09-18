@@ -45,9 +45,11 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  accounts Account[]
-  sessions Session[]
-  projects ProjectUser[]
+  accounts     Account[]
+  sessions     Session[]
+  projects     ProjectUser[]
+  Form         Form[]
+  FormResponse FormResponse[]
 }
 
 model VerificationToken {
@@ -59,10 +61,10 @@ model VerificationToken {
 }
 
 model Project {
-  id        String    @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   users      ProjectUser[]
   feedbacks  Feedback[]
@@ -124,4 +126,41 @@ model Invitation {
   projectId        String
 
   @@unique([email, projectId])
+}
+
+model Form {
+  id           String   @id @default(cuid())
+  title        String
+  content      String
+  choices      String[]
+  authRequired Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  owner     User?          @relation(fields: [userId], references: [id])
+  userId    String
+  responses FormResponse[]
+}
+
+model FormChoiceScale {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  choices String[]
+}
+
+model FormResponse {
+  id     Int    @id @default(autoincrement())
+  form   Form   @relation(fields: [formId], references: [id])
+  formId String
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  email String?
+  name  String?
+
+  response  String
+  metadata  String?
+  isHide    Boolean  @default(false)
+  createdAt DateTime @default(now())
 }

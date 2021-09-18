@@ -20,9 +20,7 @@ export default async function handler(
 
   const data = {
     ...rest,
-    project: {
-      connect: { id: project },
-    },
+    project: { connect: { id: project } },
     domain: {
       connectOrCreate: {
         create: { domain, project: { connect: { id: project } } },
@@ -35,6 +33,8 @@ export default async function handler(
     const result = await prisma.feedback.create({
       data,
     });
+
+    // TODO: trigger integration
 
     return res.json(result);
   } catch (err) {
