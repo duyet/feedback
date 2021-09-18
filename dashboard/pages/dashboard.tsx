@@ -25,7 +25,7 @@ import FeedbackList from '../components/dashboard/feedback-list';
 import EmptyFeedback from '../components/dashboard/empty-feedback';
 import GettingStarted from '../components/dashboard/getting-started';
 import AddNewProjectButton from '../components/dashboard/add-new-project-button';
-import ProjectSettingButton from '../components/dashboard/project-setting/project-setting-button';
+import ProjectSettingButton from '../components/dashboard/project-setting/button';
 
 const API_PROJECT = '/api/project';
 const API_DOMAIN = '/api/domain';

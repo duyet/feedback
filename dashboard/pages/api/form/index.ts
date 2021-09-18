@@ -38,6 +38,9 @@ const handleGet = async (
   let where: Prisma.FormWhereInput = { userId };
   const forms = await prisma.form.findMany({
     where,
+    include: {
+      _count: true,
+    },
   });
 
   return res.status(200).json(forms);

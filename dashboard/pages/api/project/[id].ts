@@ -60,7 +60,7 @@ export default async function handler(
 // Handle PATCH
 const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id: projectId } = req.query;
-  let { name, domains } = req.body;
+  let { name, domains, setting } = req.body;
 
   if (domains) {
     const domainsOnDB = await prisma.domain.findMany({
@@ -107,9 +107,23 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
     };
   }
 
+  if (setting) {
+    setting = {
+      upsert: {
+        create: {
+          ...setting
+        },
+        update: {
+          ...setting
+        }
+      }
+    }
+  }
+
   const data = {
     ...{ name },
     ...{ domains },
+    ...{ setting },
   };
 
   try {

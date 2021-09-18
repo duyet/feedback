@@ -39,3 +39,11 @@ const domainPopulated = Prisma.validator<Prisma.DomainArgs>()({
 });
 
 export type DomainPopulated = Prisma.DomainGetPayload<typeof domainPopulated>;
+
+const formPopulated = Prisma.validator<Prisma.FormArgs>()({
+  include: {
+    _count: true,
+  },
+});
+
+export type FormPopulated = Prisma.FormGetPayload<typeof formPopulated>;

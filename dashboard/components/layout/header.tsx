@@ -78,7 +78,11 @@ const Header: React.FC = () => {
               display={{ base: 'none', md: 'flex' }}
             >
               {links.map(({ label, url }: INavLinkItem) => (
-                <NavLink key={url} href={url} isActive={router.asPath === url}>
+                <NavLink
+                  key={url}
+                  href={url}
+                  isActive={router.asPath.startsWith(url)}
+                >
                   {label}
                 </NavLink>
               ))}
@@ -94,7 +98,11 @@ const Header: React.FC = () => {
         <Box pb={4} display={{ md: 'none' }}>
           <Stack as={'nav'} spacing={4}>
             {links.map(({ label, url }: INavLinkItem) => (
-              <NavLink key={url} href={url} isActive={router.asPath === url}>
+              <NavLink
+                key={url}
+                href={url}
+                isActive={router.asPath.startsWith(url)}
+              >
                 {label}
               </NavLink>
             ))}

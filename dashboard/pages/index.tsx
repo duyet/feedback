@@ -3,8 +3,6 @@ import type { NextPage } from 'next';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import Heros from '../components/landing/hero';
-import Widget from '../components/widget';
-import Features from '../components/landing/features';
 
 const Home: NextPage = () => {
   return (
@@ -13,8 +11,6 @@ const Home: NextPage = () => {
         <title>Feedback</title>
       </Head>
       <Heros />
-      <Features />
-      <Widget />
     </ChakraProvider>
   );
 };
