@@ -92,6 +92,11 @@ model ProjectSetting {
 
   plan String?
 
+  // Email
+  emailEnabled Boolean @default(false)
+  emailTitle   String?
+  emailBody    String?
+
   // Slack
   slackEnabled  Boolean @default(false)
   slackWebhook  String?

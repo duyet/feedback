@@ -20,7 +20,6 @@ export const TeamSettingPanel: React.FC<Props> = ({ projectId }) => {
 
   return (
     <>
-      <Text fontWeight={700}>Team</Text>
       <Text color="gray" mb={5}>
         Add or remove users that have access to this project! The user should
         login once before they can be added.
