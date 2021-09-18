@@ -32,6 +32,7 @@ export default async function handler(
       },
       setting: true,
       domains: true,
+      _count: true,
     },
   });
 

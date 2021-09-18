@@ -27,7 +27,7 @@ export type Props = {
 export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
   const [name, setProjectName] = useState<string>();
   const [domains, setDomains] = useState<string[]>([]);
-  const [users, setUsers] = useState<string[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const toast = useToast();
   const { mutate } = useSWRConfig();
@@ -51,6 +51,7 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
     };
 
     try {
+      setLoading(true);
       const res = await fetch(url, {
         method: 'PATCH',
         headers: { 'Content-type': 'application/json' },
@@ -81,6 +82,8 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
         status: 'error',
         isClosable: true,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -145,6 +148,7 @@ export const ProjectSettingPanel: React.FC<Props> = ({ projectId }) => {
                 <Button
                   colorScheme="messenger"
                   onClick={handleSaveSettingGeneral}
+                  disabled={isLoading}
                 >
                   Save Settings
                 </Button>

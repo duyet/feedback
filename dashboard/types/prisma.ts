@@ -30,3 +30,12 @@ export type ProjectUserSettingPopulated = Prisma.ProjectGetPayload<
 export type InvitationWithProject = Invitation & {
   invitedToProject: Project;
 };
+
+const domainPopulated = Prisma.validator<Prisma.DomainArgs>()({
+  include: {
+    project: true,
+    _count: true,
+  },
+});
+
+export type DomainPopulated = Prisma.DomainGetPayload<typeof domainPopulated>;

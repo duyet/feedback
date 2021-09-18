@@ -8,6 +8,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+
+  if (!req.body) {
+    return _400(res, 'invalid')
+  }
+
   const { projectId, ...rest } = req.body;
   const { url } = rest;
 

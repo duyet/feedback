@@ -31,6 +31,7 @@ export default async function handler(
       },
       include: {
         project: true,
+        _count: true
       },
     });
 
