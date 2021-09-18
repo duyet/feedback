@@ -90,7 +90,7 @@ const Dashboard: NextPage = () => {
         router.push(`/dashboard?project=${first}`);
       }
     }
-  }, [projects, currentProject, router, mutate, toast]);
+  }, [projects, currentProject, router, mutate, toast, isInvitation]);
 
   if (isInvitation) {
     return (

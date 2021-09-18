@@ -11,7 +11,7 @@ import {
 
 export const Heros: React.FC = () => {
   return (
-    <Box px={8} py={24} mx="auto">
+    <Box px={8} py={8} mx="auto">
       <Box
         w={{ base: 'full', md: 11 / 12, xl: 9 / 12 }}
         mx="auto"
