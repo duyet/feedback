@@ -4,7 +4,7 @@
 
 > Please take note that this project is still under heavy development.
 
-Project information and milestone: [link](https://duyet.notion.site/feedback-okie-one-235f310b198946b184d3617cf3d50de6)
+[Project information and milestone](https://duyet.notion.site/feedback-okie-one-235f310b198946b184d3617cf3d50de6)
 
 ![Screenshot](./dashboard/public/landing.png)
 
