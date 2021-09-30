@@ -9,4 +9,4 @@ jobs:
         with:
           node-version: 14
       - run: cd dashboard && npm install && npm run build && npm install -g @lhci/cli@0.8.x
-      - run: cd dashboard && lhci autorun --staticDistDir=.next
+      - run: cd dashboard && lhci autorun --collect.staticDistDir=.next
