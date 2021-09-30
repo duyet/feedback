@@ -20,7 +20,7 @@
     "@emotion/react": "11.4.1",
     "@emotion/styled": "11.3.0",
     "@next-auth/prisma-adapter": "0.5.2-next.5",
-    "@prisma/client": "3.0.2",
+    "@prisma/client": "3.1.1",
     "@splitbee/web": "0.3.0",
     "@types/nodemailer": "6.4.4",
     "framer-motion": "4.1.17",
@@ -45,7 +45,7 @@
     "@types/react": "17.0.25",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
-    "prisma": "3.0.2",
+    "prisma": "3.1.1",
     "ts-node": "10.2.1",
     "typescript": "4.4.3"
   },
