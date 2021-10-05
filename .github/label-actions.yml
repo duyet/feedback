@@ -1,0 +1,66 @@
+# The `heated` label is added to issues, pull requests or discussions
+heated:
+  # Post a comment
+  comment: >
+    The thread has been temporarily locked.
+    Please follow our community guidelines.
+  # Lock the thread
+  lock: true
+  # Set a lock reason
+  lock-reason: 'too heated'
+  # Additionally, add a label to pull requests
+  prs:
+    label: 'on hold'
+
+# The `heated` label is removed from issues, pull requests or discussions
+-heated:
+  # Unlock the thread
+  unlock: true
+
+# The `wontfix` label is removed from issues
+-wontfix:
+  issues:
+    # Reopen the issue
+    reopen: true
+
+# The `feature` label is added to issues
+feature:
+  issues:
+    # Post a comment, `{issue-author}` is an optional placeholder
+    comment: >
+      :wave: @{issue-author}, please use our idea board to request new features.
+    # Close the issue
+    close: true
+
+# The `wip` label is added to pull requests
+wip:
+  prs:
+    # Add labels
+    label:
+      - 'on hold'
+      - 'needs feedback'
+
+# The `wip` label is removed from pull requests
+-wip:
+  prs:
+    # Add label
+    label: 'needs QA'
+    # Remove labels
+    unlabel:
+      - 'on hold'
+      - 'needs feedback'
+
+# The `solved` label is added to discussions
+solved:
+  discussions:
+    # Lock the discussion
+    lock: true
+
+# The `pizzazz` label is added to issues, pull requests or discussions
+pizzazz:
+  # Post comments
+  comment:
+    - '![](https://i.imgur.com/WuduJNk.jpg)'
+    - '![](https://i.imgur.com/1D8yxOo.gif)'
+Using a personal access token
+
