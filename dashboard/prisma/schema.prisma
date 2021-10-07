@@ -89,7 +89,20 @@ model ProjectSetting {
   id        Int     @id @default(autoincrement())
   project   Project @relation(fields: [projectId], references: [id])
   projectId String
-  plan      String
+
+  plan String?
+
+  // Email
+  emailEnabled Boolean @default(false)
+  emailTitle   String?
+  emailBody    String?
+
+  // Slack
+  slackEnabled  Boolean @default(false)
+  slackWebhook  String?
+  slackChannel  String?
+  slackUserName String?
+  slackIcon     String?
 }
 
 model Feedback {

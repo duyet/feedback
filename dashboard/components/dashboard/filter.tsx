@@ -11,10 +11,10 @@ import {
   AlertDescription,
 } from '@chakra-ui/react';
 
-import { Domain } from '../../types/prisma';
+import { DomainPopulated } from '../../types/prisma';
 
 export type FilterProps = {
-  domains: Domain[];
+  domains: DomainPopulated[];
   selected?: string;
   onSelected: (domain: string) => void;
 };
@@ -43,9 +43,10 @@ export const Filter: React.FC<FilterProps> = ({
         Domains
       </Heading>
       <List>
-        {domains.map((obj: Domain) => {
+        {domains.map((obj: DomainPopulated) => {
           const { domain } = obj;
           const isSelected = current === domain;
+          const count = obj?._count?.feedbacks || 0;
 
           return (
             <ListItem
@@ -62,6 +63,7 @@ export const Filter: React.FC<FilterProps> = ({
             >
               <Flex justifyContent="space-between">
                 <Text whiteSpace="nowrap">{domain}</Text>
+                <Text>{count > -1 ? count : null}</Text>
               </Flex>
             </ListItem>
           );
