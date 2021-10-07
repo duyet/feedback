@@ -11,9 +11,10 @@ import {
   FormHelperText,
 } from '@chakra-ui/react';
 
+import Error from '../../common/error';
 import fetcher from '../../../lib/fetcher';
 import Loading from '../../common/loading';
-import Error from '../../common/error';
+import { ProjectPopulated } from '../../../types/prisma';
 
 export type Props = {
   projectId: string;
@@ -27,28 +28,20 @@ const slackSettingStyle = {
 
 export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
   const url = `/api/project/${projectId}`;
-  const { data, error } = useSWR(url, fetcher);
+  const { data, error } = useSWR<ProjectPopulated>(url, fetcher);
 
   const toast = useToast();
   const { mutate } = useSWRConfig();
-  const [emailEnabled, setEmailEnabled] = useState<boolean>(
-    data?.setting.emailEnabled || false
-  );
-  const [slackEnabled, setSlackEnabled] = useState<boolean>(
-    data?.setting.slackEnabled || false
-  );
-  const [setting, setSetting] = useState<Record<string, string>>(
-    data?.setting || {}
-  );
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [emailEnabled, setEmailEnabled] = useState<boolean>();
+  const [slackEnabled, setSlackEnabled] = useState<boolean>();
+  const [setting, setSetting] = useState<ProjectPopulated['setting']>();
 
   useEffect(() => {
-    if (data) {
-      setEmailEnabled(data?.setting.emailEnabled);
-      setSlackEnabled(data?.setting.slackEnabled);
-      setSetting(data?.setting);
-    }
-  });
+    setEmailEnabled(data?.setting?.emailEnabled);
+    setSlackEnabled(data?.setting?.slackEnabled);
+    setSetting(data?.setting as ProjectPopulated['setting']);
+  }, [data]);
 
   if (error) return <Error />;
   if (!data) return <Loading />;
@@ -64,11 +57,18 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
   const handleChangeText = (fieldName: string) => (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const newVal = { ...setting, [fieldName]: e.currentTarget.value };
+    const newVal = {
+      ...setting,
+      [fieldName]: e.currentTarget.value,
+    } as ProjectPopulated['setting'];
+
     setSetting(newVal);
   };
 
   const handleSaveSetting = async () => {
+    console.log(setting);
+    if (setting === null || setting === undefined) return;
+
     // removed projectId from default object
     const { projectId, ...rest } = setting;
 
@@ -118,8 +118,28 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
     }
   };
 
-  const handleTestSlack = () => {
-    console.log('ok');
+  const handleTestSlack = async () => {
+    try {
+      const res = await fetch('/api/project/test-slack', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(setting),
+      });
+      const json = await res.json();
+      if (!res.ok) throw json.err || 'Error';
+      return toast({
+        description: 'Sent',
+        status: 'success',
+        isClosable: true,
+      });
+    } catch (err) {
+      return toast({
+        title: 'Error',
+        description: `${err}`,
+        status: 'error',
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -144,8 +164,9 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
           <FormControl {...emailSettingStyle}>
             <FormLabel>Email Title</FormLabel>
             <Input
-              value={setting?.['emailTitle']}
+              value={setting?.['emailTitle'] || ''}
               onChange={handleChangeText('emailTitle')}
+              placeholder="[Feedback] New feedback"
             />
             <FormHelperText></FormHelperText>
           </FormControl>
@@ -166,7 +187,7 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
           <FormControl {...slackSettingStyle}>
             <FormLabel>Slack Webhook</FormLabel>
             <Input
-              value={setting?.['slackWebhook']}
+              value={setting?.['slackWebhook'] || ''}
               onChange={handleChangeText('slackWebhook')}
             />
             <FormHelperText>
@@ -177,27 +198,30 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
           <FormControl {...slackSettingStyle}>
             <FormLabel>Slack Channel</FormLabel>
             <Input
-              value={setting?.['slackChannel']}
+              value={setting?.['slackChannel'] || ''}
               onChange={handleChangeText('slackChannel')}
             />
             <FormHelperText>#customer-feedbacks</FormHelperText>
           </FormControl>
+
           <FormControl {...slackSettingStyle}>
             <FormLabel>Slack Name</FormLabel>
             <Input
-              value={setting?.['slackUserName']}
+              value={setting?.['slackUserName'] || ''}
               onChange={handleChangeText('slackUserName')}
             />
             <FormHelperText>e.g. Feedback Robot</FormHelperText>
           </FormControl>
+
           <FormControl {...slackSettingStyle}>
             <FormLabel>Slack Icon</FormLabel>
             <Input
-              value={setting?.['slackIcon']}
+              value={setting?.['slackIcon'] || ''}
               onChange={handleChangeText('slackIcon')}
             />
             <FormHelperText>e.g. :pray:</FormHelperText>
           </FormControl>
+
           <FormControl {...slackSettingStyle}>
             <Button onClick={handleTestSlack} disabled={isLoading}>
               Test Slack

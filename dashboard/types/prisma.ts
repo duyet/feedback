@@ -5,6 +5,19 @@ export * from '@prisma/client';
 // Advanced type safety
 // https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety
 
+const projectPopulated = Prisma.validator<Prisma.ProjectArgs>()({
+  include: {
+    users: true,
+    setting: true,
+    domains: true, 
+    _count: true
+  },
+});
+
+export type ProjectPopulated = Prisma.ProjectGetPayload<
+  typeof projectPopulated
+>;
+
 const projectUserPopulated = Prisma.validator<Prisma.ProjectUserArgs>()({
   include: {
     project: true,

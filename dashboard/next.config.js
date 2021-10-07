@@ -2,7 +2,6 @@ const { DOCS_URL = "http://localhost:3001/docs" } = process.env;
 
 const navLink = JSON.stringify([
   { label: "Dashboard", url: "/dashboard" },
-  { label: "Integration", url: "/integration" },
   { label: "The Form", url: "/form" },
   { label: "Docs", url: "/docs" },
 ]);
