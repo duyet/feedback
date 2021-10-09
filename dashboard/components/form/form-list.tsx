@@ -19,7 +19,7 @@ export const FormList: React.FC<Props> = ({ forms }) => {
       </Thead>
       <Tbody>
         {forms.map((form: FormPopulated) => {
-          const { id, title, content, choices, _count } = form;
+          const { id, title, choices, _count } = form;
           const count = _count?.responses || 0;
           const responseText = count > 1 ? 'responses' : 'response';
           const seeResponseText =
