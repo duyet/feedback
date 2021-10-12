@@ -30,7 +30,7 @@
     "lodash": "4.17.21",
     "next": "11.1.2",
     "next-auth": "4.0.0-beta.2",
-    "nodemailer": "6.6.5",
+    "nodemailer": "6.7.0",
     "nodemailer-sendgrid": "1.0.3",
     "prism-react-renderer": "1.2.1",
     "react": "17.0.2",
