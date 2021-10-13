@@ -88,7 +88,7 @@ model ProjectUser {
 model ProjectSetting {
   id        Int     @id @default(autoincrement())
   project   Project @relation(fields: [projectId], references: [id])
-  projectId String
+  projectId String  @unique
 
   plan String?
 
@@ -142,10 +142,13 @@ model Invitation {
 }
 
 model Form {
-  id           String   @id @default(cuid())
-  title        String
-  content      String
-  choices      String[]
+  id               String   @id @default(cuid())
+  title            String
+  content          String
+  choices          String[]
+  isMultipleChoice Boolean  @default(false)
+  hasOtherChoice   Boolean  @default(false)
+
   authRequired Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

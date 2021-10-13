@@ -150,36 +150,42 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
 
       <FormControl mb={5}>
         <FormLabel htmlFor="emailEnabled">
+          <Switch
+            id="emailEnabled"
+            isChecked={emailEnabled}
+            onChange={handleChangeEmailEnabled}
+            mr={3}
+          />
           Enable Email notify for new feedbacks
         </FormLabel>
-        <Switch
-          id="emailEnabled"
-          isChecked={emailEnabled}
-          onChange={handleChangeEmailEnabled}
-        />
       </FormControl>
 
       {emailEnabled && (
         <>
           <FormControl {...emailSettingStyle}>
-            <FormLabel>Email Title</FormLabel>
+            <FormLabel>Custom Email Title</FormLabel>
             <Input
               value={setting?.['emailTitle'] || ''}
               onChange={handleChangeText('emailTitle')}
               placeholder="[Feedback] New feedback"
             />
-            <FormHelperText></FormHelperText>
+            <FormHelperText>
+              Default: [Feedback] You got new feedback
+            </FormHelperText>
           </FormControl>
         </>
       )}
 
       <FormControl mb={5} mt={5}>
-        <FormLabel htmlFor="slackEnabled">Enable Slack</FormLabel>
-        <Switch
-          id="slackEnabled"
-          isChecked={slackEnabled}
-          onChange={handleChangeSlackEnabled}
-        />
+        <FormLabel htmlFor="slackEnabled">
+          <Switch
+            id="slackEnabled"
+            isChecked={slackEnabled}
+            onChange={handleChangeSlackEnabled}
+            mr={3}
+          />
+          Enable Slack
+        </FormLabel>
       </FormControl>
 
       {slackEnabled && (

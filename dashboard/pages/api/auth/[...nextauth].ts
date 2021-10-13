@@ -40,7 +40,7 @@ export default NextAuth({
   adapter: PrismaAdapter(prisma),
 
   // https://next-auth.js.org/configuration/providers
-  providers: [...email, ...github, ...google],
+  providers: [...github, ...google, ...email],
 
   callbacks: {
     async session({ session, user }) {

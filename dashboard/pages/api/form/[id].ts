@@ -17,13 +17,14 @@ export default async function handler(
 ) {
   const id = req.query.id as string;
   const session = await getSession({ req });
-  if (!session?.userId) return unauthorized(res);
-
-  const { userId } = session;
 
   if (req.method === 'GET') {
-    return handleGet(req, res, userId, id);
+    return handleGet(req, res, id, session?.userId);
   }
+
+  // the rest method must have authorized
+  if (!session?.userId) return unauthorized(res);
+  const { userId } = session;
 
   if (req.method === 'PUT' || req.method == 'PATCH') {
     return handlePatch(req, res, userId, id);
@@ -35,21 +36,31 @@ export default async function handler(
 const handleGet = async (
   _req: NextApiRequest,
   res: NextApiResponse,
-  userId: string,
-  id: string
+  id: string,
+  userId: string | undefined
 ) => {
   let where: Prisma.FormWhereUniqueInput = { id };
+  console.log(where)
   const resp = await prisma.form.findUnique({
     where,
     include: {
-      owner: true,
-      responses: true,
+      owner: !!userId,
+      responses: !!userId,
       _count: true,
     },
   });
 
   if (!resp) return _404(res, 'not found');
-  if (resp.userId !== userId) return _400(res, 'permission denied');
+
+  // return public info only
+  if (!userId || resp.userId !== userId) {
+    const { title, content, choices } = resp;
+    return res.json({
+      title,
+      content,
+      choices,
+    });
+  }
 
   return res.status(200).json(resp);
 };
@@ -58,7 +69,7 @@ const handlePatch = async (
   req: NextApiRequest,
   res: NextApiResponse,
   userId: string,
-  id: string
+  _id: string
 ) => {
   const { title, content, authRequired, choices } = req.body;
 
