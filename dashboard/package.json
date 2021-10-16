@@ -5,6 +5,7 @@
   "contributors": [
     "Duyet <me@duyet.net>"
   ],
+  "repository": "https://github.com/duyet/feedback",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

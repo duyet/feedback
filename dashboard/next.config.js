@@ -1,3 +1,5 @@
+const package = require('./package.json');
+
 const { DOCS_URL = 'http://localhost:3001/docs' } = process.env;
 
 const navLink = JSON.stringify([
@@ -14,6 +16,7 @@ module.exports = {
     logo: 'Feedback',
     navLink,
     donationUrl: 'https://ko-fi.com/duyet',
+    repo: package.repository,
   },
   async rewrites() {
     return [
