@@ -5,6 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import Heros from '../components/landing/hero';
 import Widget from '../components/widget';
 import Features from '../components/landing/features';
+import Pricing from '../components/landing/pricing';
 
 const Home: NextPage = () => {
   return (
@@ -14,6 +15,7 @@ const Home: NextPage = () => {
       </Head>
       <Heros />
       <Features />
+      <Pricing />
       <Widget />
     </ChakraProvider>
   );

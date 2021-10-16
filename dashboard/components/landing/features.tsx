@@ -53,8 +53,14 @@ export const Feature: React.FC<Props> = (props) => {
 
 export const Features = () => {
   return (
-    <Flex p={20} px={40} w="auto" justifyContent="center" alignItems="center">
-      <Box px={8} py={20} mx="auto" bg={useColorModeValue('white', 'gray.800')}>
+    <Flex p={8} px={8} w="auto" justifyContent="center" alignItems="center">
+      <Box
+        w={{ base: 'full', md: 11 / 12, xl: 9 / 12 }}
+        mx="auto"
+        px={8}
+        py={20}
+        bg={useColorModeValue('white', 'gray.800')}
+      >
         <Box textAlign={{ lg: 'center' }}>
           <chakra.p
             mt={2}
@@ -73,13 +79,15 @@ export const Features = () => {
             mx={{ lg: 'auto' }}
             color={useColorModeValue('gray.500', 'gray.400')}
           >
-            Get insights to dig down into what&apos;s powering your growth the most.
+            Get insights to dig down into what&apos;s powering your growth the
+            most.
           </chakra.p>
         </Box>
+        
         <SimpleGrid
           columns={{ base: 1, sm: 2, md: 3 }}
-          spacingX={{ base: 16, lg: 24 }}
-          spacingY={20}
+          spacingX={{ base: 8, lg: 24 }}
+          spacingY={16}
           mt={6}
         >
           <Feature
@@ -176,48 +184,6 @@ export const Features = () => {
           >
             Our forecasting is your magical crystal ball that helps you predict
             and plan for the future.
-          </Feature>
-          <Feature
-            color="purple"
-            title="Performance on Fire"
-            icon={
-              <path
-                fillRule="evenodd"
-                d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
-                clipRule="evenodd"
-              />
-            }
-          >
-            How does your company compare? Learn how your company stacks up in
-            the industry.
-          </Feature>
-          <Feature
-            color="blue"
-            title="Love is in the Air"
-            icon={
-              <path
-                fillRule="evenodd"
-                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                clipRule="evenodd"
-              />
-            }
-          >
-            Organize your customers to bring meaningful and comparative insights
-            across your dashboards.
-          </Feature>
-          <Feature
-            color="brand"
-            title="Thunder and Lightning"
-            icon={
-              <path
-                fillRule="evenodd"
-                d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
-                clipRule="evenodd"
-              />
-            }
-          >
-            Improve your conversion rates by monitoring exactly what’s going on
-            while your customers are in trial.
           </Feature>
         </SimpleGrid>
       </Box>
