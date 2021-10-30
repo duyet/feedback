@@ -1,4 +1,4 @@
-# Feedback
+# Feedback (Close beta)
 
 🤙Feedback is a platform built with Next.js, TypeScript & Prisma to collect issues, ideas, and compliments.
 
