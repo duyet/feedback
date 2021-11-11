@@ -71,3 +71,8 @@ Open [http://localhost:3001/docs](http://localhost:3001/docs) with your browser 
 ## The Widget
 
 TBU
+
+# Stats
+
+![Alt](https://repobeats.axiom.co/api/embed/ecc9f534d0c0eac4e006559857575db679de52c7.svg "Repobeats analytics image")
+
