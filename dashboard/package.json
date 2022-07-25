@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@types/lodash": "4.14.177",
-    "@types/node": "16.11.6",
+    "@types/node": "16.11.45",
     "@types/nodemailer-sendgrid": "1.0.0",
     "@types/react": "17.0.33",
     "eslint": "8.14.0",
