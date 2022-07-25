@@ -20,7 +20,7 @@ const github: Provider[] = process.env.GITHUB_ID
   ? [
       GithubProvider({
         clientId: process.env.GITHUB_ID,
-        clientSecret: process.env.GITHUB_SECRET,
+        clientSecret: process.env.GITHUB_SECRET || '',
       }),
     ]
   : [];
