@@ -38,7 +38,7 @@
     "react-device-detect": "2.1.2",
     "react-dom": "18.2.0",
     "swr": "1.0.1",
-    "unique-names-generator": "4.6.0"
+    "unique-names-generator": "4.7.1"
   },
   "devDependencies": {
     "@types/lodash": "4.14.182",
