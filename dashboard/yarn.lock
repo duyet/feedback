@@ -922,10 +922,10 @@
   resolved "https://registry.yarnpkg.com/@napi-rs/triples/-/triples-1.0.3.tgz#76d6d0c3f4d16013c61e45dfca5ff1e6c31ae53c"
   integrity sha512-jDJTpta+P4p1NZTFVLHJ/TLFVYVcOqv6l8xwOeBKNPMgY/zDYH/YH7SJbvrr/h1RcS9GzbPcLKGzpuK9cV56UA==
 
-"@next-auth/prisma-adapter@0.5.2-next.5":
-  version "0.5.2-next.5"
-  resolved "https://registry.yarnpkg.com/@next-auth/prisma-adapter/-/prisma-adapter-0.5.2-next.5.tgz#6106dd6cd27000ec7c982bc63bb3bc1de876fd76"
-  integrity sha512-hROAWw5YuFWE1E4FhogJmEAPyfVNAXs14ZzHgDPfAeubdXeOb4eFVOcl/m88+yPpY6SknSnfo3GPyg0yh5JG+g==
+"@next-auth/prisma-adapter@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@next-auth/prisma-adapter/-/prisma-adapter-1.0.4.tgz#3e7304ac0615b8bfe425c81f96c40b40cafb59f0"
+  integrity sha512-jIOM6CzCbl2/Mzbx9kb2IjtHoJOeRN9wtQgLk4EUm5bhneSVGv1rtz5TDskvp2UfCa+EK9nDmug+lje41z80Gg==
 
 "@next/env@12.0.2":
   version "12.0.2"
