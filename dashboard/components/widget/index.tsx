@@ -2,6 +2,7 @@ import html2canvas from 'html2canvas';
 import React, { ReactNode, useState } from 'react';
 import {
   Box,
+  Flex,
   Image,
   Button,
   IconButton,
@@ -152,37 +153,38 @@ export const Widget: React.FC<WidgetProps> = ({
       </PopoverBody>
       <PopoverFooter
         border={0}
-        d="flex"
         alignItems="center"
         justifyContent="space-between"
       >
-        {''}
-        <Box>
-          <IconButton
-            aria-label="Capture Screenshot"
-            icon={<ScreenshotIcon />}
-            isDisabled={disableScreenshot}
-            onClick={handleCaptureScreenshot}
-          />
-          {screenshot ? (
+        <Flex>
+          {''}
+          <Box>
             <IconButton
-              ml={3}
               aria-label="Capture Screenshot"
-              icon={
-                <Image
-                  src={screenshot}
-                  alt="Screenshot"
-                  htmlWidth={40}
-                  htmlHeight={40}
-                />
-              }
-              onClick={handleClickOnCapturedScreenshot}
+              icon={<ScreenshotIcon />}
+              isDisabled={disableScreenshot}
+              onClick={handleCaptureScreenshot}
             />
-          ) : null}
-        </Box>
-        <Button onClick={handleSubmitFeedback}>
-          {state == 'submitting' ? 'Loading ...' : sendFeedbackText}
-        </Button>
+            {screenshot ? (
+              <IconButton
+                ml={3}
+                aria-label="Capture Screenshot"
+                icon={
+                  <Image
+                    src={screenshot}
+                    alt="Screenshot"
+                    htmlWidth={40}
+                    htmlHeight={40}
+                  />
+                }
+                onClick={handleClickOnCapturedScreenshot}
+              />
+            ) : null}
+          </Box>
+          <Button onClick={handleSubmitFeedback}>
+            {state == 'submitting' ? 'Loading ...' : sendFeedbackText}
+          </Button>
+        </Flex>
       </PopoverFooter>
     </>
   );

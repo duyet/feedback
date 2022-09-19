@@ -15,6 +15,7 @@ type Props = {
   icon: React.ReactElement;
   color: string;
   title: string;
+  children: React.ReactNode;
 };
 
 export const Feature: React.FC<Props> = (props) => (
