@@ -29,7 +29,7 @@ export const ResponseList: React.FC<Props> = ({ responses }) => {
             <Tr key={id}>
               <Td>{email || name}</Td>
               <Td>{responseText}</Td>
-              <Td textAlign="right">{createdAt}</Td>
+              <Td textAlign="right">{createdAt.toString()}</Td>
             </Tr>
           );
         })}

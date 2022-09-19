@@ -28,7 +28,7 @@ const Feedback: React.FC<{ feedback: FeedbackProps }> = ({ feedback }) => {
       >
         <Tag>{name ? `${name} (${email})` : email}</Tag>
         <Text color="gray.500" fontWeight={500}>
-          {createdAt}
+          {createdAt.toString()}
         </Text>
       </Flex>
 

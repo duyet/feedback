@@ -44,8 +44,6 @@ const App = () => {
       <Grid
         alignItems="center"
         templateColumns="repeat(5, 1fr)"
-        spacingY={{ base: 10, lg: 32 }}
-        spacingX={{ base: 10, lg: 24 }}
       >
         <GridItem colSpan={2}>
           <Box>
