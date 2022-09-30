@@ -25,7 +25,7 @@
     "@slack/webhook": "6.1.0",
     "@splitbee/web": "0.3.0",
     "@types/nodemailer": "6.4.6",
-    "framer-motion": "7.4.0",
+    "framer-motion": "7.5.0",
     "html2canvas": "1.4.1",
     "is-valid-domain": "0.1.6",
     "lodash": "4.17.21",
