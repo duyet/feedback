@@ -44,7 +44,7 @@
     "@types/lodash": "4.14.188",
     "@types/node": "18.11.9",
     "@types/nodemailer-sendgrid": "1.0.0",
-    "@types/react": "18.0.24",
+    "@types/react": "18.0.25",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.2",
     "prisma": "4.5.0",
