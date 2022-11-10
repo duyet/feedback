@@ -45,7 +45,7 @@
     "@types/node": "18.11.9",
     "@types/nodemailer-sendgrid": "1.0.0",
     "@types/react": "18.0.25",
-    "eslint": "8.26.0",
+    "eslint": "8.27.0",
     "eslint-config-next": "13.0.2",
     "prisma": "4.5.0",
     "ts-node": "10.9.1",
