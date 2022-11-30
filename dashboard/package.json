@@ -16,8 +16,8 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@chakra-ui/icons": "2.0.12",
-    "@chakra-ui/react": "2.4.1",
+    "@chakra-ui/icons": "2.0.13",
+    "@chakra-ui/react": "2.4.2",
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
     "@next-auth/prisma-adapter": "1.0.5",
