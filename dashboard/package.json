@@ -41,7 +41,7 @@
     "unique-names-generator": "4.7.1"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.190",
+    "@types/lodash": "4.14.191",
     "@types/node": "18.11.9",
     "@types/nodemailer-sendgrid": "1.0.0",
     "@types/react": "18.0.25",
