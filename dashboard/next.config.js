@@ -18,6 +18,9 @@ module.exports = {
     donationUrl: 'https://ko-fi.com/duyet',
     repo: package.repository,
   },
+  api: {
+    responseLimit: false,
+  },
   async rewrites() {
     return [
       {
