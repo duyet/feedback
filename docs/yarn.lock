@@ -2830,10 +2830,10 @@ nextra-theme-docs@2.0.2:
     next-themes "^0.2.1"
     scroll-into-view-if-needed "^3.0.0"
 
-nextra@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/nextra/-/nextra-2.0.2.tgz#ffbd0703e5fb3ee3700708d77fcf6084ea954ec2"
-  integrity sha512-SryuJVTw/FDMIZBEbXJm9Jo5OX+/HajjccHj8QVcGCEtmWFqbEJklGHHMDKOhC9pBr6sxRhtFFzOGu//F9J1Hw==
+nextra@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/nextra/-/nextra-2.0.3.tgz#9075523d7113e17303881164c108d30832e720aa"
+  integrity sha512-GttZMwfHiVcrnVMnN2PKq2mS6YoQ0zrbzRYS838WYfzUpjIPCR6L8rJbAEd00kcrJNM1MvSCxONOTqGDDjW7YA==
   dependencies:
     "@mdx-js/mdx" "^2.1.5"
     "@napi-rs/simple-git" "^0.1.8"
