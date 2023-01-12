@@ -2467,10 +2467,10 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-framer-motion@8.4.0:
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-8.4.0.tgz#3211ba4006a335fc9f5d04690e473dfb7ab20bc8"
-  integrity sha512-32ECxsAMrhFfpMnA/j3wXku//587kQe29emTGpIQsnh60mFSMTrnpIupAn5Bnk5qq4/OMNgWWCI6mnaFhsIu7w==
+framer-motion@8.4.2:
+  version "8.4.2"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-8.4.2.tgz#06f4ad469d8a697cde2441c8b4009810420025db"
+  integrity sha512-AdYwbEZZ+6Z748A8JdNtwH7YR24HvXr/hJHL06ofipMyRchrf7Mzvk69zM24+rAm3SC3DCJK0WdbhpOLzroO+w==
   dependencies:
     "@motionone/dom" "^10.15.3"
     hey-listen "^1.0.8"
