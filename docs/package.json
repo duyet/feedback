@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "markdown-to-jsx": "7.1.8",
+    "markdown-to-jsx": "7.1.9",
     "next": "13.1.6",
     "nextra": "2.1.0",
     "nextra-theme-docs": "2.1.0",
