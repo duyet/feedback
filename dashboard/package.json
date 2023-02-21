@@ -18,8 +18,8 @@
   "dependencies": {
     "@chakra-ui/icons": "2.0.17",
     "@chakra-ui/react": "2.5.1",
-    "@emotion/react": "11.10.5",
-    "@emotion/styled": "11.10.5",
+    "@emotion/react": "11.10.6",
+    "@emotion/styled": "11.10.6",
     "@next-auth/prisma-adapter": "1.0.5",
     "@prisma/client": "4.10.1",
     "@slack/webhook": "6.1.0",
