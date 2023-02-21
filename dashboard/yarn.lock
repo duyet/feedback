@@ -2471,10 +2471,10 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-framer-motion@9.0.3:
-  version "9.0.3"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-9.0.3.tgz#ff61c077c3ced378fd500f7a6431527403be7837"
-  integrity sha512-QcMWXcwvBmInzFpkIgtLx8VQ/+H9+EhiHVgnx6zsOWTGmcvzFqkrw6SLTZn5fKejCaf3RznqkshhxXipBpe9ig==
+framer-motion@9.0.4:
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-9.0.4.tgz#69ff2e64fa40d7e7bdbde88cc4e3772247d622e1"
+  integrity sha512-lZ1+2/WBn8iYRYmeEFpu/X2fI1GNwJL+X21EpnWwKP3vkJsnWBXZF5kHF29wIPk9sBU2xDIpDm9SAVo206bp9A==
   dependencies:
     "@motionone/dom" "^10.15.3"
     hey-listen "^1.0.8"
