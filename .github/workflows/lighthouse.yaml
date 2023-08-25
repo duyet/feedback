@@ -8,6 +8,5 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: npm install && npm install -g @lhci/cli@0.8.x
-      - run: npm run build
-      - run: lhci autorun
+      - run: cd dashboard && npm install && npm run build && npm install -g @lhci/cli@0.8.x
+      - run: cd dashboard && lhci autorun --collect.staticDistDir=.next
