@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "markdown-to-jsx": "7.1.9",
-    "next": "13.2.3",
+    "next": "13.5.0",
     "nextra": "2.1.0",
     "nextra-theme-docs": "2.1.0",
     "react": "18.2.0",
