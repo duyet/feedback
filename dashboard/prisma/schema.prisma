@@ -38,7 +38,7 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
-  name          String
+  name          String?   // Added ? to allow null values PR added by @adryserage
   email         String?   @unique
   emailVerified DateTime?
   image         String?
