@@ -19,8 +19,13 @@ export default {
   ),
   head: (
     <>
-      <meta name="description" content="" />
-      <meta name="og:title" content="" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="description" content="Feedback - A modern platform built with Next.js, TypeScript & Prisma to collect issues, ideas, and compliments from your users." />
+      <meta name="og:title" content="Feedback Documentation" />
+      <meta name="og:description" content="Learn how to integrate and use the Feedback platform to collect user feedback effectively." />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Feedback Documentation" />
+      <meta name="twitter:description" content="Learn how to integrate and use the Feedback platform to collect user feedback effectively." />
     </>
   ),
 }

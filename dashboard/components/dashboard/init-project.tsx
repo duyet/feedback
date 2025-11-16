@@ -22,7 +22,7 @@ export const InitProject: React.FC = () => {
           field. Refer to <Link href="/docs">the document</Link> if you have any
           concerns.
         </Text>
-        <Image src="https://source.unsplash.com/daily" alt="" />
+        <Image src="https://source.unsplash.com/daily" alt="Getting started illustration" />
       </Box>
     </SimpleGrid>
   );

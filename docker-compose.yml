@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: feedback-postgres
+    environment:
+      POSTGRES_USER: feedback
+      POSTGRES_PASSWORD: feedback_dev_password
+      POSTGRES_DB: feedback
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U feedback"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Dashboard (Next.js app)
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile.dev
+    container_name: feedback-dashboard
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://feedback:feedback_dev_password@postgres:5432/feedback
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=development_secret_change_in_production
+      - NODE_ENV=development
+    volumes:
+      - ./dashboard:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sh -c "npx prisma migrate dev && npm run dev"
+
+  # Docs (Nextra)
+  docs:
+    build:
+      context: ./docs
+      dockerfile: Dockerfile.dev
+    container_name: feedback-docs
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./docs:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev
+
+volumes:
+  postgres_data:
+    driver: local
