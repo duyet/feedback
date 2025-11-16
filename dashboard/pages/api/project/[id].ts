@@ -9,11 +9,15 @@ import {
   _404,
   _409,
 } from '../../../lib/error-response';
+import { validateMethod } from '../../../lib/api-middleware';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Validate HTTP method
+  if (!validateMethod(req, res, ['GET', 'PATCH', 'DELETE'])) return;
+
   const session = await getSession({ req });
   if (!session?.userId) return unauthorized(res);
 
@@ -93,8 +97,15 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
         (domain: string) => !domains.includes(domain)
       );
 
-      // TODO: remove removed domain from database
-      removedDomain;
+      // Delete removed domains from database
+      if (removedDomain.length > 0) {
+        await prisma.domain.deleteMany({
+          where: {
+            domain: { in: removedDomain },
+            projectId: `${projectId}`,
+          },
+        });
+      }
 
       domains = newDomains;
     }

@@ -10,6 +10,7 @@ import {
 } from '../../../lib/error-response';
 import { prisma } from '../../../lib/prisma';
 import { ProjectRole } from '../../../types/role';
+import { validateMethod } from '../../../lib/api-middleware';
 
 const DEFAULT_PROJECT_ROLE: ProjectRole = 'owner';
 
@@ -17,6 +18,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Validate HTTP method
+  if (!validateMethod(req, res, ['POST'])) return;
+
   const session = await getSession({ req });
   if (!session?.userId) return unauthorized(res);
 

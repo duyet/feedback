@@ -7,14 +7,17 @@ import {
   prismaErrorResponse,
   required,
   unauthorized,
-  _400,
   _404,
 } from '../../../lib/error-response';
+import { validateMethod } from '../../../lib/api-middleware';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Validate HTTP method
+  if (!validateMethod(req, res, ['GET', 'PUT', 'PATCH'])) return;
+
   const id = req.query.id as string;
   const session = await getSession({ req });
 
@@ -29,8 +32,6 @@ export default async function handler(
   if (req.method === 'PUT' || req.method == 'PATCH') {
     return handlePatch(req, res, userId, id);
   }
-
-  return _400(res, 'invalid request method');
 }
 
 const handleGet = async (
@@ -40,7 +41,6 @@ const handleGet = async (
   userId: string | undefined
 ) => {
   let where: Prisma.FormWhereUniqueInput = { id };
-  console.log(where)
   const resp = await prisma.form.findUnique({
     where,
     include: {

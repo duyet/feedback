@@ -7,11 +7,15 @@ import {
   unauthorized,
 } from '../../../lib/error-response';
 import { prisma } from '../../../lib/prisma';
+import { validateMethod } from '../../../lib/api-middleware';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Validate HTTP method
+  if (!validateMethod(req, res, ['GET'])) return;
+
   const session = await getSession({ req });
   if (!session?.userId) return unauthorized(res);
 
