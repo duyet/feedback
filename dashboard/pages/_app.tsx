@@ -5,6 +5,7 @@ import { Session } from "next-auth";
 import { SessionProvider } from 'next-auth/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import ErrorBoundary from '../components/common/error-boundary';
+import theme from '../theme';
 
 function MyApp({ Component, pageProps: { session, ...pagePropsRest } }: AppProps<{ session: Session; }>) {
   useEffect(() => {
@@ -17,7 +18,7 @@ function MyApp({ Component, pageProps: { session, ...pagePropsRest } }: AppProps
   return (
     <ErrorBoundary>
       <SessionProvider session={session}>
-        <ChakraProvider>
+        <ChakraProvider theme={theme}>
           <Component {...pagePropsRest} />
         </ChakraProvider>
       </SessionProvider>
