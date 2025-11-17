@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app';
 import { Session } from "next-auth";
 import { SessionProvider } from 'next-auth/react';
 import { ChakraProvider } from '@chakra-ui/react';
+import ErrorBoundary from '../components/common/error-boundary';
 
 function MyApp({ Component, pageProps: { session, ...pagePropsRest } }: AppProps<{ session: Session; }>) {
   useEffect(() => {
@@ -11,14 +12,17 @@ function MyApp({ Component, pageProps: { session, ...pagePropsRest } }: AppProps
       scriptUrl: '/bee.js',
       apiUrl: '/_hive',
     });
-  });
+  }, []);
 
   return (
-    <SessionProvider session={session}>
-      <ChakraProvider>
-        <Component {...pagePropsRest} />
-      </ChakraProvider>
-    </SessionProvider>
+    <ErrorBoundary>
+      <SessionProvider session={session}>
+        <ChakraProvider>
+          <Component {...pagePropsRest} />
+        </ChakraProvider>
+      </SessionProvider>
+    </ErrorBoundary>
   );
 }
+
 export default MyApp;

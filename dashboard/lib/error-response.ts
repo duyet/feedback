@@ -32,7 +32,11 @@ export const prismaErrorResponse = (
     return res.status(500).json({ code, message, meta, messages });
   }
 
-  console.error(err);
+  // Log error only in development
+  if (process.env.NODE_ENV === 'development') {
+    console.error('Unhandled error:', err);
+  }
+
   return res
     .status(500)
     .json({ err: `Something went wrong`, detail: `${err}` });
@@ -52,6 +56,9 @@ export const badRequest = (res: NextApiResponse, err: string) =>
 
 export const _400 = (res: NextApiResponse, err: string) =>
   withCode(400)(res, err);
+
+export const _403 = (res: NextApiResponse, err: string) =>
+  withCode(403)(res, err);
 
 export const _404 = (res: NextApiResponse, err: string) =>
   withCode(404)(res, err);
