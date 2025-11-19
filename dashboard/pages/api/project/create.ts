@@ -32,15 +32,20 @@ export default async function handler(
   const projectName = `${req.query.name}`;
   const createProjectName = { name: projectName };
 
-  // ?domain
-  const domain = req.query.domain ? `${req.query.domain}` : null;
-  if (domain && !isValidDomain(domain)) {
-    return badRequest(res, 'Invalid domain name');
+  // ?domain (supports single domain or comma-separated list)
+  const domainParam = req.query.domain ? `${req.query.domain}` : null;
+  const domains = domainParam ? domainParam.split(',').map(d => d.trim()) : [];
+
+  // Validate all domains
+  for (const domain of domains) {
+    if (!isValidDomain(domain)) {
+      return badRequest(res, `Invalid domain name: ${domain}`);
+    }
   }
 
-  // TODO: support multiple domains
-  const createDomain = domain
-    ? { domains: { create: { domain: domain } } }
+  // Support multiple domains
+  const createDomain = domains.length > 0
+    ? { domains: { create: domains.map(domain => ({ domain })) } }
     : {};
 
   const data = {

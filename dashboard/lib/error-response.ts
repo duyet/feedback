@@ -22,9 +22,15 @@ export const prismaErrorResponse = (
 
     if (code === 'P2002' && meta) {
       if (meta.hasOwnProperty('target')) {
-        // TODO: Access to the meta.target for better error message
-        const target = JSON.stringify(meta);
-        return res.status(409).json({ code, err: `Already exists: ${target}` });
+        // Extract target field name(s) from meta for better error message
+        const target = Array.isArray(meta.target)
+          ? meta.target.join(', ')
+          : String(meta.target);
+        return res.status(409).json({
+          code,
+          err: `A record with this ${target} already exists`,
+          field: meta.target
+        });
       }
     }
 
