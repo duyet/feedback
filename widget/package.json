@@ -9,11 +9,11 @@
     "react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "@types/react": "18.0.28",
-    "@types/react-dom": "18.0.11",
+    "@types/react": "^19.2.6",
+    "@types/react-dom": "^19.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "4.9.5"
+    "typescript": "5"
   },
   "scripts": {
     "build": "yarn build:esm && yarn build:cjs",
