@@ -23,7 +23,6 @@ export const ActionDelete: React.FC<Props> = ({ id }) => {
       const res = await fetch(`/api/feedback/delete?id=${id}`, {
         method: 'DELETE',
       });
-      console.log(res);
       toast({ title: 'Deleted', status: 'info', isClosable: true });
     } catch (e) {
       console.error(e);

@@ -1,0 +1,13 @@
+# robots.txt for Feedback platform
+# https://www.robotstxt.org/
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard
+
+# Sitemap
+Sitemap: https://feedback.okie.one/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

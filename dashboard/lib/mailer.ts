@@ -14,6 +14,24 @@ export const mailer = nodemailer.createTransport(
 export default mailer;
 
 /**
+ * Send a generic email
+ */
+export const sendEmail = async ({
+  to,
+  subject,
+  html,
+  text,
+}: {
+  to: string;
+  subject: string;
+  html?: string;
+  text?: string;
+}) => {
+  const from = process.env.EMAIL_FROM;
+  return await mailer.sendMail({ to, from, subject, html, text });
+};
+
+/**
  * Send invitation request
  */
 export const sendInvitationRequest = async ({

@@ -68,7 +68,6 @@ export const GeneralSetting: React.FC<Props> = ({ projectId }) => {
         isClosable: true,
       });
     } catch (err) {
-      console.log(err);
       return toast({
         title: 'Error',
         description: `${err}`,

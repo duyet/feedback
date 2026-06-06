@@ -9,15 +9,18 @@ import {
 } from '../../../lib/error-response';
 import { prisma } from '../../../lib/prisma';
 import { InvitationStatus } from '../../../types/invitation';
+import { validateMethod } from '../../../lib/api-middleware';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Validate HTTP method
+  if (!validateMethod(req, res, ['POST'])) return;
+
   const session = await getSession({ req });
   if (!session?.userId) return unauthorized(res);
 
-  // TODO: Validate the `project` param
   const project = req.query.project as string;
   if (!project) {
     return required(res, 'project');
@@ -28,16 +31,23 @@ export default async function handler(
     return required(res, 'invitation');
   }
 
+  let invitationData;
   try {
-    const res = await prisma.invitation.findUnique({
+    invitationData = await prisma.invitation.findUnique({
       where: { id: invitation },
     });
 
-    if (!res) throw 'Token is not exists';
-    if (res.email !== session.user.email) throw 'Invalid email';
-    if (res.projectId !== project) throw 'Invalid project';
+    if (!invitationData) {
+      return _400(res, 'Invitation token does not exist');
+    }
+    if (invitationData.email !== session.user.email) {
+      return _400(res, 'Invalid email - invitation not sent to this email address');
+    }
+    if (invitationData.projectId !== project) {
+      return _400(res, 'Invalid project - invitation not for this project');
+    }
   } catch (err) {
-    return _400(res, `${err}`);
+    return _400(res, `Validation error: ${err}`);
   }
 
   const data = {

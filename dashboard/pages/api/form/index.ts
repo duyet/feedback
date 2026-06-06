@@ -7,13 +7,16 @@ import {
   prismaErrorResponse,
   required,
   unauthorized,
-  _400,
 } from '../../../lib/error-response';
+import { validateMethod } from '../../../lib/api-middleware';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Validate HTTP method
+  if (!validateMethod(req, res, ['GET', 'POST'])) return;
+
   const session = await getSession({ req });
   if (!session?.userId) return unauthorized(res);
 
@@ -26,8 +29,6 @@ export default async function handler(
   if (req.method === 'POST') {
     return handlePost(req, res, userId);
   }
-
-  return _400(res, 'invalid request method');
 }
 
 const handleGet = async (

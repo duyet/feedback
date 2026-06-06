@@ -66,7 +66,6 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
   };
 
   const handleSaveSetting = async () => {
-    console.log(setting);
     if (setting === null || setting === undefined) return;
 
     // removed projectId from default object
@@ -79,7 +78,6 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
         emailEnabled,
       },
     };
-    console.log('Submit', data);
 
     try {
       setLoading(true);
@@ -90,7 +88,6 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
       });
 
       const json = await res.json();
-      console.log(json);
 
       if (!res?.ok) {
         throw json.err || res?.statusText || 'Something went wrong';
