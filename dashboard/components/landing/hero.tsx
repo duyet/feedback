@@ -54,33 +54,35 @@ export const Heros: React.FC = () => {
           gap={2}
           justifyContent={{ sm: 'left', md: 'center' }}
         >
-          <Button
-            asChild
-            variant="solid"
-            colorPalette="teal"
-            display="inline-flex"
-            alignItems="center"
-            justifyContent="center"
-            w={{ base: 'full', sm: 'auto' }}
-            mb={{ base: 2, sm: 0 }}
-            size="lg"
-            cursor="pointer"
-          >
-            <a href="/dashboard">Dashboard</a>
-          </Button>
-          <Button
-            asChild
-            colorPalette="gray"
-            display="inline-flex"
-            alignItems="center"
-            justifyContent="center"
-            w={{ base: 'full', sm: 'auto' }}
-            mb={{ base: 2, sm: 0 }}
-            size="lg"
-            cursor="pointer"
-          >
-            <a href="/docs">Documentation</a>
-          </Button>
+          <Link href="/dashboard" variant="plain">
+            <Button
+              variant="solid"
+              colorPalette="teal"
+              display="inline-flex"
+              alignItems="center"
+              justifyContent="center"
+              w={{ base: 'full', sm: 'auto' }}
+              mb={{ base: 2, sm: 0 }}
+              size="lg"
+              cursor="pointer"
+            >
+              Dashboard
+            </Button>
+          </Link>
+          <Link href="/docs" variant="plain">
+            <Button
+              colorPalette="gray"
+              display="inline-flex"
+              alignItems="center"
+              justifyContent="center"
+              w={{ base: 'full', sm: 'auto' }}
+              mb={{ base: 2, sm: 0 }}
+              size="lg"
+              cursor="pointer"
+            >
+              Documentation
+            </Button>
+          </Link>
         </Stack>
       </Box>
       <Box

@@ -69,16 +69,15 @@ const App = () => {
               Integrate the widget into your website to start collecting
               customer feedback.
             </chakra.p>
-            <Button
-              asChild
-              variant="solid"
-              w={{ base: 'full', sm: 'auto' }}
-            >
-              <a href="/docs" target="_blank" rel="noopener noreferrer">
+            <Link href="/docs" target="_blank" variant="plain">
+              <Button
+                variant="solid"
+                w={{ base: 'full', sm: 'auto' }}
+              >
                 <Text mr={1}>Documentation</Text>
                 <Icon as={LuExternalLink} />
-              </a>
-            </Button>
+              </Button>
+            </Link>
           </Box>
         </GridItem>
         <GridItem colSpan={3}>
