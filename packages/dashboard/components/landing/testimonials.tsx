@@ -5,12 +5,36 @@ import {
   Heading,
   Text,
   Stack,
-  Container,
   AvatarRoot,
   AvatarImage,
   VStack,
 } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import { useColorModeValue } from '../ui/color-mode';
+
+const MotionBox = motion.create(Box);
+const MotionStack = motion.create(Stack);
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+  },
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
 
 const Testimonial = ({ children }: { children: ReactNode }) => {
   return <Box>{children}</Box>;
@@ -20,28 +44,19 @@ const TestimonialContent = ({ children }: { children: ReactNode }) => {
   return (
     <Stack
       bg={useColorModeValue('white', 'gray.800')}
-      boxShadow={'lg'}
+      boxShadow={useColorModeValue('md', 'lg')}
       p={8}
-      rounded={'xl'}
-      align={'center'}
-      pos={'relative'}
-      gap={0}
-      _after={{
-        content: `""`,
-        w: 0,
-        h: 0,
-        borderLeft: 'solid transparent',
-        borderLeftWidth: 16,
-        borderRight: 'solid transparent',
-        borderRightWidth: 16,
-        borderTop: 'solid',
-        borderTopWidth: 16,
-        borderTopColor: useColorModeValue('white', 'gray.800'),
-        pos: 'absolute',
-        bottom: '-16px',
-        left: '50%',
-        transform: 'translateX(-50%)',
+      rounded="xl"
+      align="center"
+      pos="relative"
+      gap={2}
+      border="1px solid"
+      borderColor={useColorModeValue('gray.100', 'gray.700')}
+      _hover={{
+        boxShadow: useColorModeValue('xl', '2xl'),
+        transform: 'translateY(-2px)',
       }}
+      transition="all 0.2s"
     >
       {children}
     </Stack>
@@ -50,7 +65,7 @@ const TestimonialContent = ({ children }: { children: ReactNode }) => {
 
 const TestimonialHeading = ({ children }: { children: ReactNode }) => {
   return (
-    <Heading as={'h3'} fontSize={'xl'}>
+    <Heading as="h3" fontSize="lg" fontWeight="semibold">
       {children}
     </Heading>
   );
@@ -59,9 +74,10 @@ const TestimonialHeading = ({ children }: { children: ReactNode }) => {
 const TestimonialText = ({ children }: { children: ReactNode }) => {
   return (
     <Text
-      textAlign={'center'}
+      textAlign="center"
       color={useColorModeValue('gray.600', 'gray.400')}
-      fontSize={'sm'}
+      fontSize="sm"
+      lineHeight="tall"
     >
       {children}
     </Text>
@@ -78,13 +94,15 @@ const TestimonialAvatar = ({
   title: string;
 }) => {
   return (
-    <Flex align={'center'} mt={8} direction={'column'}>
-      <AvatarRoot mb={2}>
+    <Flex align="center" mt={8} direction="column">
+      <AvatarRoot mb={2} ring="2px" ringColor={useColorModeValue('teal.200', 'teal.700')}>
         <AvatarImage src={src} />
       </AvatarRoot>
-      <VStack gap={0} align={'center'}>
-        <Text fontWeight={600}>{name}</Text>
-        <Text fontSize={'sm'} color={useColorModeValue('gray.600', 'gray.400')}>
+      <VStack gap={0} align="center">
+        <Text fontWeight={600} fontSize="sm">
+          {name}
+        </Text>
+        <Text fontSize="xs" color={useColorModeValue('gray.500', 'gray.400')}>
           {title}
         </Text>
       </VStack>
@@ -119,38 +137,82 @@ Auctor neque sed imperdiet nibh lectus feugiat nunc sem.`;
 
 export default function WithSpeechBubbles() {
   return (
-    <Box bg={useColorModeValue('gray.100', 'gray.700')} borderRadius={10}>
-      <VStack maxW={'7xl'} py={16} gap={12} mx="auto" px={4}>
-        <VStack gap={0} align={'center'}>
-          <Heading>Our Clients Says</Heading>
-          <Text>We have been working with clients around the world :))</Text>
-        </VStack>
-        <Stack
+    <Box
+      py={{ base: 16, md: 24 }}
+      px={{ base: 4, md: 8 }}
+      position="relative"
+    >
+      {/* Top gradient divider */}
+      <Box
+        position="absolute"
+        top={0}
+        left="10%"
+        right="10%"
+        height="1px"
+        bgGradient="linear(to-r, transparent, gray.300, transparent)"
+        opacity={useColorModeValue(0.6, 0.2)}
+      />
+
+      <VStack maxW="7xl" gap={{ base: 8, md: 12 }} mx="auto">
+        <MotionBox
+          textAlign="center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Heading
+            fontSize={{ base: '2xl', md: '3xl' }}
+            fontWeight="extrabold"
+            letterSpacing="tight"
+          >
+            Our Clients Say
+          </Heading>
+          <Text
+            mt={2}
+            color={useColorModeValue('gray.500', 'gray.400')}
+            fontSize="lg"
+          >
+            We have been working with clients around the world :))
+          </Text>
+        </MotionBox>
+
+        <MotionStack
           direction={{ base: 'column', md: 'row' }}
           gap={{ base: 10, md: 4, lg: 10 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <TestimonialItem
-            heading="Efficient Collaborating"
-            content={lorem}
-            name={'Duyet'}
-            title={'Data Engineer'}
-            avatar="https://ca.slack-edge.com/T099A8DM3-UDPR7BEFK-3eed1926ad60-512"
-          />
-          <TestimonialItem
-            heading="Mindblowing Service"
-            content={lorem}
-            name={'Duyet'}
-            title={'Data Engineer'}
-            avatar="https://ca.slack-edge.com/T099A8DM3-UDPR7BEFK-3eed1926ad60-512"
-          />
-          <TestimonialItem
-            heading="Intuitive Design"
-            content={lorem}
-            name={'Duyet'}
-            title={'Data Engineer'}
-            avatar="https://ca.slack-edge.com/T099A8DM3-UDPR7BEFK-3eed1926ad60-512"
-          />
-        </Stack>
+          {[
+            {
+              heading: 'Efficient Collaborating',
+              name: 'Duyet',
+              title: 'Data Engineer',
+            },
+            {
+              heading: 'Mindblowing Service',
+              name: 'Duyet',
+              title: 'Data Engineer',
+            },
+            {
+              heading: 'Intuitive Design',
+              name: 'Duyet',
+              title: 'Data Engineer',
+            },
+          ].map((item) => (
+            <MotionBox key={item.heading} variants={cardVariants} flex={1}>
+              <TestimonialItem
+                heading={item.heading}
+                content={lorem}
+                name={item.name}
+                title={item.title}
+                avatar="https://ca.slack-edge.com/T099A8DM3-UDPR7BEFK-3eed1926ad60-512"
+              />
+            </MotionBox>
+          ))}
+        </MotionStack>
       </VStack>
     </Box>
   );

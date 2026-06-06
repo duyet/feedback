@@ -7,7 +7,30 @@ import {
   Link,
   SimpleGrid,
 } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import { useColorModeValue } from '../ui/color-mode';
+
+const MotionBox = motion.create(Box);
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+  },
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
 
 const REPO = process.env.repo;
 
@@ -19,16 +42,31 @@ type Props = {
 };
 
 export const Feature: React.FC<Props> = (props) => (
-  <Box>
+  <MotionBox
+    variants={cardVariants}
+    whileHover={{ y: -4, transition: { duration: 0.2 } }}
+    p={6}
+    rounded="xl"
+    bg={useColorModeValue('white', 'gray.800')}
+    borderWidth="1px"
+    borderColor={useColorModeValue('gray.100', 'gray.700')}
+    boxShadow={useColorModeValue('sm', 'none')}
+    _hover={{
+      boxShadow: useColorModeValue('lg', 'xl'),
+      borderColor: useColorModeValue('gray.200', 'gray.600'),
+    }}
+    css={{ transition: 'all 0.2s' }}
+    cursor="default"
+  >
     <Flex
       alignItems="center"
       justifyContent="center"
-      w={8}
-      h={8}
+      w={10}
+      h={10}
       mb={4}
-      rounded="full"
-      color={useColorModeValue(`${props.color}.600`, `${props.color}.100`)}
-      bg={useColorModeValue(`${props.color}.100`, `${props.color}.600`)}
+      rounded="lg"
+      color={useColorModeValue(`${props.color}.600`, `${props.color}.200`)}
+      bg={useColorModeValue(`${props.color}.50`, `${props.color}.900`)}
     >
       <Icon
         boxSize={5}
@@ -43,52 +81,80 @@ export const Feature: React.FC<Props> = (props) => (
       mb={2}
       fontWeight="semibold"
       lineHeight="shorter"
-      color={useColorModeValue('gray.900', 'gray.900')}
+      fontSize="md"
+      color={useColorModeValue('gray.900', 'gray.100')}
     >
       {props.title}
     </chakra.h3>
-    <chakra.p fontSize="sm" color={useColorModeValue('gray.500', 'gray.400')}>
+    <chakra.p
+      fontSize="sm"
+      lineHeight="tall"
+      color={useColorModeValue('gray.500', 'gray.400')}
+    >
       {props.children}
     </chakra.p>
-  </Box>
+  </MotionBox>
 );
 
 export const Features = () => (
-  <Flex p={8} px={8} w="auto" justifyContent="center" alignItems="center">
+  <Box
+    py={{ base: 16, md: 24 }}
+    px={8}
+    position="relative"
+  >
+    {/* Subtle top divider gradient */}
+    <Box
+      position="absolute"
+      top={0}
+      left="10%"
+      right="10%"
+      height="1px"
+      bgGradient="linear(to-r, transparent, gray.300, transparent)"
+      opacity={useColorModeValue(0.6, 0.2)}
+    />
+
     <Box
       w={{ base: 'full', md: 11 / 12, xl: 9 / 12 }}
       mx="auto"
-      px={8}
-      py={20}
-      bg={useColorModeValue('white', 'gray.800')}
     >
-      <Box textAlign={{ lg: 'center' }}>
+      <MotionBox
+        textAlign={{ lg: 'center' }}
+        mb={{ base: 10, md: 16 }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6 }}
+      >
         <chakra.p
           mt={2}
           fontSize={{ base: '3xl', sm: '4xl' }}
-          lineHeight="8"
+          lineHeight="shorter"
           fontWeight="extrabold"
           letterSpacing="tight"
-          color={useColorModeValue('gray.900', 'gray.900')}
+          color={useColorModeValue('gray.900', 'gray.100')}
         >
           Why use the Feedback?
         </chakra.p>
         <chakra.p
           mt={4}
           maxW="2xl"
-          fontSize="xl"
+          fontSize="lg"
           mx={{ lg: 'auto' }}
           color={useColorModeValue('gray.500', 'gray.400')}
         >
           Get insights to dig down into what&apos;s powering your growth the
           most.
         </chakra.p>
-      </Box>
+      </MotionBox>
 
-      <SimpleGrid
+      <MotionBox
+        as={SimpleGrid}
         columns={{ base: 1, sm: 2, md: 3 }}
-        gap={{ base: 8, lg: 24 }}
-        mt={6}
+        gap={{ base: 6, lg: 8 }}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
       >
         <Feature
           color="yellow"
@@ -184,14 +250,14 @@ export const Features = () => (
         >
           Feedback is open source. If you&apos;re interested in contributing visit
           the{' '}
-          <Link href={REPO} target="_blank" rel="noopener noreferrer">
+          <Link href={REPO} target="_blank" rel="noopener noreferrer" color="teal.500">
             GitHub repository
           </Link>
           .
         </Feature>
-      </SimpleGrid>
+      </MotionBox>
     </Box>
-  </Flex>
+  </Box>
 );
 
 export default Features;
