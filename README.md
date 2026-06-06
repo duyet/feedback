@@ -1,129 +1,84 @@
 # Feedback
 
-[![Security Hardened](https://img.shields.io/badge/security-hardened-green.svg)](https://github.com/duyet/feedback)
-[![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue.svg)](https://www.typescriptlang.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-13-black.svg)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black.svg)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
+[![Chakra UI](https://img.shields.io/badge/Chakra_UI-v3-teal.svg)](https://chakra-ui.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-6-blue.svg)](https://www.prisma.io/)
 
-🚀 A modern feedback platform built with Next.js, TypeScript & Prisma to collect issues, ideas, and compliments from your users.
-
-**Features:**
-- 🔐 **Enterprise-grade security**: Rate limiting, CORS, input validation, authorization
-- 📊 **Real-time feedback collection** with screenshot capture
-- 🔔 **Multiple integrations**: Slack, Email notifications
-- 🎨 **Beautiful UI** built with Chakra UI
-- 📱 **Responsive design** works on all devices
-- 🔍 **Advanced search & filtering** with pagination
-- 👥 **Team collaboration** with role-based access
-- 🐳 **Docker support** for easy deployment
-
-> **Note**: This project has been significantly improved with comprehensive security hardening, performance optimizations, and production-ready features.
-
-[Project information and milestone](https://duyet.notion.site/feedback-okie-one-235f310b198946b184d3617cf3d50de6)
+A modern feedback platform to collect issues, ideas, and compliments from your users.
 
 ![Screenshot](./dashboard/public/landing.png)
 
-# Table of Contents
+## Features
 
-- [Quick Start with Docker](#quick-start-with-docker)
-- [Manual Setup](#manual-setup)
-  - [The Dashboard](#the-dashboard)
-  - [The Docs](#the-docs)
-  - [The Widget](#the-widget)
-- [Environment Variables](#environment-variables)
-- [Security Features](#security-features)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [Stats](#stats)
+- **Feedback collection** — embeddable widget with screenshot capture
+- **Dashboard** — project management, search, filtering, pagination
+- **Team collaboration** — invitations, role-based access (owner/member)
+- **Integrations** — Slack webhooks, email notifications (SendGrid/SMTP)
+- **Authentication** — GitHub, Google OAuth, magic email link via NextAuth
+- **Security** — rate limiting, CORS, input validation, query parameter normalization
+- **Docker** — one-command setup with `docker-compose`
 
-# Quick Start with Docker
+## Tech Stack
 
-The fastest way to get started is using Docker Compose:
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (Pages Router) |
+| UI | Chakra UI v3, React 19 |
+| Database | PostgreSQL, Prisma 6 |
+| Auth | NextAuth v4 |
+| Docs | Nextra |
+| CI | GitHub Actions, Lighthouse CI |
+| Deploy | Vercel |
+
+## Quick Start
+
+### Docker (recommended)
 
 ```bash
-# Clone the repository
 git clone https://github.com/duyet/feedback.git
 cd feedback
-
-# Start all services (PostgreSQL, Dashboard, Docs)
 docker-compose up -d
 
-# Access the application
 # Dashboard: http://localhost:3000
-# Docs: http://localhost:3001
+# Docs:      http://localhost:3001
 ```
 
-The Docker setup includes:
-- PostgreSQL database with automatic migrations
-- Next.js dashboard with hot reload
-- Documentation site
-- All dependencies pre-installed
+Includes PostgreSQL with auto-migrations, Next.js dashboard with hot reload, and the docs site.
 
-# Manual Setup
+### Manual Setup
 
-## The Dashboard
+#### Dashboard
 
-[![Deploy Dashboard with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fduyet%2Ffeedback%2Ftree%2Fmain%2Fdashboard&env=GITHUB_ID,GITHUB_SECRET,GOOGLE_ID,GOOGLE_SECRET,DATABASE_URL,DOCS_URL,NEXTAUTH_URL,SENDGRID_API_KEY,EMAIL_SERVER,EMAIL_FROM)
-
-Change the directory to `./dashboard` and install dependencies:
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fduyet%2Ffeedback%2Ftree%2Fmain%2Fdashboard&env=GITHUB_ID,GITHUB_SECRET,GOOGLE_ID,GOOGLE_SECRET,DATABASE_URL,DOCS_URL,NEXTAUTH_URL,SENDGRID_API_KEY,EMAIL_SERVER,EMAIL_FROM)
 
 ```bash
 cd dashboard
-yarn
-```
-
-Create the `.env` file from `.env.example`:
-
-```bash
-cp .env.example .env
-vi .env
-```
-
-Run the following command to init the database:
-
-```bash
+cp .env.example .env   # fill in your values
+yarn install
 yarn prisma migrate dev --name init
-```
-
-Now, seed the database with the sample data in prisma/seed.ts by running the following command:
-
-```bash
-yarn prisma db seed --preview-feature
-```
-
-Run the development server:
-
-```bash
+yarn prisma db seed
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> The dashboard proxies `/docs` to the docs site. Start both for full functionality.
 
-> Note: The dashboard using Next proxy to route http://localhost:3000/docs to http://localhost:3001/docs
-> Please start the dashboard and the docs at the same time.
-
-## The Docs
-
-[![Deploy Docs with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fduyet%2Ffeedback%2Ftree%2Fmain%2Fdocs)
-
-Change the directory to `./docs` and install dependencies:
+#### Docs
 
 ```bash
 cd docs
-yarn
-```
-
-```bash
+yarn install
 yarn dev
+# → http://localhost:3001/docs
 ```
 
-Open [http://localhost:3001/docs](http://localhost:3001/docs) with your browser to see the result.
+#### Widget
 
-## The Widget
-
-The widget allows you to embed a feedback form directly into your website:
+Embed a feedback form on any website:
 
 ```tsx
-import { Widget } from '@okie/widget';
+import { Widget } from '@okie/widget'
 
 function App() {
   return (
@@ -132,15 +87,11 @@ function App() {
       title="Send us feedback"
       placeholder="Tell us what you think..."
     />
-  );
+  )
 }
 ```
 
-> **Note**: The standalone widget package is currently in development. For now, use the dashboard component.
-
-# Environment Variables
-
-Create a `.env` file in the `dashboard` directory with the following variables:
+## Environment Variables
 
 ```bash
 # Database
@@ -148,72 +99,67 @@ DATABASE_URL="postgresql://user:password@localhost:5432/feedback"
 
 # NextAuth
 NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-secret-key-here" # Generate with: openssl rand -base64 32
+NEXTAUTH_SECRET="openssl rand -base64 32"
 
-# OAuth Providers (optional)
-GITHUB_ID="your-github-oauth-app-id"
-GITHUB_SECRET="your-github-oauth-app-secret"
-GOOGLE_ID="your-google-oauth-client-id"
-GOOGLE_SECRET="your-google-oauth-client-secret"
+# OAuth (configure at least one)
+GITHUB_ID=""
+GITHUB_SECRET=""
+GOOGLE_ID=""
+GOOGLE_SECRET=""
 
-# Email (optional)
-EMAIL_SERVER="smtp://username:password@smtp.example.com:587"
-EMAIL_FROM="noreply@feedback.okie.one"
-SENDGRID_API_KEY="your-sendgrid-api-key"
+# Email (optional — for magic link auth & notifications)
+EMAIL_SERVER="smtp://user:pass@smtp.example.com:587"
+EMAIL_FROM="noreply@example.com"
+SENDGRID_API_KEY=""
 
-# Docs URL
+# Slack (optional — for project notifications)
+SLACK_WEBHOOK_URL=""
+
+# Docs
 DOCS_URL="http://localhost:3001"
 ```
 
-# Security Features
+## API
 
-This project implements comprehensive security measures:
+RESTful endpoints under `/api/`:
 
-- ✅ **HTTP Method Validation**: All API routes validate HTTP methods
-- ✅ **Rate Limiting**: Protects against DoS and spam attacks
-- ✅ **CORS Configuration**: Secure cross-origin requests for widget
-- ✅ **Input Validation**: Email format, message length, SQL injection prevention
-- ✅ **Authorization Checks**: Proper ownership verification
-- ✅ **Error Handling**: Graceful error handling without data exposure
-- ✅ **Production Hardening**: Debug mode disabled in production
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/feedback` | Submit feedback (CORS-enabled for widget) |
+| GET | `/api/feedback/list` | List with pagination & search |
+| DELETE | `/api/feedback/delete` | Delete feedback |
+| GET/POST | `/api/project` | List / create projects |
+| GET/PUT | `/api/project/[id]` | Get / update project |
+| POST | `/api/project/invitation` | Invite team member |
+| GET | `/api/form/[id]` | Get form configuration |
 
-# API Documentation
+All authenticated endpoints require a valid NextAuth session.
 
-The platform provides RESTful APIs for:
+## Project Structure
 
-- **Feedback Management**: Create, list, delete, search feedback
-- **Project Management**: CRUD operations, team management, settings
-- **User Management**: Search, invitations, role-based access
-- **Integrations**: Slack, Email notifications
-
-Example API calls:
-
-```bash
-# Create feedback (with CORS support)
-POST /api/feedback
-Content-Type: application/json
-
-{
-  "projectId": "project-id",
-  "message": "Great product!",
-  "email": "user@example.com",
-  "url": "https://example.com"
-}
-
-# List feedback (with pagination)
-GET /api/feedback/list?project=project-id&page=1&limit=50&search=query
+```
+feedback/
+├── dashboard/          # Next.js 16 app (main application)
+│   ├── pages/          # Pages Router routes & API endpoints
+│   ├── components/     # React components (Chakra UI v3)
+│   ├── lib/            # Utilities, Prisma client, middleware
+│   ├── prisma/         # Database schema & migrations
+│   └── theme/          # Chakra UI system config
+├── docs/               # Nextra documentation site
+├── widget/             # Embeddable feedback widget (WIP)
+├── docker-compose.yml  # Docker orchestration
+└── .github/            # CI workflows
 ```
 
-# Contributing
+## Contributing
 
-We welcome contributions! Please ensure your code:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feat/my-feature`)
+3. Commit with conventional commits (`feat:`, `fix:`, `chore:`)
+4. Open a pull request
 
-1. Passes all security checks
-2. Includes proper error handling
-3. Has meaningful commit messages
-4. Follows TypeScript strict mode
-5. Includes tests for new features
+Requirements: TypeScript strict mode, passing CI, no lint errors.
 
-# Stats
+## License
 
-![Alt](https://repobeats.axiom.co/api/embed/ecc9f534d0c0eac4e006559857575db679de52c7.svg "Repobeats analytics image")
+MIT © [Duyet Le](https://duyet.net)
