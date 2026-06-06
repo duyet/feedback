@@ -78,7 +78,6 @@ export const Widget: React.FC<WidgetProps> = ({
   const handleCaptureScreenshot = () => {
     html2canvas(document.body).then((canvas) => {
       const base64image = canvas.toDataURL('image/png');
-      console.log(base64image);
       setScrenshot(base64image);
     });
   };
@@ -114,8 +113,6 @@ export const Widget: React.FC<WidgetProps> = ({
       }),
     };
 
-    console.log(JSON.stringify(data));
-
     try {
       setState('submitting');
 
@@ -131,10 +128,12 @@ export const Widget: React.FC<WidgetProps> = ({
         throw new Error('Something went wrong!');
       }
 
-      console.log(res);
       setState('success');
     } catch (err) {
-      console.error(err);
+      // Log error for debugging but don't expose to console in production
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Feedback submission error:', err);
+      }
 
       setState('error');
     }

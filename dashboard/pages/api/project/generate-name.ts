@@ -7,11 +7,15 @@ import {
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { _400 } from '../../../lib/error-response';
+import { validateMethod } from '../../../lib/api-middleware';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Validate HTTP method
+  if (!validateMethod(req, res, ['GET'])) return;
+
   const dictionaries = [adjectives, animals, colors];
 
   const length = +(req.query.length || 2);

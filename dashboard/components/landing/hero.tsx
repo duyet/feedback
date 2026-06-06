@@ -90,7 +90,7 @@ export const Heros: React.FC = () => {
         mt={20}
         textAlign="center"
       >
-        <Image w="full" rounded="lg" src="/landing.png" alt="" />
+        <Image w="full" rounded="lg" src="/landing.png" alt="Feedback platform dashboard screenshot showing project overview and feedback management interface" />
       </Box>
     </Box>
   );

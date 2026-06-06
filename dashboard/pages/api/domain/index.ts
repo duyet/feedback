@@ -7,16 +7,21 @@ import {
   unauthorized,
 } from '../../../lib/error-response';
 import { prisma } from '../../../lib/prisma';
+import { validateMethod } from '../../../lib/api-middleware';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Validate HTTP method
+  if (!validateMethod(req, res, ['GET'])) return;
+
   const session = await getSession({ req });
   if (!session?.userId) return unauthorized(res);
 
   const { projectId } = req.query;
   if (!projectId) return required(res, 'projectId');
+  const projectIds = Array.isArray(projectId) ? projectId : [projectId];
 
   try {
     const domains = await prisma.domain.findMany({
@@ -24,7 +29,7 @@ export default async function handler(
         project: {
           is: {
             id: {
-              in: projectId,
+              in: projectIds,
             },
           },
         },

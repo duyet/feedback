@@ -1,13 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { required, _400 } from '../../../lib/error-response';
+import { required } from '../../../lib/error-response';
 import { sendSlack } from '../../../lib/slack';
+import { validateMethod } from '../../../lib/api-middleware';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== 'POST') return _400(res, 'invalid method');
+  // Validate HTTP method
+  if (!validateMethod(req, res, ['POST'])) return;
 
   const { slackWebhook, slackChannel, slackUserName, slackIcon } = req.body;
   if (!slackWebhook) return required(res, 'slackWebhook');

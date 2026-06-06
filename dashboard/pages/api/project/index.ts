@@ -3,11 +3,15 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { prisma } from '../../../lib/prisma';
 import { prismaErrorResponse, unauthorized } from '../../../lib/error-response';
+import { validateMethod } from '../../../lib/api-middleware';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Validate HTTP method
+  if (!validateMethod(req, res, ['GET'])) return;
+
   const session = await getSession({ req });
   if (!session?.userId) return unauthorized(res);
 

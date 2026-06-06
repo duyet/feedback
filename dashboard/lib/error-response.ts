@@ -1,5 +1,5 @@
 import { NextApiResponse } from 'next';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export type CustomPrismaErrorResponse = {
   code: number;
@@ -22,9 +22,15 @@ export const prismaErrorResponse = (
 
     if (code === 'P2002' && meta) {
       if (meta.hasOwnProperty('target')) {
-        // TODO: Access to the meta.target for better error message
-        const target = JSON.stringify(meta);
-        return res.status(409).json({ code, err: `Already exists: ${target}` });
+        // Extract target field name(s) from meta for better error message
+        const target = Array.isArray(meta.target)
+          ? meta.target.join(', ')
+          : String(meta.target);
+        return res.status(409).json({
+          code,
+          err: `A record with this ${target} already exists`,
+          field: meta.target
+        });
       }
     }
 
@@ -32,7 +38,11 @@ export const prismaErrorResponse = (
     return res.status(500).json({ code, message, meta, messages });
   }
 
-  console.error(err);
+  // Log error only in development
+  if (process.env.NODE_ENV === 'development') {
+    console.error('Unhandled error:', err);
+  }
+
   return res
     .status(500)
     .json({ err: `Something went wrong`, detail: `${err}` });
@@ -52,6 +62,9 @@ export const badRequest = (res: NextApiResponse, err: string) =>
 
 export const _400 = (res: NextApiResponse, err: string) =>
   withCode(400)(res, err);
+
+export const _403 = (res: NextApiResponse, err: string) =>
+  withCode(403)(res, err);
 
 export const _404 = (res: NextApiResponse, err: string) =>
   withCode(404)(res, err);
