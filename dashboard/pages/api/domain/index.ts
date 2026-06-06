@@ -21,6 +21,7 @@ export default async function handler(
 
   const { projectId } = req.query;
   if (!projectId) return required(res, 'projectId');
+  const projectIds = Array.isArray(projectId) ? projectId : [projectId];
 
   try {
     const domains = await prisma.domain.findMany({
@@ -28,7 +29,7 @@ export default async function handler(
         project: {
           is: {
             id: {
-              in: projectId,
+              in: projectIds,
             },
           },
         },

@@ -5,11 +5,11 @@ export * from '@prisma/client';
 // Advanced type safety
 // https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety
 
-const projectPopulated = Prisma.validator<Prisma.ProjectArgs>()({
+const projectPopulated = Prisma.validator<Prisma.ProjectDefaultArgs>()({
   include: {
     users: true,
     setting: true,
-    domains: true, 
+    domains: true,
     _count: true
   },
 });
@@ -18,7 +18,7 @@ export type ProjectPopulated = Prisma.ProjectGetPayload<
   typeof projectPopulated
 >;
 
-const projectUserPopulated = Prisma.validator<Prisma.ProjectUserArgs>()({
+const projectUserPopulated = Prisma.validator<Prisma.ProjectUserDefaultArgs>()({
   include: {
     project: true,
     user: true,
@@ -29,7 +29,7 @@ export type ProjectUserPopulated = Prisma.ProjectUserGetPayload<
   typeof projectUserPopulated
 >;
 
-const projectUserSettingPopulated = Prisma.validator<Prisma.ProjectArgs>()({
+const projectUserSettingPopulated = Prisma.validator<Prisma.ProjectDefaultArgs>()({
   include: {
     users: true,
     setting: true,
@@ -44,7 +44,7 @@ export type InvitationWithProject = Invitation & {
   invitedToProject: Project;
 };
 
-const domainPopulated = Prisma.validator<Prisma.DomainArgs>()({
+const domainPopulated = Prisma.validator<Prisma.DomainDefaultArgs>()({
   include: {
     project: true,
     _count: true,
@@ -53,7 +53,7 @@ const domainPopulated = Prisma.validator<Prisma.DomainArgs>()({
 
 export type DomainPopulated = Prisma.DomainGetPayload<typeof domainPopulated>;
 
-const formPopulated = Prisma.validator<Prisma.FormArgs>()({
+const formPopulated = Prisma.validator<Prisma.FormDefaultArgs>()({
   include: {
     _count: true,
   },

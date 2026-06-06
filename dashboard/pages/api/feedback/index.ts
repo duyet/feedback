@@ -91,16 +91,15 @@ const getProjectIdFromDomain = async (domain: string) => {
 async function triggerIntegrations(projectId: string, feedback: any) {
   try {
     // Fetch project settings for integrations
-    const projectSettings = await prisma.projectSetting.findMany({
+    const projectSettings = await prisma.projectSetting.findUnique({
       where: { projectId },
     });
 
-    const slackWebhook = projectSettings.find(s => s.key === 'slackWebhook')?.value;
-    const emailNotify = projectSettings.find(s => s.key === 'emailNotify')?.value;
+    if (!projectSettings) return;
 
     // Send Slack notification
-    if (slackWebhook) {
-      await sendSlackNotification(slackWebhook, {
+    if (projectSettings.slackEnabled && projectSettings.slackWebhook) {
+      await sendSlackNotification(projectSettings.slackWebhook, {
         text: `New feedback received!`,
         blocks: [
           {
@@ -124,9 +123,9 @@ async function triggerIntegrations(projectId: string, feedback: any) {
     }
 
     // Send email notification
-    if (emailNotify) {
+    if (projectSettings.emailEnabled && projectSettings.emailTitle) {
       await sendEmail({
-        to: emailNotify,
+        to: projectSettings.emailTitle,
         subject: 'New Feedback Received',
         html: `
           <h2>New Feedback</h2>

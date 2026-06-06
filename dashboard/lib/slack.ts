@@ -1,4 +1,4 @@
-import { IncomingWebhook } from '@slack/webhook';
+import { IncomingWebhook, IncomingWebhookSendArguments } from '@slack/webhook';
 
 export const sendSlack = async ({
   webhookUrl,
@@ -21,4 +21,12 @@ export const sendSlack = async ({
     username,
     icon_emoji,
   });
+};
+
+export const sendSlackNotification = async (
+  webhookUrl: string,
+  payload: IncomingWebhookSendArguments
+) => {
+  const webhook = new IncomingWebhook(webhookUrl);
+  return await webhook.send(payload);
 };

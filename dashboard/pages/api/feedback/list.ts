@@ -64,7 +64,6 @@ export default async function handler(
         name: true,
         url: true,
         screenshot: false, // Exclude large base64 screenshots from list
-        device: true,
         createdAt: true,
         domainId: true,
       },

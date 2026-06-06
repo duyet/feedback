@@ -1,5 +1,5 @@
 import { NextApiResponse } from 'next';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export type CustomPrismaErrorResponse = {
   code: number;

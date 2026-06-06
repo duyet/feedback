@@ -61,11 +61,11 @@ export function rateLimit(
  */
 export function cleanupRateLimitStore() {
   const now = Date.now();
-  for (const [key, value] of rateLimitStore.entries()) {
+  rateLimitStore.forEach((value, key) => {
     if (now > value.resetTime) {
       rateLimitStore.delete(key);
     }
-  }
+  });
 }
 
 // Cleanup every 5 minutes
