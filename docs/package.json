@@ -19,8 +19,8 @@
   "devDependencies": {
     "@types/node": "18.19.130",
     "@types/react": "18.0.28",
-    "eslint": "8.35.0",
-    "eslint-config-next": "13.2.3",
+    "eslint": "8.57.1",
+    "eslint-config-next": "13.5.11",
     "typescript": "4.9.5"
   },
   "prettier": {
