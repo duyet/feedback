@@ -27,7 +27,8 @@ export default async function handler(
   const session = await getSession({ req });
   if (!session?.userId) return unauthorized(res);
 
-  const project = req.query.project as string;
+  const projectParam = req.query.project;
+  const project = Array.isArray(projectParam) ? projectParam[0] : projectParam;
   if (!project) {
     return required(res, 'project');
   }
@@ -47,7 +48,8 @@ export default async function handler(
   }
 
   // Validate email format
-  const to = req.query.to as string;
+  const toParam = req.query.to;
+  const to = Array.isArray(toParam) ? toParam[0] : toParam;
   if (!to) {
     return required(res, 'to');
   }
@@ -60,11 +62,11 @@ export default async function handler(
   const who = (req.query.who as string) || session.user.name;
 
   const data: Prisma.InvitationCreateInput = {
-    email: to as string,
+    email: to,
     status: 'NotSent' as InvitationStatus,
     invitedToProject: {
       connect: {
-        id: project as string,
+        id: project,
       },
     },
   };
