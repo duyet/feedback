@@ -4,13 +4,13 @@ import {
   Text,
   Button,
   Input,
-  FormControl,
-  Switch,
-  FormLabel,
-  useToast,
-  FormHelperText,
+  FieldRoot,
+  FieldLabel,
+  FieldHelperText,
+  SwitchRoot,
 } from '@chakra-ui/react';
 
+import { toaster } from '../../../hooks/useToast';
 import Error from '../../common/error';
 import fetcher from '../../../lib/fetcher';
 import Loading from '../../common/loading';
@@ -30,7 +30,6 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
   const url = `/api/project/${projectId}`;
   const { data, error } = useSWR<ProjectPopulated>(url, fetcher);
 
-  const toast = useToast();
   const { mutate } = useSWRConfig();
   const [isLoading, setLoading] = useState<boolean>(false);
   const [emailEnabled, setEmailEnabled] = useState<boolean>();
@@ -46,12 +45,12 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
   if (error) return <Error />;
   if (!data) return <Loading />;
 
-  const handleChangeEmailEnabled = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailEnabled(e.currentTarget.checked);
+  const handleEmailToggle = (details: { checked: boolean }) => {
+    setEmailEnabled(details.checked);
   };
 
-  const handleChangeSlackEnabled = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSlackEnabled(e.currentTarget.checked);
+  const handleSlackToggle = (details: { checked: boolean }) => {
+    setSlackEnabled(details.checked);
   };
 
   const handleChangeText = (fieldName: string) => (
@@ -98,17 +97,15 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
       mutate('/api/project');
       mutate(`/api/domain?projectId=${projectId}`);
 
-      return toast({
+      return toaster.create({
         description: 'Successfully',
-        status: 'success',
-        isClosable: true,
+        type: 'success',
       });
     } catch (err) {
-      return toast({
+      return toaster.create({
         title: 'Error',
         description: `${err}`,
-        status: 'error',
-        isClosable: true,
+        type: 'error',
       });
     } finally {
       setLoading(false);
@@ -124,17 +121,15 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
       });
       const json = await res.json();
       if (!res.ok) throw json.err || 'Error';
-      return toast({
+      return toaster.create({
         description: 'Sent',
-        status: 'success',
-        isClosable: true,
+        type: 'success',
       });
     } catch (err) {
-      return toast({
+      return toaster.create({
         title: 'Error',
         description: `${err}`,
-        status: 'error',
-        isClosable: true,
+        type: 'error',
       });
     }
   };
@@ -145,103 +140,103 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
         Integrations to get notify to your tools.
       </Text>
 
-      <FormControl mb={5}>
-        <FormLabel htmlFor="emailEnabled">
-          <Switch
-            id="emailEnabled"
-            isChecked={emailEnabled}
-            onChange={handleChangeEmailEnabled}
-            mr={3}
-          />
+      <FieldRoot mb={5}>
+        <SwitchRoot
+          id="emailEnabled"
+          checked={emailEnabled}
+          onCheckedChange={handleEmailToggle}
+          mr={3}
+        />
+        <FieldLabel htmlFor="emailEnabled">
           Enable Email notify for new feedbacks
-        </FormLabel>
-      </FormControl>
+        </FieldLabel>
+      </FieldRoot>
 
       {emailEnabled && (
         <>
-          <FormControl {...emailSettingStyle}>
-            <FormLabel>Custom Email Title</FormLabel>
+          <FieldRoot {...emailSettingStyle}>
+            <FieldLabel>Custom Email Title</FieldLabel>
             <Input
               value={setting?.['emailTitle'] || ''}
               onChange={handleChangeText('emailTitle')}
               placeholder="[Feedback] New feedback"
             />
-            <FormHelperText>
+            <FieldHelperText>
               Default: [Feedback] You got new feedback
-            </FormHelperText>
-          </FormControl>
+            </FieldHelperText>
+          </FieldRoot>
         </>
       )}
 
-      <FormControl mb={5} mt={5}>
-        <FormLabel htmlFor="slackEnabled">
-          <Switch
-            id="slackEnabled"
-            isChecked={slackEnabled}
-            onChange={handleChangeSlackEnabled}
-            mr={3}
-          />
+      <FieldRoot mb={5} mt={5}>
+        <SwitchRoot
+          id="slackEnabled"
+          checked={slackEnabled}
+          onCheckedChange={handleSlackToggle}
+          mr={3}
+        />
+        <FieldLabel htmlFor="slackEnabled">
           Enable Slack
-        </FormLabel>
-      </FormControl>
+        </FieldLabel>
+      </FieldRoot>
 
       {slackEnabled && (
         <>
-          <FormControl {...slackSettingStyle}>
-            <FormLabel>Slack Webhook</FormLabel>
+          <FieldRoot {...slackSettingStyle}>
+            <FieldLabel>Slack Webhook</FieldLabel>
             <Input
               value={setting?.['slackWebhook'] || ''}
               onChange={handleChangeText('slackWebhook')}
             />
-            <FormHelperText>
+            <FieldHelperText>
               https://hooks.slack.com/services/...
-            </FormHelperText>
-          </FormControl>
+            </FieldHelperText>
+          </FieldRoot>
 
-          <FormControl {...slackSettingStyle}>
-            <FormLabel>Slack Channel</FormLabel>
+          <FieldRoot {...slackSettingStyle}>
+            <FieldLabel>Slack Channel</FieldLabel>
             <Input
               value={setting?.['slackChannel'] || ''}
               onChange={handleChangeText('slackChannel')}
             />
-            <FormHelperText>#customer-feedbacks</FormHelperText>
-          </FormControl>
+            <FieldHelperText>#customer-feedbacks</FieldHelperText>
+          </FieldRoot>
 
-          <FormControl {...slackSettingStyle}>
-            <FormLabel>Slack Name</FormLabel>
+          <FieldRoot {...slackSettingStyle}>
+            <FieldLabel>Slack Name</FieldLabel>
             <Input
               value={setting?.['slackUserName'] || ''}
               onChange={handleChangeText('slackUserName')}
             />
-            <FormHelperText>e.g. Feedback Robot</FormHelperText>
-          </FormControl>
+            <FieldHelperText>e.g. Feedback Robot</FieldHelperText>
+          </FieldRoot>
 
-          <FormControl {...slackSettingStyle}>
-            <FormLabel>Slack Icon</FormLabel>
+          <FieldRoot {...slackSettingStyle}>
+            <FieldLabel>Slack Icon</FieldLabel>
             <Input
               value={setting?.['slackIcon'] || ''}
               onChange={handleChangeText('slackIcon')}
             />
-            <FormHelperText>e.g. :pray:</FormHelperText>
-          </FormControl>
+            <FieldHelperText>e.g. :pray:</FieldHelperText>
+          </FieldRoot>
 
-          <FormControl {...slackSettingStyle}>
+          <FieldRoot {...slackSettingStyle}>
             <Button onClick={handleTestSlack} disabled={isLoading}>
               Test Slack
             </Button>
-          </FormControl>
+          </FieldRoot>
         </>
       )}
 
-      <FormControl textAlign="right">
+      <FieldRoot textAlign="right">
         <Button
-          colorScheme="messenger"
+          colorPalette="messenger"
           onClick={handleSaveSetting}
           disabled={isLoading}
         >
           Save Settings
         </Button>
-      </FormControl>
+      </FieldRoot>
     </>
   );
 };

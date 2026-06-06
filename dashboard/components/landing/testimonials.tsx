@@ -6,9 +6,11 @@ import {
   Text,
   Stack,
   Container,
-  Avatar,
-  useColorModeValue,
+  AvatarRoot,
+  AvatarImage,
+  VStack,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
 
 const Testimonial = ({ children }: { children: ReactNode }) => {
   return <Box>{children}</Box>;
@@ -23,6 +25,7 @@ const TestimonialContent = ({ children }: { children: ReactNode }) => {
       rounded={'xl'}
       align={'center'}
       pos={'relative'}
+      gap={0}
       _after={{
         content: `""`,
         w: 0,
@@ -76,13 +79,15 @@ const TestimonialAvatar = ({
 }) => {
   return (
     <Flex align={'center'} mt={8} direction={'column'}>
-      <Avatar src={src} mb={2} />
-      <Stack spacing={-1} align={'center'}>
+      <AvatarRoot mb={2}>
+        <AvatarImage src={src} />
+      </AvatarRoot>
+      <VStack gap={0} align={'center'}>
         <Text fontWeight={600}>{name}</Text>
         <Text fontSize={'sm'} color={useColorModeValue('gray.600', 'gray.400')}>
           {title}
         </Text>
-      </Stack>
+      </VStack>
     </Flex>
   );
 };
@@ -115,14 +120,14 @@ Auctor neque sed imperdiet nibh lectus feugiat nunc sem.`;
 export default function WithSpeechBubbles() {
   return (
     <Box bg={useColorModeValue('gray.100', 'gray.700')} borderRadius={10}>
-      <Container maxW={'7xl'} py={16} as={Stack} spacing={12}>
-        <Stack spacing={0} align={'center'}>
+      <VStack maxW={'7xl'} py={16} gap={12} mx="auto" px={4}>
+        <VStack gap={0} align={'center'}>
           <Heading>Our Clients Says</Heading>
           <Text>We have been working with clients around the world :))</Text>
-        </Stack>
+        </VStack>
         <Stack
           direction={{ base: 'column', md: 'row' }}
-          spacing={{ base: 10, md: 4, lg: 10 }}
+          gap={{ base: 10, md: 4, lg: 10 }}
         >
           <TestimonialItem
             heading="Efficient Collaborating"
@@ -146,7 +151,7 @@ export default function WithSpeechBubbles() {
             avatar="https://ca.slack-edge.com/T099A8DM3-UDPR7BEFK-3eed1926ad60-512"
           />
         </Stack>
-      </Container>
+      </VStack>
     </Box>
   );
 }

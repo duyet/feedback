@@ -2,12 +2,13 @@ import React from 'react';
 import {
   chakra,
   Box,
-  useColorModeValue,
   Button,
   Stack,
   Image,
   Text,
+  Link,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
 
 export const Heros: React.FC = () => {
   return (
@@ -50,13 +51,13 @@ export const Heros: React.FC = () => {
         <Stack
           direction={{ base: 'column', sm: 'row' }}
           mb={{ base: 4, md: 8 }}
-          spacing={2}
+          gap={2}
           justifyContent={{ sm: 'left', md: 'center' }}
         >
           <Button
-            as="a"
+            asChild
             variant="solid"
-            colorScheme="teal"
+            colorPalette="teal"
             display="inline-flex"
             alignItems="center"
             justifyContent="center"
@@ -64,13 +65,12 @@ export const Heros: React.FC = () => {
             mb={{ base: 2, sm: 0 }}
             size="lg"
             cursor="pointer"
-            href="/dashboard"
           >
-            Dashboard
+            <a href="/dashboard">Dashboard</a>
           </Button>
           <Button
-            as="a"
-            colorScheme="gray"
+            asChild
+            colorPalette="gray"
             display="inline-flex"
             alignItems="center"
             justifyContent="center"
@@ -78,9 +78,8 @@ export const Heros: React.FC = () => {
             mb={{ base: 2, sm: 0 }}
             size="lg"
             cursor="pointer"
-            href="/docs"
           >
-            Documentation
+            <a href="/docs">Documentation</a>
           </Button>
         </Stack>
       </Box>

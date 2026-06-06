@@ -1,53 +1,54 @@
 import {
   Button,
   Link,
-  Popover,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
+  PopoverRoot,
   PopoverTrigger,
-  useToast,
+  PopoverPositioner,
+  PopoverContent,
+  PopoverCloseTrigger,
+  PopoverBody,
+  PopoverFooter,
 } from '@chakra-ui/react';
 import React from 'react';
+
+import { toaster } from '../../../hooks/useToast';
 
 type Props = {
   id: number;
 };
 
 export const ActionDelete: React.FC<Props> = ({ id }) => {
-  const toast = useToast();
-
   const handleDelete = async () => {
     try {
       const res = await fetch(`/api/feedback/delete?id=${id}`, {
         method: 'DELETE',
       });
-      toast({ title: 'Deleted', status: 'info', isClosable: true });
+      toaster.create({ title: 'Deleted', type: 'info' });
     } catch (e) {
       console.error(e);
-      toast({
+      toaster.create({
         title: 'Something went wrong!',
-        status: 'error',
-        isClosable: true,
+        type: 'error',
       });
     }
   };
 
   return (
-    <Popover>
+    <PopoverRoot>
       <PopoverTrigger>
         <Link color="red">Delete</Link>
       </PopoverTrigger>
-      <PopoverContent>
-        <PopoverCloseButton />
-        <PopoverBody border={0}>Are you sure?</PopoverBody>
-        <PopoverFooter border={0} textAlign="right">
-          <Button colorScheme="red" onClick={handleDelete}>
-            Delete
-          </Button>
-        </PopoverFooter>
-      </PopoverContent>
-    </Popover>
+      <PopoverPositioner>
+        <PopoverContent>
+          <PopoverCloseTrigger />
+          <PopoverBody border={0}>Are you sure?</PopoverBody>
+          <PopoverFooter border={0} textAlign="right">
+            <Button colorPalette="red" onClick={handleDelete}>
+              Delete
+            </Button>
+          </PopoverFooter>
+        </PopoverContent>
+      </PopoverPositioner>
+    </PopoverRoot>
   );
 };

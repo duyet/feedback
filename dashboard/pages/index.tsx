@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import { ChakraProvider } from '@chakra-ui/react';
+import { ThemeProvider } from 'next-themes';
+import { system } from '../theme';
 
 import Heros from '../components/landing/hero';
 import Widget from '../components/widget';
@@ -9,7 +11,8 @@ import Pricing from '../components/landing/pricing';
 
 const Home: NextPage = () => {
   return (
-    <ChakraProvider>
+    <ChakraProvider value={system}>
+      <ThemeProvider attribute="class" disableTransitionOnChange>
       <Head>
         <title>Feedback - Collect User Feedback, Issues, and Ideas</title>
         <meta name="description" content="A modern feedback platform built with Next.js, TypeScript & Prisma. Collect issues, ideas, and compliments from your users with ease." />
@@ -37,6 +40,7 @@ const Home: NextPage = () => {
       <Features />
       <Pricing />
       <Widget />
+      </ThemeProvider>
     </ChakraProvider>
   );
 };

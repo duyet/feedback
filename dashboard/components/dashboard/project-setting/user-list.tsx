@@ -3,18 +3,19 @@ import React, { useState } from 'react';
 import {
   ListItem,
   Input,
-  FormHelperText,
+  FieldHelperText,
   Text,
-  WrapItem,
-  Avatar,
   HStack,
-  List,
+  ListRoot,
+  AvatarRoot,
+  AvatarImage,
+  AvatarFallback,
   Badge,
-  useToast,
   Kbd,
   Link,
 } from '@chakra-ui/react';
 
+import { toaster } from '../../../hooks/useToast';
 import { ProjectUserPopulated, Invitation } from '../../../types/prisma';
 import fetcher from '../../../lib/fetcher';
 
@@ -28,7 +29,6 @@ export type Props = {
 };
 
 export const UserList: React.FC<Props> = ({ projectId, defaultValue = [] }) => {
-  const toast = useToast();
   const { mutate } = useSWRConfig();
 
   const invitationListUrl = `${API_INVITATION_LIST}?project=${projectId}`;
@@ -46,10 +46,9 @@ export const UserList: React.FC<Props> = ({ projectId, defaultValue = [] }) => {
     if (e.key !== 'Enter' || !inviteEmail) return;
 
     if (!inviteEmail.includes('@')) {
-      return toast({
-        status: 'error',
+      return toaster.create({
+        type: 'error',
         description: 'Invalid email',
-        isClosable: true,
       });
     }
 
@@ -65,19 +64,17 @@ export const UserList: React.FC<Props> = ({ projectId, defaultValue = [] }) => {
         throw Error(json.err);
       }
 
-      toast({
-        status: 'success',
+      toaster.create({
+        type: 'success',
         description: `Invited ${inviteEmail}`,
-        isClosable: true,
       });
 
       mutate(invitationListUrl);
       setInviteEmail('');
     } catch (err) {
-      toast({
-        status: 'error',
+      toaster.create({
+        type: 'error',
         description: `${err || 'Something went wrong'}`,
-        isClosable: true,
       });
     } finally {
       setLoading(false);
@@ -89,45 +86,45 @@ export const UserList: React.FC<Props> = ({ projectId, defaultValue = [] }) => {
 
   return (
     <>
-      <List mb={5}>
+      <ListRoot mb={5}>
         {list.map((item: ProjectUserPopulated) => (
           <ListItem key={item.userId} mb={3}>
-            <WrapItem>
-              <HStack>
+            <HStack>
+              <AvatarRoot>
                 {item.user.image ? (
-                  <Avatar src={item.user.image} />
+                  <AvatarImage src={item.user.image} />
                 ) : (
-                  <Avatar name={item.user.name || 'User'} />
+                  <AvatarFallback>{item.user.name || 'U'}</AvatarFallback>
                 )}
-                {JSON.stringify(item.user)}
-                <Text>
-                  {item.user.name}{' '}
-                  {item.user.email ? `(${item.user.email})` : null}
-                </Text>
-                <Badge
-                  colorScheme={item.role === 'owner' ? 'green' : undefined}
-                >
-                  {item.role}
-                </Badge>
-              </HStack>
-            </WrapItem>
+              </AvatarRoot>
+              {JSON.stringify(item.user)}
+              <Text>
+                {item.user.name}{' '}
+                {item.user.email ? `(${item.user.email})` : null}
+              </Text>
+              <Badge
+                colorPalette={item.role === 'owner' ? 'green' : undefined}
+              >
+                {item.role}
+              </Badge>
+            </HStack>
           </ListItem>
         ))}
 
         {!invitationListError && invitationList?.map((item: Invitation) => (
           <ListItem key={item.email} mb={3} opacity={0.5}>
-            <WrapItem>
-              <HStack>
-                <Avatar name={item.email} />
-                <Text>{item.email} </Text>
-                <Badge>{item.status}</Badge>
-                <Link onClick={handleRevokeInvitation}>(revoke)</Link>
-                <Link onClick={handleResendInvitation}>(resend)</Link>
-              </HStack>
-            </WrapItem>
+            <HStack>
+              <AvatarRoot>
+                <AvatarFallback>{item.email}</AvatarFallback>
+              </AvatarRoot>
+              <Text>{item.email} </Text>
+              <Badge>{item.status}</Badge>
+              <Link onClick={handleRevokeInvitation}>(revoke)</Link>
+              <Link onClick={handleResendInvitation}>(resend)</Link>
+            </HStack>
           </ListItem>
         ))}
-      </List>
+      </ListRoot>
 
       <Input
         type="url"
@@ -135,9 +132,9 @@ export const UserList: React.FC<Props> = ({ projectId, defaultValue = [] }) => {
         value={inviteEmail}
         onChange={handleOnChange}
         onKeyPress={handleOnEnterKey}
-        isDisabled={isLoading}
+        disabled={isLoading}
       />
-      <FormHelperText>
+      <FieldHelperText>
         {isLoading ? (
           <>Loading ...</>
         ) : (
@@ -145,7 +142,7 @@ export const UserList: React.FC<Props> = ({ projectId, defaultValue = [] }) => {
             Press <Kbd>Enter</Kbd> to invite via email.
           </>
         )}
-      </FormHelperText>
+      </FieldHelperText>
     </>
   );
 };

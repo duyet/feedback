@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import isValidDomain from 'is-valid-domain';
 import {
   ListItem,
-  UnorderedList,
   Input,
-  FormHelperText,
+  FieldHelperText,
   Kbd,
-  useToast,
   Link,
 } from '@chakra-ui/react';
 
+import { toaster } from '../../../hooks/useToast';
 import { Domain } from '../../../types/prisma';
 
 export type DomainListProps = {
@@ -21,7 +20,6 @@ export const DomainList: React.FC<DomainListProps> = ({
   defaultValue = [],
   onChange,
 }) => {
-  const toast = useToast();
   const [list, setList] = useState<string[]>(
     defaultValue.map((domain: Domain) => domain.domain)
   );
@@ -44,10 +42,9 @@ export const DomainList: React.FC<DomainListProps> = ({
     if (e.key !== 'Enter' || !current) return;
 
     if (!current.startsWith('localhost') && !isValidDomain(current)) {
-      return toast({
-        status: 'error',
+      return toaster.create({
+        type: 'error',
         description: 'Invalid domain name',
-        isClosable: true,
       });
     }
 
@@ -68,7 +65,7 @@ export const DomainList: React.FC<DomainListProps> = ({
 
   return (
     <>
-      <UnorderedList mb={5}>
+      <ul style={{ marginBottom: '1.25rem', paddingLeft: '1.25rem' }}>
         {list.map((item: string, index: number) => {
           return (
             <ListItem key={index}>
@@ -79,7 +76,7 @@ export const DomainList: React.FC<DomainListProps> = ({
             </ListItem>
           );
         })}
-      </UnorderedList>
+      </ul>
       <Input
         type="url"
         value={current}
@@ -87,9 +84,9 @@ export const DomainList: React.FC<DomainListProps> = ({
         onKeyPress={handleOnEnterKey}
         placeholder="domain.com"
       />
-      <FormHelperText>
+      <FieldHelperText>
         Press <Kbd>Enter</Kbd>
-      </FormHelperText>
+      </FieldHelperText>
     </>
   );
 };

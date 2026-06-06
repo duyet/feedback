@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import type { NextPage } from 'next';
-import { Flex, Heading, Alert, AlertIcon } from '@chakra-ui/react';
+import { Flex, Heading, AlertRoot, AlertIndicator } from '@chakra-ui/react';
 
 import fetcher from '../../lib/fetcher';
 import Layout from '../../components/layout';
@@ -16,10 +16,10 @@ const TheForm: NextPage = () => {
   if (errForm) {
     return (
       <Layout>
-        <Alert status="error">
-          <AlertIcon />
+        <AlertRoot status="error">
+          <AlertIndicator />
           Cannot load the list of forms!
-        </Alert>
+        </AlertRoot>
       </Layout>
     );
   }

@@ -6,7 +6,7 @@ import { Box, Skeleton, SkeletonText, VStack, HStack } from '@chakra-ui/react';
  */
 export const FeedbackListSkeleton = () => {
   return (
-    <VStack spacing={4} w="full" align="stretch">
+    <VStack gap={4} w="full" align="stretch">
       {[1, 2, 3, 4, 5].map((i) => (
         <Box
           key={i}
@@ -16,14 +16,14 @@ export const FeedbackListSkeleton = () => {
           bg="white"
           boxShadow="sm"
         >
-          <HStack spacing={4} mb={3}>
+          <HStack gap={4} mb={3}>
             <Skeleton height="40px" width="40px" borderRadius="full" />
             <Box flex={1}>
               <Skeleton height="16px" width="30%" mb={2} />
               <Skeleton height="12px" width="50%" />
             </Box>
           </HStack>
-          <SkeletonText mt={4} noOfLines={3} spacing={2} />
+          <SkeletonText mt={4} noOfLines={3} gap={2} />
         </Box>
       ))}
     </VStack>
@@ -43,8 +43,8 @@ export const ProjectCardSkeleton = () => {
       boxShadow="sm"
     >
       <Skeleton height="24px" width="60%" mb={4} />
-      <SkeletonText noOfLines={2} spacing={2} mb={4} />
-      <HStack spacing={3}>
+      <SkeletonText noOfLines={2} gap={2} mb={4} />
+      <HStack gap={3}>
         <Skeleton height="32px" width="80px" borderRadius="md" />
         <Skeleton height="32px" width="80px" borderRadius="md" />
       </HStack>
@@ -59,8 +59,8 @@ export const DashboardSkeleton = () => {
   return (
     <Box p={8}>
       <Skeleton height="40px" width="300px" mb={8} />
-      <VStack spacing={6} align="stretch">
-        <HStack spacing={6}>
+      <VStack gap={6} align="stretch">
+        <HStack gap={6}>
           {[1, 2, 3].map((i) => (
             <Box key={i} flex={1} p={6} borderWidth={1} borderRadius="lg" bg="white">
               <Skeleton height="20px" width="40%" mb={3} />
@@ -80,7 +80,7 @@ export const DashboardSkeleton = () => {
  */
 export const FormSkeleton = () => {
   return (
-    <VStack spacing={4} align="stretch">
+    <VStack gap={4} align="stretch">
       {[1, 2, 3].map((i) => (
         <Box key={i}>
           <Skeleton height="14px" width="100px" mb={2} />

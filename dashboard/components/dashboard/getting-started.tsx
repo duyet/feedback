@@ -8,11 +8,13 @@ import {
   Text,
   Grid,
   GridItem,
-  useColorModeValue,
+  Link,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
 
 import CodeHighLight from '../common/code-highlight';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { Icon } from '@chakra-ui/react';
+import { LuExternalLink } from 'react-icons/lu';
 
 export type GettingStartedProps = {
   projectId?: string;
@@ -27,7 +29,7 @@ import { Feedback } from '@okie/feedback';
 const App = () => {
   return (
       <Feedback
-        user={currentUser.email} 
+        user={currentUser.email}
         project="${projectId || '...'}" />
   );
 }
@@ -68,14 +70,14 @@ const App = () => {
               customer feedback.
             </chakra.p>
             <Button
-              as="a"
+              asChild
               variant="solid"
               w={{ base: 'full', sm: 'auto' }}
-              href="/docs"
-              target="_blank"
             >
-              <Text mr={1}>Documentation</Text>
-              <ExternalLinkIcon />
+              <a href="/docs" target="_blank" rel="noopener noreferrer">
+                <Text mr={1}>Documentation</Text>
+                <Icon as={LuExternalLink} />
+              </a>
             </Button>
           </Box>
         </GridItem>
@@ -83,7 +85,7 @@ const App = () => {
           <VStack
             direction="column"
             flexGrow={1}
-            spacing={5}
+            gap={5}
             alignItems="start"
           >
             <CodeHighLight

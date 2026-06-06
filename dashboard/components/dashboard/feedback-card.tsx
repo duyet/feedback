@@ -1,24 +1,25 @@
 import {
   Box,
   Button,
-  Card,
+  CardRoot,
   CardBody,
-  CardFooter,
   CardHeader,
+  CardFooter,
   Flex,
   Heading,
   HStack,
   Icon,
   IconButton,
-  Tag,
   Text,
   VStack,
-  useColorModeValue,
-  Collapse,
-  Image,
   Badge,
-  Tooltip,
+  TooltipRoot,
+  TooltipTrigger,
+  TooltipPositioner,
+  TooltipContent,
+  Image,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
 import { useState } from 'react';
 import {
   FiMail,
@@ -30,9 +31,6 @@ import {
   FiClock,
   FiImage,
 } from 'react-icons/fi';
-import { motion } from 'framer-motion';
-
-const MotionCard = motion(Card);
 
 interface FeedbackCardProps {
   id: number;
@@ -82,7 +80,7 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({
   const deviceInfo = device ? JSON.parse(device) : null;
 
   return (
-    <MotionCard
+    <CardRoot
       bg={bgColor}
       borderWidth="1px"
       borderColor={borderColor}
@@ -93,63 +91,70 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({
         boxShadow: 'md',
         borderColor: 'blue.400',
       }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      whileHover={{ scale: 1.01 }}
     >
       <CardHeader pb={2}>
         <Flex justify="space-between" align="start">
-          <VStack align="start" spacing={1} flex={1}>
-            <HStack spacing={2}>
+          <VStack align="start" gap={1} flex={1}>
+            <HStack gap={2}>
               {name ? (
-                <HStack spacing={2}>
+                <HStack gap={2}>
                   <Icon as={FiUser} color="blue.500" />
                   <Text fontWeight="semibold" fontSize="md">
                     {name}
                   </Text>
                 </HStack>
               ) : (
-                <Badge colorScheme="gray">Anonymous</Badge>
+                <Badge colorPalette="gray">Anonymous</Badge>
               )}
               {email && (
-                <Tooltip label={email} placement="top">
-                  <HStack spacing={1} fontSize="sm" color={textColor}>
-                    <Icon as={FiMail} boxSize={3} />
-                    <Text isTruncated maxW="200px">
-                      {email}
-                    </Text>
-                  </HStack>
-                </Tooltip>
+                <TooltipRoot>
+                  <TooltipTrigger asChild>
+                    <HStack gap={1} fontSize="sm" color={textColor}>
+                      <Icon as={FiMail} boxSize={3} />
+                      <Text truncate maxW="200px">
+                        {email}
+                      </Text>
+                    </HStack>
+                  </TooltipTrigger>
+                  <TooltipPositioner>
+                    <TooltipContent>{email}</TooltipContent>
+                  </TooltipPositioner>
+                </TooltipRoot>
               )}
             </HStack>
-            <HStack spacing={2} fontSize="xs" color={textColor}>
+            <HStack gap={2} fontSize="xs" color={textColor}>
               <Icon as={FiClock} />
               <Text>{formattedDate}</Text>
             </HStack>
           </VStack>
 
-          <HStack spacing={2}>
+          <HStack gap={2}>
             {screenshot && !imageError && (
-              <Tooltip label="Has screenshot" placement="top">
-                <Badge colorScheme="green" variant="subtle">
-                  <HStack spacing={1}>
-                    <Icon as={FiImage} boxSize={3} />
-                    <Text>Screenshot</Text>
-                  </HStack>
-                </Badge>
-              </Tooltip>
+              <TooltipRoot>
+                <TooltipTrigger asChild>
+                  <Badge colorPalette="green" variant="subtle">
+                    <HStack gap={1}>
+                      <Icon as={FiImage} boxSize={3} />
+                      <Text>Screenshot</Text>
+                    </HStack>
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipPositioner>
+                  <TooltipContent>Has screenshot</TooltipContent>
+                </TooltipPositioner>
+              </TooltipRoot>
             )}
             <IconButton
               aria-label="Delete feedback"
-              icon={<FiTrash2 />}
               size="sm"
               variant="ghost"
-              colorScheme="red"
+              colorPalette="red"
               onClick={() => onDelete?.(id)}
-              isLoading={isDeleting}
+              loading={isDeleting}
               _hover={{ bg: 'red.50' }}
-            />
+            >
+              <FiTrash2 />
+            </IconButton>
           </HStack>
         </Flex>
       </CardHeader>
@@ -172,34 +177,39 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({
         </Box>
 
         {url && (
-          <HStack mt={3} spacing={2} fontSize="sm" color={textColor}>
+          <HStack mt={3} gap={2} fontSize="sm" color={textColor}>
             <Icon as={FiGlobe} />
-            <Tooltip label={url} placement="top">
-              <Text isTruncated maxW="400px" cursor="pointer">
-                {url}
-              </Text>
-            </Tooltip>
+            <TooltipRoot>
+              <TooltipTrigger asChild>
+                <Text truncate maxW="400px" cursor="pointer">
+                  {url}
+                </Text>
+              </TooltipTrigger>
+              <TooltipPositioner>
+                <TooltipContent>{url}</TooltipContent>
+              </TooltipPositioner>
+            </TooltipRoot>
           </HStack>
         )}
       </CardBody>
 
       <CardFooter pt={0}>
-        <VStack w="full" spacing={2} align="stretch">
+        <VStack w="full" gap={2} align="stretch">
           {(screenshot || deviceInfo) && (
             <>
               <Button
                 size="sm"
                 variant="ghost"
-                rightIcon={isExpanded ? <FiChevronUp /> : <FiChevronDown />}
                 onClick={() => setIsExpanded(!isExpanded)}
                 w="full"
                 justifyContent="space-between"
               >
                 <Text>Additional Details</Text>
+                {isExpanded ? <FiChevronUp /> : <FiChevronDown />}
               </Button>
 
-              <Collapse in={isExpanded} animateOpacity>
-                <VStack spacing={3} align="stretch">
+              {isExpanded && (
+                <VStack gap={3} align="stretch">
                   {deviceInfo && (
                     <Box
                       p={3}
@@ -210,7 +220,7 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({
                       <Text fontWeight="semibold" mb={2}>
                         Device Information:
                       </Text>
-                      <VStack align="start" spacing={1}>
+                      <VStack align="start" gap={1}>
                         {deviceInfo.osName && (
                           <Text>
                             <strong>OS:</strong> {deviceInfo.osName}{' '}
@@ -252,12 +262,12 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({
                     </Box>
                   )}
                 </VStack>
-              </Collapse>
+              )}
             </>
           )}
         </VStack>
       </CardFooter>
-    </MotionCard>
+    </CardRoot>
   );
 };
 

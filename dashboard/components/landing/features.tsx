@@ -6,8 +6,8 @@ import {
   Icon,
   Link,
   SimpleGrid,
-  useColorModeValue,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
 
 const REPO = process.env.repo;
 
@@ -87,8 +87,7 @@ export const Features = () => (
 
       <SimpleGrid
         columns={{ base: 1, sm: 2, md: 3 }}
-        spacingX={{ base: 8, lg: 24 }}
-        spacingY={16}
+        gap={{ base: 8, lg: 24 }}
         mt={6}
       >
         <Feature
@@ -157,7 +156,7 @@ export const Features = () => (
           }
         >
           Your central hub that helps you see, and react to, absolutely
-          everything that’s happening.
+          everything that&apos;s happening.
         </Feature>
 
         <Feature
@@ -183,9 +182,9 @@ export const Features = () => (
             </>
           }
         >
-          Feedback is open source. If you’re interested in contributing visit
+          Feedback is open source. If you&apos;re interested in contributing visit
           the{' '}
-          <Link href={REPO} isExternal>
+          <Link href={REPO} target="_blank" rel="noopener noreferrer">
             GitHub repository
           </Link>
           .

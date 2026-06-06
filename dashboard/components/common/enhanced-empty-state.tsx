@@ -5,9 +5,9 @@ import {
   Text,
   VStack,
   Icon,
-  useColorModeValue,
   Flex,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
 import { motion } from 'framer-motion';
 import {
   FiInbox,
@@ -65,7 +65,7 @@ export const EnhancedEmptyState: React.FC<EnhancedEmptyStateProps> = ({
   };
 
   const IconComponent = CustomIcon || defaultIcons[type];
-  const colorScheme = iconColorMap[type];
+  const colorPalette = iconColorMap[type];
 
   return (
     <Flex
@@ -76,7 +76,7 @@ export const EnhancedEmptyState: React.FC<EnhancedEmptyStateProps> = ({
       bg={bgColor}
       borderRadius="xl"
     >
-      <VStack spacing={6} maxW="md" textAlign="center">
+      <VStack gap={6} maxW="md" textAlign="center">
         <MotionBox
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
@@ -91,7 +91,7 @@ export const EnhancedEmptyState: React.FC<EnhancedEmptyStateProps> = ({
             w="120px"
             h="120px"
             borderRadius="full"
-            bg={`${colorScheme}.50`}
+            bg={`${colorPalette}.50`}
             align="center"
             justify="center"
             boxShadow="xl"
@@ -99,7 +99,7 @@ export const EnhancedEmptyState: React.FC<EnhancedEmptyStateProps> = ({
             <Icon
               as={IconComponent}
               boxSize={16}
-              color={`${colorScheme}.500`}
+              color={`${colorPalette}.500`}
             />
           </Flex>
         </MotionBox>
@@ -123,12 +123,11 @@ export const EnhancedEmptyState: React.FC<EnhancedEmptyStateProps> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.4 }}
           >
-            <VStack spacing={3}>
+            <VStack gap={3}>
               {action && (
                 <Button
-                  colorScheme={colorScheme}
+                  colorPalette={colorPalette}
                   size="lg"
-                  leftIcon={action.icon ? <Icon as={action.icon} /> : undefined}
                   onClick={action.onClick}
                   boxShadow="md"
                   _hover={{
@@ -137,13 +136,14 @@ export const EnhancedEmptyState: React.FC<EnhancedEmptyStateProps> = ({
                   }}
                   transition="all 0.2s"
                 >
+                  {action.icon && <Icon as={action.icon} />}
                   {action.label}
                 </Button>
               )}
               {secondaryAction && (
                 <Button
                   variant="ghost"
-                  colorScheme={colorScheme}
+                  colorPalette={colorPalette}
                   onClick={secondaryAction.onClick}
                   _hover={{
                     transform: 'translateY(-2px)',

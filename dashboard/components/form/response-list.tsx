@@ -1,6 +1,12 @@
-import Link from 'next/link';
 import { FormResponse } from '@prisma/client';
-import { Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
+import {
+  TableRoot,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableColumnHeader,
+  TableCell,
+} from '@chakra-ui/react';
 
 export type Props = {
   responses: FormResponse[];
@@ -8,15 +14,15 @@ export type Props = {
 
 export const ResponseList: React.FC<Props> = ({ responses }) => {
   return (
-    <Table variant="simple">
-      <Thead>
-        <Tr>
-          <Th>Who</Th>
-          <Th>Choice</Th>
-          <Th>Time</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
+    <TableRoot>
+      <TableHeader>
+        <TableRow>
+          <TableColumnHeader>Who</TableColumnHeader>
+          <TableColumnHeader>Choice</TableColumnHeader>
+          <TableColumnHeader>Time</TableColumnHeader>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {responses.map((response: FormResponse) => {
           const {
             id,
@@ -26,15 +32,15 @@ export const ResponseList: React.FC<Props> = ({ responses }) => {
             createdAt,
           } = response;
           return (
-            <Tr key={id}>
-              <Td>{email || name}</Td>
-              <Td>{responseText}</Td>
-              <Td textAlign="right">{createdAt.toString()}</Td>
-            </Tr>
+            <TableRow key={id}>
+              <TableCell>{email || name}</TableCell>
+              <TableCell>{responseText}</TableCell>
+              <TableCell textAlign="right">{createdAt.toString()}</TableCell>
+            </TableRow>
           );
         })}
-      </Tbody>
-    </Table>
+      </TableBody>
+    </TableRoot>
   );
 };
 

@@ -1,10 +1,11 @@
 import React from 'react';
 import {
   Image,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalCloseButton,
+  DialogRoot,
+  DialogBackdrop,
+  DialogPositioner,
+  DialogContent,
+  DialogCloseTrigger,
   useDisclosure,
 } from '@chakra-ui/react';
 
@@ -13,28 +14,28 @@ export type ScreenshotProps = {
 };
 
 export const Screenshot: React.FC<ScreenshotProps> = ({ screenshot }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handleOnClick = onOpen;
+  const { open, onOpen, onClose } = useDisclosure();
 
   return (
     <>
       <Image
         src={screenshot}
-        onClick={handleOnClick}
+        onClick={onOpen}
         height={100}
         borderRadius={5}
         cursor="pointer"
         alt="Screenshot"
       />
 
-      <Modal onClose={onClose} size={'full'} isOpen={isOpen}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalCloseButton />
-          <Image src={screenshot} alt="Screenshot" />
-        </ModalContent>
-      </Modal>
+      <DialogRoot open={open} onOpenChange={(e: { open: boolean }) => { if (!e.open) onClose(); }} size="full">
+        <DialogBackdrop />
+        <DialogPositioner>
+          <DialogContent>
+            <DialogCloseTrigger />
+            <Image src={screenshot} alt="Screenshot" />
+          </DialogContent>
+        </DialogPositioner>
+      </DialogRoot>
     </>
   );
 };

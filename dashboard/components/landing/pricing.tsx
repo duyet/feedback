@@ -3,16 +3,16 @@ import {
   chakra,
   Box,
   Flex,
-  useColorModeValue,
   Button,
   Stack,
   Text,
-  List,
+  ListRoot,
   ListItem,
-  ListIcon,
   Link,
 } from '@chakra-ui/react';
-import { CheckIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import { Icon } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
+import { LuCheck, LuExternalLink } from 'react-icons/lu';
 
 export const Pricing: React.FC = () => {
   const DONATION_URL = process.env.donationUrl;
@@ -85,39 +85,39 @@ export const Pricing: React.FC = () => {
               </Stack>
               <Text>
                 Free. However, we do appreciate{' '}
-                <Link color="teal" href={DONATION_URL} isExternal>
-                  donations <ExternalLinkIcon mx="1px" />
+                <Link color="teal" href={DONATION_URL} target="_blank" rel="noopener noreferrer">
+                  donations <Icon as={LuExternalLink} mx="1px" />
                 </Link>
                 .
               </Text>
             </Stack>
 
             <Box bg={useColorModeValue('gray.50', 'gray.900')} px={6} py={10}>
-              <List spacing={3}>
+              <ListRoot gap={3}>
                 <ListItem>
-                  <ListIcon as={CheckIcon} color="green.400" />
+                  <Icon as={LuCheck} color="green.400" mr={2} />
                   Unlimited projects
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={CheckIcon} color="green.400" />
+                  <Icon as={LuCheck} color="green.400" mr={2} />
                   Unlimited domains
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={CheckIcon} color="green.400" />
+                  <Icon as={LuCheck} color="green.400" mr={2} />
                   Unlimited feedback submissions
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={CheckIcon} color="green.400" />
+                  <Icon as={LuCheck} color="green.400" mr={2} />
                   Support via Github Issues
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={CheckIcon} color="green.400" />
+                  <Icon as={LuCheck} color="green.400" mr={2} />
                   All features
                 </ListItem>
-              </List>
+              </ListRoot>
 
               <Button
-                as={'a'}
+                asChild
                 mt={10}
                 w={'full'}
                 bg={'teal'}
@@ -129,9 +129,8 @@ export const Pricing: React.FC = () => {
                 _focus={{
                   bg: 'teal',
                 }}
-                href="/dashboard"
               >
-                Get started
+                <a href="/dashboard">Get started</a>
               </Button>
             </Box>
           </Box>

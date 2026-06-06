@@ -6,14 +6,15 @@ import {
   Image,
   Button,
   IconButton,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
+  PopoverRoot,
   PopoverTrigger,
+  PopoverPositioner,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseTrigger,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
   Text,
   Textarea,
 } from '@chakra-ui/react';
@@ -24,7 +25,8 @@ import {
   fullBrowserVersion,
   browserName,
 } from 'react-device-detect';
-import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
+import { Icon } from '@chakra-ui/react';
+import { LuCircleCheck, LuX } from 'react-icons/lu';
 
 import ScreenshotIcon from './screenshot-icon';
 import Loading from '../common/loading';
@@ -145,7 +147,7 @@ export const Widget: React.FC<WidgetProps> = ({
         {title}
       </PopoverHeader>
       <PopoverArrow />
-      <PopoverCloseButton />
+      <PopoverCloseTrigger />
 
       <PopoverBody>
         <Textarea placeholder={placeholder} onChange={handleInputChange} />
@@ -160,24 +162,24 @@ export const Widget: React.FC<WidgetProps> = ({
           <Box>
             <IconButton
               aria-label="Capture Screenshot"
-              icon={<ScreenshotIcon />}
-              isDisabled={disableScreenshot}
+              disabled={disableScreenshot}
               onClick={handleCaptureScreenshot}
-            />
+            >
+              <ScreenshotIcon />
+            </IconButton>
             {screenshot ? (
               <IconButton
                 ml={3}
                 aria-label="Capture Screenshot"
-                icon={
-                  <Image
-                    src={screenshot}
-                    alt="Screenshot"
-                    htmlWidth={40}
-                    htmlHeight={40}
-                  />
-                }
                 onClick={handleClickOnCapturedScreenshot}
-              />
+              >
+                <Image
+                  src={screenshot}
+                  alt="Screenshot"
+                  htmlWidth={40}
+                  htmlHeight={40}
+                />
+              </IconButton>
             ) : null}
           </Box>
           <Button onClick={handleSubmitFeedback}>
@@ -196,10 +198,10 @@ export const Widget: React.FC<WidgetProps> = ({
 
   const successContent = (
     <>
-      <PopoverCloseButton onClick={handleResetState} />
+      <PopoverCloseTrigger onClick={handleResetState} />
       <PopoverBody textAlign="center">
         <Box p={5}>
-          <CheckCircleIcon color="green" w={10} h={10} />
+          <Icon as={LuCircleCheck} color="green" w={10} h={10} />
         </Box>
         <Text pb={5}>Thanks! We received your feedback.</Text>
       </PopoverBody>
@@ -208,10 +210,10 @@ export const Widget: React.FC<WidgetProps> = ({
 
   const errorContent = (
     <>
-      <PopoverCloseButton onClick={handleResetState} />
+      <PopoverCloseTrigger onClick={handleResetState} />
       <PopoverBody textAlign="center">
         <Box p={5}>
-          <CloseIcon color="red" w={10} h={10} />
+          <Icon as={LuX} color="red" w={10} h={10} />
         </Box>
         <Text pb={2}>Sorry! We can&apos;t received your feedback.</Text>
         <Text cursor="pointer" color="gray" onClick={handleSubmitFeedback}>
@@ -222,15 +224,17 @@ export const Widget: React.FC<WidgetProps> = ({
   );
 
   return (
-    <Popover closeOnBlur={true} autoFocus={true} closeOnEsc={true}>
+    <PopoverRoot>
       <PopoverTrigger>{trigger}</PopoverTrigger>
-      <PopoverContent>
-        {state === 'submit' ? submitContent : null}
-        {state === 'submitting' ? submittingContent : null}
-        {state === 'success' ? successContent : null}
-        {state === 'error' ? errorContent : null}
-      </PopoverContent>
-    </Popover>
+      <PopoverPositioner>
+        <PopoverContent>
+          {state === 'submit' ? submitContent : null}
+          {state === 'submitting' ? submittingContent : null}
+          {state === 'success' ? successContent : null}
+          {state === 'error' ? errorContent : null}
+        </PopoverContent>
+      </PopoverPositioner>
+    </PopoverRoot>
   );
 };
 

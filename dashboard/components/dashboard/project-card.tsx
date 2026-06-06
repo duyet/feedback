@@ -1,5 +1,5 @@
 import {
-  Card,
+  CardRoot,
   CardBody,
   CardHeader,
   CardFooter,
@@ -10,19 +10,20 @@ import {
   VStack,
   Badge,
   Icon,
-  useColorModeValue,
-  Stat,
+  StatRoot,
   StatLabel,
-  StatNumber,
+  StatValueText,
   StatHelpText,
   Flex,
   IconButton,
-  Menu,
-  MenuButton,
-  MenuList,
+  MenuRoot,
+  MenuTrigger,
+  MenuPositioner,
+  MenuContent,
   MenuItem,
-  Divider,
+  MenuSeparator,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
 import {
   FiMessageSquare,
   FiUsers,
@@ -32,10 +33,7 @@ import {
   FiTrash2,
   FiExternalLink,
 } from 'react-icons/fi';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
-
-const MotionCard = motion(Card);
 
 interface ProjectCardProps {
   id: string;
@@ -68,7 +66,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   const statBg = useColorModeValue('blue.50', 'blue.900');
 
   return (
-    <MotionCard
+    <CardRoot
       bg={bgColor}
       borderWidth="1px"
       borderColor={borderColor}
@@ -80,24 +78,21 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         borderColor: 'blue.400',
         transform: 'translateY(-4px)',
       }}
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.2 }}
+      transition="all 0.2s"
     >
       <CardHeader pb={2}>
         <Flex justify="space-between" align="start">
-          <VStack align="start" spacing={1} flex={1}>
+          <VStack align="start" gap={1} flex={1}>
             <Heading size="md" mb={1}>
               {name}
             </Heading>
             {domains.length > 0 && (
-              <HStack spacing={2} flexWrap="wrap">
+              <HStack gap={2} flexWrap="wrap">
                 <Icon as={FiGlobe} color="gray.500" boxSize={4} />
                 {domains.slice(0, 2).map((domain) => (
                   <Badge
                     key={domain}
-                    colorScheme="blue"
+                    colorPalette="blue"
                     variant="subtle"
                     borderRadius="full"
                     px={3}
@@ -107,7 +102,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 ))}
                 {domains.length > 2 && (
                   <Badge
-                    colorScheme="gray"
+                    colorPalette="gray"
                     variant="subtle"
                     borderRadius="full"
                     px={2}
@@ -119,43 +114,43 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             )}
           </VStack>
 
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              aria-label="Project options"
-              icon={<FiMoreVertical />}
-              size="sm"
-              variant="ghost"
-              _hover={{ bg: hoverBg }}
-            />
-            <MenuList>
-              <Link href={`/dashboard?project=${id}`} passHref>
-                <MenuItem icon={<FiExternalLink />}>
-                  Open Dashboard
-                </MenuItem>
-              </Link>
-              <Link href={`/project/${id}/settings`} passHref>
-                <MenuItem icon={<FiSettings />}>
-                  Settings
-                </MenuItem>
-              </Link>
-              <Divider />
-              <MenuItem
-                icon={<FiTrash2 />}
-                color="red.500"
-                onClick={() => onDelete?.(id)}
-                isDisabled={isDeleting}
+          <MenuRoot>
+            <MenuTrigger asChild>
+              <IconButton
+                aria-label="Project options"
+                size="sm"
+                variant="ghost"
+                _hover={{ bg: hoverBg }}
               >
-                Delete Project
-              </MenuItem>
-            </MenuList>
-          </Menu>
+                <FiMoreVertical />
+              </IconButton>
+            </MenuTrigger>
+            <MenuPositioner>
+              <MenuContent>
+                  <MenuItem asChild value="open-dashboard">
+                    <a href={`/dashboard?project=${id}`}><FiExternalLink /> Open Dashboard</a>
+                  </MenuItem>
+                  <MenuItem asChild value="settings">
+                    <a href={`/project/${id}/settings`}><FiSettings /> Settings</a>
+                  </MenuItem>
+                <MenuSeparator />
+                <MenuItem
+                  value="delete"
+                  color="red.500"
+                  onClick={() => onDelete?.(id)}
+                  disabled={isDeleting}
+                >
+                  <FiTrash2 /> Delete Project
+                </MenuItem>
+              </MenuContent>
+            </MenuPositioner>
+          </MenuRoot>
         </Flex>
       </CardHeader>
 
       <CardBody py={4}>
-        <HStack spacing={4} justify="space-around">
-          <Stat
+        <HStack gap={4} justify="space-around">
+          <StatRoot
             bg={statBg}
             p={3}
             borderRadius="lg"
@@ -168,15 +163,15 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               <Icon as={FiMessageSquare} mr={1} />
               Feedback
             </StatLabel>
-            <StatNumber fontSize="2xl" fontWeight="bold" color="blue.600">
+            <StatValueText fontSize="2xl" fontWeight="bold" color="blue.600">
               {feedbackCount}
-            </StatNumber>
+            </StatValueText>
             <StatHelpText fontSize="xs" m={0}>
               {feedbackCount === 1 ? 'item' : 'items'}
             </StatHelpText>
-          </Stat>
+          </StatRoot>
 
-          <Stat
+          <StatRoot
             bg={statBg}
             p={3}
             borderRadius="lg"
@@ -189,43 +184,43 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               <Icon as={FiUsers} mr={1} />
               Members
             </StatLabel>
-            <StatNumber fontSize="2xl" fontWeight="bold" color="blue.600">
+            <StatValueText fontSize="2xl" fontWeight="bold" color="blue.600">
               {memberCount}
-            </StatNumber>
+            </StatValueText>
             <StatHelpText fontSize="xs" m={0}>
               {memberCount === 1 ? 'member' : 'members'}
             </StatHelpText>
-          </Stat>
+          </StatRoot>
         </HStack>
       </CardBody>
 
       <CardFooter pt={0} pb={4}>
-        <HStack w="full" spacing={3}>
+        <HStack w="full" gap={3}>
           <Link href={`/dashboard?project=${id}`} passHref style={{ flex: 1 }}>
             <Button
-              colorScheme="blue"
+              colorPalette="blue"
               size="md"
               w="full"
-              leftIcon={<FiMessageSquare />}
               _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
               transition="all 0.2s"
             >
-              View Feedback
+              <FiMessageSquare /> View Feedback
             </Button>
           </Link>
           <Link href={`/project/${id}/settings`} passHref>
             <IconButton
               aria-label="Project settings"
-              icon={<FiSettings />}
-              colorScheme="gray"
+              colorPalette="gray"
               variant="outline"
               _hover={{ transform: 'translateY(-2px)', boxShadow: 'md' }}
               transition="all 0.2s"
-            />
+            >
+              <FiSettings />
+            </IconButton>
           </Link>
         </HStack>
       </CardFooter>
-    </MotionCard>
+    </CardRoot>
   );
 };
 

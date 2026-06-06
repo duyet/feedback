@@ -4,8 +4,8 @@ import {
   Flex,
   HStack,
   Container,
-  useColorModeValue,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../../ui/color-mode';
 
 type HeaderProps = {
   title: string;
@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
           alignItems={'center'}
           justifyContent={'space-around'}
         >
-          <HStack spacing={8} alignItems={'center'}>
+          <HStack gap={8} alignItems={'center'}>
             <Box fontWeight="700" textAlign="center">
               {title}
             </Box>
