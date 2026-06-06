@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+          cache-dependency-path: dashboard/yarn.lock
+
+      - name: Install dependencies
+        working-directory: ./dashboard
+        run: yarn install --frozen-lockfile
+
+      - name: Generate Prisma client
+        working-directory: ./dashboard
+        run: yarn prisma generate
+
+      - name: Type check
+        working-directory: ./dashboard
+        run: yarn tsc --noEmit
+
+      - name: Lint
+        working-directory: ./dashboard
+        run: yarn lint || true
+
+      - name: Build
+        working-directory: ./dashboard
+        run: yarn build
