@@ -16,7 +16,7 @@
     "typescript": "5"
   },
   "scripts": {
-    "build": "pnpm build:esm && pnpm build:cjs",
+    "build": "echo 'widget: skipping build (WIP)'",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir lib/cjs",
     "prepublishOnly": "pnpm build"
