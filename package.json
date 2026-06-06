@@ -1,0 +1,21 @@
+{
+  "name": "feedback-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Feedback project monorepo",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "clean": "turbo clean",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
+  },
+  "devDependencies": {
+    "prettier": "^3",
+    "turbo": "^2"
+  },
+  "packageManager": "pnpm@10.11.0",
+  "engines": {
+    "node": ">=20"
+  }
+}

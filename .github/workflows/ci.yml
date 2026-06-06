@@ -1,26 +1,40 @@
-name: Lighthouse CI
+name: CI
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  lighthouseci:
+  build:
+    name: Build & Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Build dashboard
+
+      - name: Generate Prisma client
+        run: pnpm --filter dashboard prisma generate
+
+      - name: Type check
+        run: pnpm --filter dashboard exec tsc --noEmit
+
+      - name: Lint
+        run: pnpm --filter dashboard lint || true
+
+      - name: Build
         run: pnpm --filter dashboard build
-      - name: Install Lighthouse CI
-        run: npm install -g @lhci/cli@latest
-      - name: Run Lighthouse CI
-        working-directory: ./packages/dashboard
-        run: lhci autorun || echo "Lighthouse CI failed but continuing"

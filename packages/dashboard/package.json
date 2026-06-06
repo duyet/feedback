@@ -50,7 +50,8 @@
     "eslint-config-next": "^16",
     "prisma": "6.19.0",
     "ts-node": "^10.9.2",
-    "typescript": "5"
+    "typescript": "5",
+    "@feedback/shared": "workspace:*"
   },
   "prettier": {
     "semi": true,
