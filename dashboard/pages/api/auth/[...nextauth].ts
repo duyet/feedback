@@ -1,4 +1,5 @@
 import NextAuth from 'next-auth';
+// @ts-expect-error -- next-auth v4 module resolution with bundler moduleResolution
 import { Provider } from 'next-auth/providers';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import GithubProvider from 'next-auth/providers/github';

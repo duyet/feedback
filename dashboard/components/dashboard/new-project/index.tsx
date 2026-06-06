@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
+  AlertRoot,
+  AlertIndicator,
   AlertTitle,
+  AlertDescription,
+  FieldRoot,
+  FieldLabel,
   Box,
   Button,
-  FormControl,
-  FormLabel,
   Input,
   Text,
-  useToast,
 } from '@chakra-ui/react';
+import { toaster } from '../../../hooks/useToast';
 
 import fetcher from '../../../lib/fetcher';
 import Loading from '../../common/loading';
@@ -28,7 +28,6 @@ export const NewProjectForm: React.FC<NewProjectFormProps> = ({
   onSuccess,
 }) => {
   const { mutate } = useSWRConfig();
-  const toast = useToast();
 
   const [state, setState] = useState<CreateProjectState>('init');
 
@@ -68,19 +67,17 @@ export const NewProjectForm: React.FC<NewProjectFormProps> = ({
       mutate('/api/project');
 
       // Toast message
-      toast({
-        status: 'success',
+      toaster.create({
+        type: 'success',
         description: `🤘 Successfully`,
-        isClosable: true,
       });
 
       if (onSuccess) onSuccess(json.projectId);
     } catch (err) {
       setState('error');
-      toast({
-        status: 'error',
+      toaster.create({
+        type: 'error',
         description: `${err}`,
-        isClosable: true,
       });
     }
   };
@@ -96,7 +93,7 @@ export const NewProjectForm: React.FC<NewProjectFormProps> = ({
 
   if (state === 'success') {
     return (
-      <Alert
+      <AlertRoot
         status="success"
         variant="subtle"
         flexDirection="column"
@@ -105,40 +102,40 @@ export const NewProjectForm: React.FC<NewProjectFormProps> = ({
         textAlign="center"
         height="200px"
       >
-        <AlertIcon boxSize="40px" mr={0} />
+        <AlertIndicator boxSize="40px" mr={0} />
         <AlertTitle mt={4} mb={1} fontSize="lg">
           You&apos;re all set!
         </AlertTitle>
         <AlertDescription maxWidth="sm">
           Please reload this page to see your project!
         </AlertDescription>
-      </Alert>
+      </AlertRoot>
     );
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormControl mb={5}>
-        <FormLabel>Project Name</FormLabel>
+      <FieldRoot mb={5}>
+        <FieldLabel>Project Name</FieldLabel>
         <Input
           defaultValue={suggestedName?.name}
           value={projectName}
           onChange={handleChangeProjectName}
         />
-      </FormControl>
-      <FormControl mb={5}>
-        <FormLabel>Domain Name</FormLabel>
+      </FieldRoot>
+      <FieldRoot mb={5}>
+        <FieldLabel>Domain Name</FieldLabel>
         <Input
           placeholder="Domain Name"
           value={domain}
           onChange={handleChangeDomain}
         />
-      </FormControl>
-      <FormControl>
+      </FieldRoot>
+      <FieldRoot>
         <Button type="submit" w="100%" colorScheme="telegram">
           Submit
         </Button>
-      </FormControl>
+      </FieldRoot>
     </form>
   );
 };

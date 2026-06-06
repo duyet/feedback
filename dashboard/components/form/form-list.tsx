@@ -1,5 +1,12 @@
 import Link from 'next/link';
-import { Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
+import {
+  TableRoot,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableColumnHeader,
+  TableCell,
+} from '@chakra-ui/react';
 
 import { FormPopulated } from '../../types/prisma';
 
@@ -9,15 +16,15 @@ export type Props = {
 
 export const FormList: React.FC<Props> = ({ forms }) => {
   return (
-    <Table variant="simple">
-      <Thead>
-        <Tr>
-          <Th>Title</Th>
-          <Th>Choices</Th>
-          <Th textAlign="right">Actions</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
+    <TableRoot>
+      <TableHeader>
+        <TableRow>
+          <TableColumnHeader>Title</TableColumnHeader>
+          <TableColumnHeader>Choices</TableColumnHeader>
+          <TableColumnHeader textAlign="right">Actions</TableColumnHeader>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {forms.map((form: FormPopulated) => {
           const { id, title, choices, _count } = form;
           const count = _count?.responses || 0;
@@ -26,19 +33,19 @@ export const FormList: React.FC<Props> = ({ forms }) => {
             count == 0 ? 'no response' : `see ${count} ${responseText}`;
 
           return (
-            <Tr key={id}>
-              <Td>{title}</Td>
-              <Td>{choices.join(', ')}</Td>
-              <Td textAlign="right">
+            <TableRow key={id}>
+              <TableCell>{title}</TableCell>
+              <TableCell>{choices.join(', ')}</TableCell>
+              <TableCell textAlign="right">
                 <Link href={`/form/${id}/response`}>{seeResponseText}</Link>{' '}
                 {' | '}
                 <Link href={`/form/${id}/edit`}>edit</Link>
-              </Td>
-            </Tr>
+              </TableCell>
+            </TableRow>
           );
         })}
-      </Tbody>
-    </Table>
+      </TableBody>
+    </TableRoot>
   );
 };
 

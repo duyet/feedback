@@ -1,22 +1,17 @@
 import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
+  Field,
   Input,
   InputGroup,
-  InputLeftElement,
-  InputRightElement,
   Textarea,
-  useColorModeValue,
   IconButton,
   Icon,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
 import { useState } from 'react';
 import { FiEye, FiEyeOff, FiCheck, FiAlertCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
-const MotionFormControl = motion(FormControl);
+const MotionFieldRoot = motion(Field.Root);
 
 interface FormInputProps {
   label: string;
@@ -89,7 +84,7 @@ export const FormInput: React.FC<FormInputProps> = ({
       },
       onFocus: () => setIsFocused(true),
       placeholder,
-      isDisabled,
+      disabled: isDisabled,
       borderColor: isFocused ? focusBorderColor : borderColor,
       _hover: { borderColor: focusBorderColor },
       _focus: {
@@ -105,32 +100,26 @@ export const FormInput: React.FC<FormInputProps> = ({
     }
 
     return (
-      <InputGroup>
-        {leftIcon && <InputLeftElement pointerEvents="none">{leftIcon}</InputLeftElement>}
-        <Input {...commonProps} type={inputType} />
-        {type === 'password' && (
-          <InputRightElement>
+      <InputGroup
+        startElement={leftIcon}
+        endElement={
+          type === 'password' ? (
             <IconButton
               aria-label={showPassword ? 'Hide password' : 'Show password'}
-              icon={showPassword ? <FiEyeOff /> : <FiEye />}
               size="sm"
               variant="ghost"
               onClick={() => setShowPassword(!showPassword)}
-            />
-          </InputRightElement>
-        )}
-        {isValidating && (
-          <InputRightElement>
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />}
+            </IconButton>
+          ) : isValidating ? (
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             >
               <Icon as={FiAlertCircle} color="blue.500" />
             </motion.div>
-          </InputRightElement>
-        )}
-        {!isValidating && isValid && !error && value && (
-          <InputRightElement>
+          ) : !isValidating && isValid && !error && value ? (
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -138,32 +127,34 @@ export const FormInput: React.FC<FormInputProps> = ({
             >
               <Icon as={FiCheck} color="green.500" />
             </motion.div>
-          </InputRightElement>
-        )}
+          ) : undefined
+        }
+      >
+        <Input {...commonProps} type={inputType} />
       </InputGroup>
     );
   };
 
   return (
-    <MotionFormControl
-      isInvalid={!!error}
-      isRequired={isRequired}
-      isDisabled={isDisabled}
+    <MotionFieldRoot
+      invalid={!!error}
+      required={isRequired}
+      disabled={isDisabled}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <FormLabel htmlFor={name} fontWeight="semibold">
+      <Field.Label htmlFor={name} fontWeight="semibold">
         {label}
         {isRequired && (
           <span style={{ color: 'red', marginLeft: '4px' }}>*</span>
         )}
-      </FormLabel>
+      </Field.Label>
 
       {renderInput()}
 
       {error ? (
-        <FormErrorMessage>
+        <Field.ErrorText>
           <motion.div
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
@@ -172,22 +163,22 @@ export const FormInput: React.FC<FormInputProps> = ({
             <Icon as={FiAlertCircle} mr={1} />
             {error}
           </motion.div>
-        </FormErrorMessage>
+        </Field.ErrorText>
       ) : helperText ? (
-        <FormHelperText>
+        <Field.HelperText>
           {helperText}
           {maxLength && (
             <span style={{ float: 'right' }}>
               {value.length}/{maxLength}
             </span>
           )}
-        </FormHelperText>
+        </Field.HelperText>
       ) : maxLength ? (
-        <FormHelperText textAlign="right">
+        <Field.HelperText textAlign="right">
           {value.length}/{maxLength}
-        </FormHelperText>
+        </Field.HelperText>
       ) : null}
-    </MotionFormControl>
+    </MotionFieldRoot>
   );
 };
 

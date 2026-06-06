@@ -4,8 +4,9 @@ import type { AppProps } from 'next/app';
 import { Session } from "next-auth";
 import { SessionProvider } from 'next-auth/react';
 import { ChakraProvider } from '@chakra-ui/react';
+import { ThemeProvider } from 'next-themes';
 import ErrorBoundary from '../components/common/error-boundary';
-import theme from '../theme';
+import { system } from '../theme';
 
 function MyApp({ Component, pageProps: { session, ...pagePropsRest } }: AppProps<{ session: Session; }>) {
   useEffect(() => {
@@ -18,8 +19,10 @@ function MyApp({ Component, pageProps: { session, ...pagePropsRest } }: AppProps
   return (
     <ErrorBoundary>
       <SessionProvider session={session}>
-        <ChakraProvider theme={theme}>
-          <Component {...pagePropsRest} />
+        <ChakraProvider value={system}>
+          <ThemeProvider attribute="class" disableTransitionOnChange>
+            <Component {...pagePropsRest} />
+          </ThemeProvider>
         </ChakraProvider>
       </SessionProvider>
     </ErrorBoundary>

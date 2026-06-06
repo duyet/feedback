@@ -2,12 +2,11 @@ import React from 'react';
 import {
   Box,
   Heading,
-  List,
   ListItem,
   Text,
   Flex,
-  Alert,
-  AlertIcon,
+  AlertRoot,
+  AlertIndicator,
   AlertDescription,
 } from '@chakra-ui/react';
 
@@ -26,12 +25,12 @@ export const Filter: React.FC<FilterProps> = ({
 }) => {
   if (!domains?.length) {
     return (
-      <Alert status="success">
-        <AlertIcon />{' '}
+      <AlertRoot status="success">
+        <AlertIndicator />{' '}
         <AlertDescription>
           Add your domains to this project via the project setting.
         </AlertDescription>
-      </Alert>
+      </AlertRoot>
     );
   }
 
@@ -42,7 +41,7 @@ export const Filter: React.FC<FilterProps> = ({
       <Heading size="sm" color="gray.600" mb={5}>
         Domains
       </Heading>
-      <List>
+      <ul>
         {domains.map((obj: DomainPopulated) => {
           const { domain } = obj;
           const isSelected = current === domain;
@@ -68,7 +67,7 @@ export const Filter: React.FC<FilterProps> = ({
             </ListItem>
           );
         })}
-      </List>
+      </ul>
     </Box>
   );
 };

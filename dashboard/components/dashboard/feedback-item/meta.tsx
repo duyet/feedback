@@ -20,7 +20,7 @@ export const Meta: React.FC<MetaProps> = ({
       <Text fontSize="sm">
         {name}{' '}
         {!!isLink ? (
-          <Link color="blue.500" fontWeight={500} href={value} isExternal={true}>
+          <Link color="blue.500" fontWeight={500} href={value} target="_blank" rel="noopener noreferrer">
             {value}
           </Link>
         ) : (

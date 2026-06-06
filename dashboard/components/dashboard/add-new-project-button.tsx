@@ -1,21 +1,23 @@
 import React from 'react';
 import {
   Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
+  DialogRoot,
+  DialogBackdrop,
+  DialogPositioner,
+  DialogContent,
+  DialogHeader,
+  DialogBody,
+  DialogCloseTrigger,
   useDisclosure,
 } from '@chakra-ui/react';
-import { SmallAddIcon } from '@chakra-ui/icons';
+import { Icon } from '@chakra-ui/react';
+import { LuPlus } from 'react-icons/lu';
 import { useSWRConfig } from 'swr';
 
 import NewProjectForm from './new-project';
 
 export const AddProject: React.FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { open, onOpen, onClose } = useDisclosure();
   const { mutate } = useSWRConfig();
 
   const handleOnCreatedNewProject = () => {
@@ -26,19 +28,21 @@ export const AddProject: React.FC = () => {
   return (
     <>
       <Button onClick={onOpen}>
-        <SmallAddIcon />
+        <Icon as={LuPlus} />
       </Button>
 
-      <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>New Project</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <NewProjectForm onSuccess={handleOnCreatedNewProject} />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <DialogRoot open={open} onOpenChange={(e: { open: boolean }) => { if (!e.open) onClose(); }}>
+        <DialogBackdrop />
+        <DialogPositioner>
+          <DialogContent>
+            <DialogHeader>New Project</DialogHeader>
+            <DialogCloseTrigger />
+            <DialogBody pb={6}>
+              <NewProjectForm onSuccess={handleOnCreatedNewProject} />
+            </DialogBody>
+          </DialogContent>
+        </DialogPositioner>
+      </DialogRoot>
     </>
   );
 };

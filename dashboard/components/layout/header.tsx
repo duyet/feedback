@@ -7,10 +7,11 @@ import {
   Link,
   IconButton,
   useDisclosure,
-  useColorModeValue,
   Stack,
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { useColorModeValue } from '../ui/color-mode';
+import { Icon } from '@chakra-ui/react';
+import { LuMenu, LuX } from 'react-icons/lu';
 import { default as NextLink } from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -39,7 +40,7 @@ const NavLink: React.FC<NavLinkProps> = ({ href, isActive, children }) => {
           textDecoration: 'none',
           bg,
         }}
-        bg={isActive ? bg : {}}
+        bg={isActive ? bg : undefined}
       >
         {children}
       </Link>
@@ -48,7 +49,7 @@ const NavLink: React.FC<NavLinkProps> = ({ href, isActive, children }) => {
 };
 
 const Header: React.FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { open, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
   return (
@@ -63,19 +64,20 @@ const Header: React.FC = () => {
         >
           <IconButton
             size={'md'}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={'Open Menu'}
             display={{ md: 'none' }}
-            onClick={isOpen ? onClose : onOpen}
-          />
-          <HStack spacing={8} alignItems={'center'}>
+            onClick={open ? onClose : onOpen}
+          >
+            {open ? <Icon as={LuX} /> : <Icon as={LuMenu} />}
+          </IconButton>
+          <HStack gap={8} alignItems={'center'}>
             <Box fontWeight="700">
               <Link href="/">{logo}</Link>
             </Box>
             <HStack
-              as={'nav'}
-              spacing={4}
+              gap={4}
               display={{ base: 'none', md: 'flex' }}
+              role="navigation"
             >
               {links.map(({ label, url }: INavLinkItem) => (
                 <NavLink
@@ -94,9 +96,9 @@ const Header: React.FC = () => {
         </Flex>
       </Container>
 
-      {isOpen ? (
+      {open ? (
         <Box pb={4} display={{ md: 'none' }}>
-          <Stack as={'nav'} spacing={4}>
+          <Stack gap={4} role="navigation">
             {links.map(({ label, url }: INavLinkItem) => (
               <NavLink
                 key={url}

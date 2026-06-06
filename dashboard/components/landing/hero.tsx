@@ -2,12 +2,13 @@ import React from 'react';
 import {
   chakra,
   Box,
-  useColorModeValue,
   Button,
   Stack,
   Image,
   Text,
+  Link,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
 
 export const Heros: React.FC = () => {
   return (
@@ -50,38 +51,38 @@ export const Heros: React.FC = () => {
         <Stack
           direction={{ base: 'column', sm: 'row' }}
           mb={{ base: 4, md: 8 }}
-          spacing={2}
+          gap={2}
           justifyContent={{ sm: 'left', md: 'center' }}
         >
-          <Button
-            as="a"
-            variant="solid"
-            colorScheme="teal"
-            display="inline-flex"
-            alignItems="center"
-            justifyContent="center"
-            w={{ base: 'full', sm: 'auto' }}
-            mb={{ base: 2, sm: 0 }}
-            size="lg"
-            cursor="pointer"
-            href="/dashboard"
-          >
-            Dashboard
-          </Button>
-          <Button
-            as="a"
-            colorScheme="gray"
-            display="inline-flex"
-            alignItems="center"
-            justifyContent="center"
-            w={{ base: 'full', sm: 'auto' }}
-            mb={{ base: 2, sm: 0 }}
-            size="lg"
-            cursor="pointer"
-            href="/docs"
-          >
-            Documentation
-          </Button>
+          <Link href="/dashboard" variant="plain">
+            <Button
+              variant="solid"
+              colorScheme="teal"
+              display="inline-flex"
+              alignItems="center"
+              justifyContent="center"
+              w={{ base: 'full', sm: 'auto' }}
+              mb={{ base: 2, sm: 0 }}
+              size="lg"
+              cursor="pointer"
+            >
+              Dashboard
+            </Button>
+          </Link>
+          <Link href="/docs" variant="plain">
+            <Button
+              colorScheme="gray"
+              display="inline-flex"
+              alignItems="center"
+              justifyContent="center"
+              w={{ base: 'full', sm: 'auto' }}
+              mb={{ base: 2, sm: 0 }}
+              size="lg"
+              cursor="pointer"
+            >
+              Documentation
+            </Button>
+          </Link>
         </Stack>
       </Box>
       <Box

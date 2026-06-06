@@ -1,4 +1,6 @@
-const package = require('./package.json');
+import type { NextConfig } from 'next';
+
+const pkg = require('./package.json');
 
 const { DOCS_URL = 'http://localhost:3001/docs' } = process.env;
 
@@ -8,18 +10,14 @@ const navLink = JSON.stringify([
   { label: 'Docs', url: '/docs' },
 ]);
 
-/** @type {import('next').NextConfig} */
-module.exports = {
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   env: {
     title: 'Feedback',
     logo: 'Feedback',
     navLink,
     donationUrl: 'https://ko-fi.com/duyet',
-    repo: package.repository,
-  },
-  api: {
-    responseLimit: false,
+    repo: pkg.repository,
   },
   async rewrites() {
     return [
@@ -42,3 +40,5 @@ module.exports = {
     ];
   },
 };
+
+export default nextConfig;

@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import React from 'react';
-import { Text, Alert, AlertIcon, FormControl } from '@chakra-ui/react';
+import { Text, FieldRoot } from '@chakra-ui/react';
 
 import fetcher from '../../../lib/fetcher';
 import Loading from '../../common/loading';
@@ -24,9 +24,9 @@ export const TeamSettingPanel: React.FC<Props> = ({ projectId }) => {
         Add or remove users that have access to this project! The user should
         login once before they can be added.
       </Text>
-      <FormControl id="email" mb={5}>
+      <FieldRoot id="email" mb={5}>
         <UserList defaultValue={data.users} projectId={projectId} />
-      </FormControl>
+      </FieldRoot>
     </>
   );
 };

@@ -1,14 +1,5 @@
 import React from 'react';
-import { Heading } from '@chakra-ui/react';
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalCloseButton,
-  ModalBody,
-  useDisclosure,
-} from '@chakra-ui/react';
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { Heading, DialogRoot, DialogBackdrop, DialogPositioner, DialogContent, DialogBody, DialogCloseTrigger, TabsRoot, TabsList, TabsTrigger, TabsContent } from '@chakra-ui/react';
 
 import GeneralSetting from './panel-general-setting';
 import TeamSetting from './panel-team-setting';
@@ -28,42 +19,40 @@ export const ProjectSettingPanel: React.FC<Props> = ({
   onClose,
 }) => {
   return (
-    <Modal
-      size="3xl"
-      blockScrollOnMount={false}
-      isOpen={isOpen}
-      onClose={onClose}
+    <DialogRoot
+      open={isOpen}
+      onOpenChange={(e: { open: boolean }) => { if (!e.open) onClose(); }}
     >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalCloseButton />
-        <ModalBody>
-          <Heading size="md" mb={5} mt={5}>
-            Project Settings
-          </Heading>
+      <DialogBackdrop />
+      <DialogPositioner>
+        <DialogContent maxW="3xl">
+          <DialogCloseTrigger />
+          <DialogBody>
+            <Heading size="md" mb={5} mt={5}>
+              Project Settings
+            </Heading>
 
-          <Tabs>
-            <TabList>
-              <Tab>General</Tab>
-              <Tab>Team</Tab>
-              <Tab>Integrations</Tab>
-            </TabList>
+            <TabsRoot>
+              <TabsList>
+                <TabsTrigger value="general">General</TabsTrigger>
+                <TabsTrigger value="team">Team</TabsTrigger>
+                <TabsTrigger value="integrations">Integrations</TabsTrigger>
+              </TabsList>
 
-            <TabPanels>
-              <TabPanel>
+              <TabsContent value="general">
                 <GeneralSetting projectId={projectId} />
-              </TabPanel>
-              <TabPanel>
+              </TabsContent>
+              <TabsContent value="team">
                 <TeamSetting projectId={projectId} />
-              </TabPanel>
-              <TabPanel>
-                <IntegrationPanel projectId={projectId} /> 
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+              </TabsContent>
+              <TabsContent value="integrations">
+                <IntegrationPanel projectId={projectId} />
+              </TabsContent>
+            </TabsRoot>
+          </DialogBody>
+        </DialogContent>
+      </DialogPositioner>
+    </DialogRoot>
   );
 };
 

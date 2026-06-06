@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Tag, Text } from '@chakra-ui/react';
+import { Box, Flex, TagRoot, Text } from '@chakra-ui/react';
 
 import { Meta } from './meta';
 import { Screenshot } from './screenshot';
@@ -26,7 +26,7 @@ const Feedback: React.FC<{ feedback: FeedbackProps }> = ({ feedback }) => {
         mb={5}
         flexDirection={['column', 'row']}
       >
-        <Tag>{name ? `${name} (${email})` : email}</Tag>
+        <TagRoot>{name ? `${name} (${email})` : email}</TagRoot>
         <Text color="gray.500" fontWeight={500}>
           {createdAt.toString()}
         </Text>

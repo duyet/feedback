@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import React from 'react';
-import { Alert } from '@chakra-ui/react';
+import { AlertRoot } from '@chakra-ui/react';
 
 import Feedback from './feedback-item';
 import Loading from '../common/loading';
@@ -18,7 +18,7 @@ export const FeedbackList: React.FC<Props> = ({ project, domain }) => {
   const { data, error } = useSWR(url, fetcher);
 
 
-  if (error) return <Alert status="error">Error ...</Alert>;
+  if (error) return <AlertRoot status="error">Error ...</AlertRoot>;
   if (!data) return <Loading />;
 
   if (!data.length) {

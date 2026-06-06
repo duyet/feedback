@@ -71,7 +71,7 @@ export class ErrorBoundary extends Component<Props, State> {
           bg="gray.50"
         >
           <VStack
-            spacing={6}
+            gap={6}
             maxW="600px"
             bg="white"
             p={8}
@@ -109,7 +109,7 @@ export class ErrorBoundary extends Component<Props, State> {
               </Box>
             )}
 
-            <VStack spacing={3} w="full">
+            <VStack gap={3} w="full">
               <Button
                 colorScheme="blue"
                 onClick={this.handleReset}

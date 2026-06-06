@@ -5,8 +5,8 @@ import {
   Text,
   Progress,
   VStack,
-  useColorModeValue,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const MotionBox = motion(Box);
@@ -50,7 +50,7 @@ export const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
         >
-          <VStack spacing={4}>
+          <VStack gap={4}>
             <motion.div
               animate={{
                 scale: [1, 1.1, 1],
@@ -64,8 +64,6 @@ export const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
             >
               <Spinner
                 size="xl"
-                thickness="4px"
-                speed="0.8s"
                 color="blue.500"
               />
             </motion.div>
@@ -81,14 +79,16 @@ export const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
 
             {typeof progress === 'number' && (
               <Box w="200px">
-                <Progress
+                <Progress.Root
                   value={progress}
                   size="sm"
-                  colorScheme="blue"
+                  colorPalette="blue"
                   borderRadius="full"
-                  hasStripe
-                  isAnimated
-                />
+                >
+                  <Progress.Track borderRadius="full">
+                    <Progress.Range />
+                  </Progress.Track>
+                </Progress.Root>
                 <Text fontSize="sm" color="gray.500" textAlign="center" mt={2}>
                   {Math.round(progress)}%
                 </Text>

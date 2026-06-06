@@ -1,13 +1,15 @@
 import React from 'react';
 import {
   Text,
-  Avatar,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
+  AvatarRoot,
+  AvatarImage,
+  AvatarFallback,
+  MenuRoot,
+  MenuTrigger,
+  MenuPositioner,
+  MenuContent,
   MenuItem,
-  MenuDivider,
+  MenuSeparator,
 } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import { default as NextLink } from 'next/link';
@@ -21,24 +23,26 @@ const Profile: React.FC<Props> = () => {
   if (!session) return <NextLink href="/api/auth/signin">Sign in</NextLink>;
 
   return (
-    <Menu>
-      <MenuButton
-        as={Button}
-        rounded={'full'}
-        variant={'link'}
-        cursor={'pointer'}
-        minW={0}
-      >
-        <Avatar src={session.user.image} size="sm" />
-      </MenuButton>
-      <MenuList>
-        <MenuItem>{session.user.email || session.user.name}</MenuItem>
-        <MenuDivider />
-        <MenuItem>
-          <NextLink href="/api/auth/signout">Sign out</NextLink>
-        </MenuItem>
-      </MenuList>
-    </Menu>
+    <MenuRoot>
+      <MenuTrigger asChild>
+        <AvatarRoot size="sm" cursor="pointer">
+          {session.user.image ? (
+            <AvatarImage src={session.user.image} />
+          ) : (
+            <AvatarFallback>{session.user.name?.[0] || 'U'}</AvatarFallback>
+          )}
+        </AvatarRoot>
+      </MenuTrigger>
+      <MenuPositioner>
+        <MenuContent>
+          <MenuItem value="user-info">{session.user.email || session.user.name}</MenuItem>
+          <MenuSeparator />
+          <MenuItem value="signout" asChild>
+            <NextLink href="/api/auth/signout">Sign out</NextLink>
+          </MenuItem>
+        </MenuContent>
+      </MenuPositioner>
+    </MenuRoot>
   );
 };
 

@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import React, { ReactNode } from 'react';
 import { ChakraProvider, Container } from '@chakra-ui/react';
+import { ThemeProvider } from 'next-themes';
+import { system } from '../../../theme';
 
 import Header from './header';
 
@@ -13,15 +15,17 @@ type Props = {
 const DEFAULT_FORM_TITLE = 'Feedback Form';
 
 const Layout: React.FC<Props> = ({ title, maxW, children }) => (
-  <ChakraProvider>
-    <Head>
-      <title>{title || DEFAULT_FORM_TITLE}</title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head>
-    <Header title={title || DEFAULT_FORM_TITLE} />
-    <Container maxW={maxW || 'container.md'} marginTop={10} paddingLeft={20} paddingRight={20}>
-      {children}
-    </Container>
+  <ChakraProvider value={system}>
+    <ThemeProvider attribute="class" disableTransitionOnChange>
+      <Head>
+        <title>{title || DEFAULT_FORM_TITLE}</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <Header title={title || DEFAULT_FORM_TITLE} />
+      <Container maxW={maxW || 'container.md'} marginTop={10} paddingLeft={20} paddingRight={20}>
+        {children}
+      </Container>
+    </ThemeProvider>
   </ChakraProvider>
 );
 

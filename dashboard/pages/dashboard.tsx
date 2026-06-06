@@ -8,13 +8,13 @@ import {
   Heading,
   Grid,
   GridItem,
-  Select,
-  Alert,
-  AlertIcon,
+  AlertRoot,
+  AlertIndicator,
   Link,
-  useToast,
+  Box,
 } from '@chakra-ui/react';
 
+import { toaster } from '../hooks/useToast';
 import fetcher from '../lib/fetcher';
 import Layout from '../components/layout';
 import Loading from '../components/common/loading';
@@ -32,7 +32,6 @@ const API_DOMAIN = '/api/domain';
 const API_SIGNIN = '/api/auth/signin';
 
 const Dashboard: NextPage = () => {
-  const toast = useToast();
   const router = useRouter();
   const { mutate } = useSWRConfig();
   const [currentProject, setProject] = useState<string>();
@@ -59,17 +58,16 @@ const Dashboard: NextPage = () => {
         const json = await res.json();
 
         if (!res.ok || !json) {
-          toast({
-            status: 'warning',
+          toaster.create({
+            type: 'warning',
             description: `Cannot accept the invitation: ${json.err}`,
           });
         } else {
           mutate(API_PROJECT);
           setProject(project);
-          toast({
-            status: 'success',
+          toaster.create({
+            type: 'success',
             description: `You're joined to project ${json?.project?.name}`,
-            isClosable: true,
           });
           router.push(`/dashboard?project=${project}`);
         }
@@ -90,7 +88,7 @@ const Dashboard: NextPage = () => {
         router.push(`/dashboard?project=${first}`);
       }
     }
-  }, [projects, currentProject, router, mutate, toast, isInvitation]);
+  }, [projects, currentProject, router, mutate, isInvitation]);
 
   if (isInvitation) {
     return (
@@ -114,10 +112,10 @@ const Dashboard: NextPage = () => {
   if (errProject || errDomain) {
     return (
       <Layout>
-        <Alert status="error">
-          <AlertIcon />
+        <AlertRoot status="error">
+          <AlertIndicator />
           Cannot load the list of projects!
-        </Alert>
+        </AlertRoot>
       </Layout>
     );
   }
@@ -148,7 +146,11 @@ const Dashboard: NextPage = () => {
       <Flex mb={10} justifyContent="space-between">
         <Heading mr={5}>Feedbacks</Heading>
         <Flex>
-          <Select maxW={250} mr={3} onChange={handleChangeProject}>
+          <Box maxW={250} mr={3}>
+            <select
+              onChange={handleChangeProject}
+              style={{ padding: '8px', borderRadius: '6px', border: '1px solid #e2e8f0', background: 'white', width: '100%' }}
+            >
             {projects.map((project: ProjectUserPopulated) => {
               const { projectId } = project;
               return (
@@ -161,7 +163,8 @@ const Dashboard: NextPage = () => {
                 </option>
               );
             })}
-          </Select>
+            </select>
+          </Box>
 
           {currentProject && (
             <ProjectSettingButton projectId={currentProject} />

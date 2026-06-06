@@ -2,7 +2,7 @@
 import useSWR from 'swr';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Flex, Heading, Alert, AlertIcon, Box } from '@chakra-ui/react';
+import { Flex, Heading, AlertRoot, AlertIndicator, Box } from '@chakra-ui/react';
 
 import fetcher from '../../../lib/fetcher';
 import Layout from '../../../components/layout';
@@ -20,10 +20,10 @@ const TheFormResponse: NextPage = () => {
   if (error) {
     return (
       <Layout>
-        <Alert status="error">
-          <AlertIcon />
+        <AlertRoot status="error">
+          <AlertIndicator />
           Cannot load the data!
-        </Alert>
+        </AlertRoot>
       </Layout>
     );
   }

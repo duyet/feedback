@@ -8,11 +8,13 @@ import {
   Text,
   Grid,
   GridItem,
-  useColorModeValue,
+  Link,
 } from '@chakra-ui/react';
+import { useColorModeValue } from '../ui/color-mode';
 
 import CodeHighLight from '../common/code-highlight';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { Icon } from '@chakra-ui/react';
+import { LuExternalLink } from 'react-icons/lu';
 
 export type GettingStartedProps = {
   projectId?: string;
@@ -27,7 +29,7 @@ import { Feedback } from '@okie/feedback';
 const App = () => {
   return (
       <Feedback
-        user={currentUser.email} 
+        user={currentUser.email}
         project="${projectId || '...'}" />
   );
 }
@@ -67,23 +69,22 @@ const App = () => {
               Integrate the widget into your website to start collecting
               customer feedback.
             </chakra.p>
-            <Button
-              as="a"
-              variant="solid"
-              w={{ base: 'full', sm: 'auto' }}
-              href="/docs"
-              target="_blank"
-            >
-              <Text mr={1}>Documentation</Text>
-              <ExternalLinkIcon />
-            </Button>
+            <Link href="/docs" target="_blank" variant="plain">
+              <Button
+                variant="solid"
+                w={{ base: 'full', sm: 'auto' }}
+              >
+                <Text mr={1}>Documentation</Text>
+                <Icon as={LuExternalLink} />
+              </Button>
+            </Link>
           </Box>
         </GridItem>
         <GridItem colSpan={3}>
           <VStack
             direction="column"
             flexGrow={1}
-            spacing={5}
+            gap={5}
             alignItems="start"
           >
             <CodeHighLight

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
   Button,
-  FormControl,
-  FormLabel,
+  FieldRoot,
+  FieldLabel,
   Input,
-  useToast,
 } from '@chakra-ui/react';
 
+import { toaster } from '../../../hooks/useToast';
 import Error from '../../common/error';
 import DomainList from './domain-list';
 import useSWR, { useSWRConfig } from 'swr';
@@ -22,7 +22,6 @@ export const GeneralSetting: React.FC<Props> = ({ projectId }) => {
   const [domains, setDomains] = useState<string[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const toast = useToast();
   const { mutate } = useSWRConfig();
 
   // Fetch project settings
@@ -62,17 +61,15 @@ export const GeneralSetting: React.FC<Props> = ({ projectId }) => {
       mutate('/api/project');
       mutate(`/api/domain?projectId=${projectId}`);
 
-      return toast({
+      return toaster.create({
         description: 'Successfully',
-        status: 'success',
-        isClosable: true,
+        type: 'success',
       });
     } catch (err) {
-      return toast({
+      return toaster.create({
         title: 'Error',
         description: `${err}`,
-        status: 'error',
-        isClosable: true,
+        type: 'error',
       });
     } finally {
       setLoading(false);
@@ -84,32 +81,32 @@ export const GeneralSetting: React.FC<Props> = ({ projectId }) => {
 
   return (
     <>
-      <FormControl id="projectId" mb={5}>
-        <FormLabel>Project ID</FormLabel>
+      <FieldRoot id="projectId" mb={5}>
+        <FieldLabel>Project ID</FieldLabel>
         <Input
           type="text"
           defaultValue={data.id}
           disabled
-          variant="filled"
+          variant="subtle"
           cursor="pointer"
         />
-      </FormControl>
+      </FieldRoot>
 
-      <FormControl id="name" mb={5}>
-        <FormLabel>Project Name</FormLabel>
+      <FieldRoot id="name" mb={5}>
+        <FieldLabel>Project Name</FieldLabel>
         <Input
           type="text"
           defaultValue={data.name}
           onChange={onChangeProjectName}
         />
-      </FormControl>
+      </FieldRoot>
 
-      <FormControl id="name" mb={5}>
-        <FormLabel>Domain</FormLabel>
+      <FieldRoot id="name" mb={5}>
+        <FieldLabel>Domain</FieldLabel>
         <DomainList defaultValue={data.domains} onChange={onChangeDomains} />
-      </FormControl>
+      </FieldRoot>
 
-      <FormControl textAlign="right">
+      <FieldRoot textAlign="right">
         <Button
           colorScheme="messenger"
           onClick={handleSaveSetting}
@@ -117,7 +114,7 @@ export const GeneralSetting: React.FC<Props> = ({ projectId }) => {
         >
           Save Settings
         </Button>
-      </FormControl>
+      </FieldRoot>
     </>
   );
 };

@@ -4,12 +4,14 @@ import { useRouter } from 'next/router';
 import {
   Flex,
   Heading,
-  Alert,
-  AlertIcon,
+  AlertRoot,
+  AlertIndicator,
   Box,
-  RadioGroup,
+  RadioGroupRoot,
+  RadioGroupItem,
+  RadioGroupItemText,
+  RadioGroupItemControl,
   Stack,
-  Radio,
 } from '@chakra-ui/react';
 
 import fetcher from '../../lib/fetcher';
@@ -28,10 +30,10 @@ const TheFormResponse: NextPage = () => {
   if (error) {
     return (
       <FormLayout>
-        <Alert status="error">
-          <AlertIcon />
+        <AlertRoot status="error">
+          <AlertIndicator />
           Cannot load the data!
-        </Alert>
+        </AlertRoot>
       </FormLayout>
     );
   }
@@ -47,10 +49,10 @@ const TheFormResponse: NextPage = () => {
   if (data.err) {
     return (
       <FormLayout>
-        <Alert status="error">
-          <AlertIcon />
+        <AlertRoot status="error">
+          <AlertIndicator />
           {data.err}
-        </Alert>
+        </AlertRoot>
       </FormLayout>
     );
   }
@@ -61,17 +63,18 @@ const TheFormResponse: NextPage = () => {
         <Box>{data.content}</Box>
       </Flex>
       <Flex>
-        <RadioGroup defaultValue="1">
-          <Stack>
+        <RadioGroupRoot name="form-choices" defaultValue="1">
+          <Stack gap={2}>
             {data.choices.map((choice: string) => {
               return (
-                <Radio key={choice} value={choice}>
-                  {choice}
-                </Radio>
+                <RadioGroupItem key={choice} value={choice}>
+                  <RadioGroupItemControl />
+                  <RadioGroupItemText>{choice}</RadioGroupItemText>
+                </RadioGroupItem>
               );
             })}
           </Stack>
-        </RadioGroup>
+        </RadioGroupRoot>
       </Flex>
     </FormLayout>
   );
