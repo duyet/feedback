@@ -43,7 +43,7 @@ export const ActionDelete: React.FC<Props> = ({ id }) => {
           <PopoverCloseTrigger />
           <PopoverBody border={0}>Are you sure?</PopoverBody>
           <PopoverFooter border={0} textAlign="right">
-            <Button colorScheme="red" onClick={handleDelete}>
+            <Button colorPalette="red" onClick={handleDelete}>
               Delete
             </Button>
           </PopoverFooter>

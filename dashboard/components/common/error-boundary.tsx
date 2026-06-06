@@ -92,7 +92,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 <Text fontWeight="bold" mb={2}>
                   Error Details:
                 </Text>
-                <Code colorScheme="red" p={2} fontSize="sm" display="block">
+                <Code colorPalette="red" p={2} fontSize="sm" display="block">
                   {this.state.error.toString()}
                 </Code>
                 {this.state.errorInfo && (
@@ -111,7 +111,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
             <VStack gap={3} w="full">
               <Button
-                colorScheme="blue"
+                colorPalette="blue"
                 onClick={this.handleReset}
                 w="full"
                 aria-label="Try again"

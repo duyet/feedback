@@ -103,7 +103,7 @@ export const UserList: React.FC<Props> = ({ projectId, defaultValue = [] }) => {
                 {item.user.email ? `(${item.user.email})` : null}
               </Text>
               <Badge
-                colorScheme={item.role === 'owner' ? 'green' : undefined}
+                colorPalette={item.role === 'owner' ? 'green' : undefined}
               >
                 {item.role}
               </Badge>

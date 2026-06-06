@@ -92,7 +92,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 {domains.slice(0, 2).map((domain) => (
                   <Badge
                     key={domain}
-                    colorScheme="blue"
+                    colorPalette="blue"
                     variant="subtle"
                     borderRadius="full"
                     px={3}
@@ -102,7 +102,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 ))}
                 {domains.length > 2 && (
                   <Badge
-                    colorScheme="gray"
+                    colorPalette="gray"
                     variant="subtle"
                     borderRadius="full"
                     px={2}
@@ -127,16 +127,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             </MenuTrigger>
             <MenuPositioner>
               <MenuContent>
-                <Link href={`/dashboard?project=${id}`} passHref>
                   <MenuItem asChild value="open-dashboard">
-                    <a><FiExternalLink /> Open Dashboard</a>
+                    <a href={`/dashboard?project=${id}`}><FiExternalLink /> Open Dashboard</a>
                   </MenuItem>
-                </Link>
-                <Link href={`/project/${id}/settings`} passHref>
                   <MenuItem asChild value="settings">
-                    <a><FiSettings /> Settings</a>
+                    <a href={`/project/${id}/settings`}><FiSettings /> Settings</a>
                   </MenuItem>
-                </Link>
                 <MenuSeparator />
                 <MenuItem
                   value="delete"
@@ -202,7 +198,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         <HStack w="full" gap={3}>
           <Link href={`/dashboard?project=${id}`} passHref style={{ flex: 1 }}>
             <Button
-              colorScheme="blue"
+              colorPalette="blue"
               size="md"
               w="full"
               _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
@@ -214,7 +210,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           <Link href={`/project/${id}/settings`} passHref>
             <IconButton
               aria-label="Project settings"
-              colorScheme="gray"
+              colorPalette="gray"
               variant="outline"
               _hover={{ transform: 'translateY(-2px)', boxShadow: 'md' }}
               transition="all 0.2s"

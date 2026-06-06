@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Box,
   Heading,
+  ListRoot,
   ListItem,
   Text,
   Flex,
@@ -41,7 +42,7 @@ export const Filter: React.FC<FilterProps> = ({
       <Heading size="sm" color="gray.600" mb={5}>
         Domains
       </Heading>
-      <ul>
+      <ListRoot>
         {domains.map((obj: DomainPopulated) => {
           const { domain } = obj;
           const isSelected = current === domain;
@@ -67,7 +68,7 @@ export const Filter: React.FC<FilterProps> = ({
             </ListItem>
           );
         })}
-      </ul>
+      </ListRoot>
     </Box>
   );
 };

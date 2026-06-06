@@ -132,7 +132,7 @@ export const NewProjectForm: React.FC<NewProjectFormProps> = ({
         />
       </FieldRoot>
       <FieldRoot>
-        <Button type="submit" w="100%" colorScheme="telegram">
+        <Button type="submit" w="100%" colorPalette="telegram">
           Submit
         </Button>
       </FieldRoot>

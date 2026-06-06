@@ -65,7 +65,7 @@ export const EnhancedEmptyState: React.FC<EnhancedEmptyStateProps> = ({
   };
 
   const IconComponent = CustomIcon || defaultIcons[type];
-  const colorScheme = iconColorMap[type];
+  const colorPalette = iconColorMap[type];
 
   return (
     <Flex
@@ -91,7 +91,7 @@ export const EnhancedEmptyState: React.FC<EnhancedEmptyStateProps> = ({
             w="120px"
             h="120px"
             borderRadius="full"
-            bg={`${colorScheme}.50`}
+            bg={`${colorPalette}.50`}
             align="center"
             justify="center"
             boxShadow="xl"
@@ -99,7 +99,7 @@ export const EnhancedEmptyState: React.FC<EnhancedEmptyStateProps> = ({
             <Icon
               as={IconComponent}
               boxSize={16}
-              color={`${colorScheme}.500`}
+              color={`${colorPalette}.500`}
             />
           </Flex>
         </MotionBox>
@@ -126,7 +126,7 @@ export const EnhancedEmptyState: React.FC<EnhancedEmptyStateProps> = ({
             <VStack gap={3}>
               {action && (
                 <Button
-                  colorScheme={colorScheme}
+                  colorPalette={colorPalette}
                   size="lg"
                   onClick={action.onClick}
                   boxShadow="md"
@@ -143,7 +143,7 @@ export const EnhancedEmptyState: React.FC<EnhancedEmptyStateProps> = ({
               {secondaryAction && (
                 <Button
                   variant="ghost"
-                  colorScheme={colorScheme}
+                  colorPalette={colorPalette}
                   onClick={secondaryAction.onClick}
                   _hover={{
                     transform: 'translateY(-2px)',

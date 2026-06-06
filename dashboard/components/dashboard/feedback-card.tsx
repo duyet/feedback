@@ -104,7 +104,7 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({
                   </Text>
                 </HStack>
               ) : (
-                <Badge colorScheme="gray">Anonymous</Badge>
+                <Badge colorPalette="gray">Anonymous</Badge>
               )}
               {email && (
                 <TooltipRoot>
@@ -132,7 +132,7 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({
             {screenshot && !imageError && (
               <TooltipRoot>
                 <TooltipTrigger asChild>
-                  <Badge colorScheme="green" variant="subtle">
+                  <Badge colorPalette="green" variant="subtle">
                     <HStack gap={1}>
                       <Icon as={FiImage} boxSize={3} />
                       <Text>Screenshot</Text>
@@ -148,7 +148,7 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({
               aria-label="Delete feedback"
               size="sm"
               variant="ghost"
-              colorScheme="red"
+              colorPalette="red"
               onClick={() => onDelete?.(id)}
               loading={isDeleting}
               _hover={{ bg: 'red.50' }}

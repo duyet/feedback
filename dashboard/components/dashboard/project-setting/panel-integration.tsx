@@ -230,7 +230,7 @@ export const IntegrationPanel: React.FC<Props> = ({ projectId }) => {
 
       <FieldRoot textAlign="right">
         <Button
-          colorScheme="messenger"
+          colorPalette="messenger"
           onClick={handleSaveSetting}
           disabled={isLoading}
         >

@@ -116,23 +116,22 @@ export const Pricing: React.FC = () => {
                 </ListItem>
               </ListRoot>
 
-              <Link href="/dashboard" variant="plain">
-                <Button
-                  mt={10}
-                  w={'full'}
-                  bg={'teal'}
-                  color={'white'}
-                  rounded={'xl'}
-                  _hover={{
-                    bg: 'teal',
-                  }}
-                  _focus={{
-                    bg: 'teal',
-                  }}
-                >
-                  Get started
-                </Button>
-              </Link>
+              <Button
+                asChild
+                mt={10}
+                w={'full'}
+                bg={'teal'}
+                color={'white'}
+                rounded={'xl'}
+                _hover={{
+                  bg: 'teal',
+                }}
+                _focus={{
+                  bg: 'teal',
+                }}
+              >
+                <a href="/dashboard">Get started</a>
+              </Button>
             </Box>
           </Box>
         </Flex>
