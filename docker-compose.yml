@@ -22,7 +22,7 @@ services:
   # Dashboard (Next.js app)
   dashboard:
     build:
-      context: ./dashboard
+      context: ./packages/dashboard
       dockerfile: Dockerfile.dev
     container_name: feedback-dashboard
     ports:
@@ -33,18 +33,18 @@ services:
       - NEXTAUTH_SECRET=development_secret_change_in_production
       - NODE_ENV=development
     volumes:
-      - ./dashboard:/app
+      - ./packages/dashboard:/app
       - /app/node_modules
       - /app/.next
     depends_on:
       postgres:
         condition: service_healthy
-    command: sh -c "npx prisma migrate dev && npm run dev"
+    command: sh -c "npx prisma migrate dev && pnpm run dev"
 
   # Docs (Nextra)
   docs:
     build:
-      context: ./docs
+      context: ./packages/docs
       dockerfile: Dockerfile.dev
     container_name: feedback-docs
     ports:
@@ -52,10 +52,10 @@ services:
     environment:
       - NODE_ENV=development
     volumes:
-      - ./docs:/app
+      - ./packages/docs:/app
       - /app/node_modules
       - /app/.next
-    command: npm run dev
+    command: pnpm run dev
 
 volumes:
   postgres_data:

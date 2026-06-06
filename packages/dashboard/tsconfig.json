@@ -1,0 +1,20 @@
+{
+  "extends": "@feedback/shared/tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "incremental": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
+}

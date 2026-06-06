@@ -17,28 +17,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: yarn
-          cache-dependency-path: dashboard/yarn.lock
+          cache: pnpm
 
       - name: Install dependencies
-        working-directory: ./dashboard
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Generate Prisma client
-        working-directory: ./dashboard
-        run: yarn prisma generate
+        run: pnpm --filter dashboard prisma generate
 
       - name: Type check
-        working-directory: ./dashboard
-        run: yarn tsc --noEmit
+        run: pnpm --filter dashboard exec tsc --noEmit
 
       - name: Lint
-        working-directory: ./dashboard
-        run: yarn lint || true
+        run: pnpm --filter dashboard lint || true
 
       - name: Build
-        working-directory: ./dashboard
-        run: yarn build
+        run: pnpm --filter dashboard build
