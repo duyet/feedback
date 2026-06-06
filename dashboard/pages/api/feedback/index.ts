@@ -32,7 +32,7 @@ export default async function handler(
     return _400(res, 'Message too long (max 10000 characters)');
   }
 
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (email && (email.length > 254 || email.indexOf('@') === -1 || email.split('@').length !== 2)) {
     return _400(res, 'Invalid email format');
   }
 

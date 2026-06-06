@@ -52,8 +52,7 @@ export default async function handler(
     return required(res, 'to');
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(to)) {
+  if (to.length > 254 || to.indexOf('@') === -1 || to.split('@').length !== 2) {
     return _400(res, 'Invalid email format');
   }
 
