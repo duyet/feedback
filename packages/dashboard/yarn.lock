@@ -4738,9 +4738,7 @@ nodemailer-sendgrid@1.0.3:
     "@sendgrid/mail" "^6.2.1"
 
 nodemailer@^8.0.0:
-  version "8.0.10"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-8.0.10.tgz#009d4deaa06f54b6bd7ddc6cac1bf78e3bcb0bf2"
-  integrity sha512-BLFuSth7QtHOkBzyqTehWWyub0NTRDuK2Q2SQfnGLsrJnzyU+Yeh4WpV1eZGuARFj1xQJHIdnTuJZLP+b9R1GQ==
+  version "8.0.11"
 
 npm-run-path@^1.0.0:
   version "1.0.0"
