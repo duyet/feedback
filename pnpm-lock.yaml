@@ -36,8 +36,8 @@ importers:
         specifier: 0.3.0
         version: 0.3.0
       '@types/nodemailer':
-        specifier: 6.4.7
-        version: 6.4.7
+        specifier: 6.4.24
+        version: 6.4.24
       framer-motion:
         specifier: ^12.23.24
         version: 12.40.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -1304,8 +1304,8 @@ packages:
   '@types/nodemailer-sendgrid@1.0.0':
     resolution: {integrity: sha512-7D3Ddd7vN4tTDNGUkv31zH+2Wr6a37V0ryk0v5dyyBow/NA5+Jx5L3HvN1xq2ArZ2DbL2/z0tR9rfJtnJZK/Gw==}
 
-  '@types/nodemailer@6.4.7':
-    resolution: {integrity: sha512-f5qCBGAn/f0qtRcd4SEn88c8Fp3Swct1731X4ryPKqS61/A3LmmzN8zaEz7hneJvpjFbUUgY7lru/B/7ODTazg==}
+  '@types/nodemailer@6.4.24':
+    resolution: {integrity: sha512-Ww4u0rT9wQNXh4JiQaIwx3QWdcOFXzOjQA2zc+jtFYNmQiT4mIUqcDin51bDFdkzKubFnQCZNK7FIHlPKQ/q9w==}
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
@@ -1516,6 +1516,7 @@ packages:
   '@xmldom/xmldom@0.9.10':
     resolution: {integrity: sha512-A9gOqLdi6cV4ibazAjcQufGj0B1y/vDqYrcuP6d/6x8P27gRS8643Dj9o1dEKtB6O7fwxb2FgBmJS2mX7gpvdw==}
     engines: {node: '>=14.6'}
+    deprecated: this version has critical issues, please update to the latest version
 
   '@zag-js/accordion@1.40.0':
     resolution: {integrity: sha512-YDdyvZJ6fr92RZazyXQq+juT3ZA0ubjDISptb5YPgMoTPdnjKNiICPpMeCeVj1ncYRDkHXrOdChS/5CtuX/K6g==}
@@ -2600,6 +2601,7 @@ packages:
   eslint@9.39.4:
     resolution: {integrity: sha512-XoMjdBOwe/esVgEvLmNsD3IRHkm7fbKIUGvrleloJXUZgDHig2IPWNniv+GwjyJXzuNqVjlr5+4yVUZjycJwfQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -6111,9 +6113,9 @@ snapshots:
 
   '@types/nodemailer-sendgrid@1.0.0':
     dependencies:
-      '@types/nodemailer': 6.4.7
+      '@types/nodemailer': 6.4.24
 
-  '@types/nodemailer@6.4.7':
+  '@types/nodemailer@6.4.24':
     dependencies:
       '@types/node': 24.13.1
 
