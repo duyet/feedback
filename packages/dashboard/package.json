@@ -44,7 +44,7 @@
     "@chakra-ui/codemod": "^3.35.0",
     "@types/lodash": "^4.17.20",
     "@types/node": "^24.10.1",
-    "@types/nodemailer-sendgrid": "1.0.0",
+    "@types/nodemailer-sendgrid": "1.0.3",
     "@types/react": "^19.2.6",
     "eslint": "^9.39.1",
     "eslint-config-next": "^16",
