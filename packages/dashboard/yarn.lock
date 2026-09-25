@@ -4689,9 +4689,7 @@ next-themes@^0.4.6:
   integrity sha512-pZvgD5L0IEvX5/9GWyHMf3m8BKiVQwsCMHfoFosXtXBMnaS0ZnIJ9ST4b4NqLVKDEm8QBxoNNGNaBv2JNF6XNA==
 
 next@^16.2.7:
-  version "16.2.7"
-  resolved "https://registry.yarnpkg.com/next/-/next-16.2.7.tgz#c4f9e7f4aff6744afd827f7f9d883ca38a1fb4b0"
-  integrity sha512-eMJxgjRzBaj3olkP4cBamHDXL79A8FC6u1GcsO1D1Tsx8bw/LLXUJCaoajVxtnhD3A1IJqIT8IcRJjgBIPJq4w==
+  version "16.3.3"
   dependencies:
     "@next/env" "16.2.7"
     "@swc/helpers" "0.5.15"
