@@ -437,9 +437,7 @@
     "@babel/helper-validator-identifier" "^7.29.7"
 
 "@chakra-ui/codemod@^3.35.0":
-  version "3.35.0"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/codemod/-/codemod-3.35.0.tgz#2a5ac1267d7ca780fd5250a9391295eb7db5086f"
-  integrity sha512-zhAsUIj/HK5SuiUige9Q2xSLe/+WyX2oOCE9znKc9aJtxm3Mvn9JftoMouPz0Thbe2wRkDJjsRHksMKrSUGIyw==
+  version "3.37.0"
   dependencies:
     "@clack/prompts" "1.0.1"
     "@emotion/is-prop-valid" "^1.4.0"
@@ -453,9 +451,7 @@
     semver "7.7.4"
 
 "@chakra-ui/react@^3":
-  version "3.35.0"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/react/-/react-3.35.0.tgz#df3e0639b1a4505d25657d082c3da02ffa35b078"
-  integrity sha512-qzfRNLwxKjxx2IXjBj6uz1nYI+pKsq6uwHxO619+hx1OzNNuwLIjEHJxnDfBzoynO7sPCBlubMwFWb1e1PrXzw==
+  version "3.37.0"
   dependencies:
     "@ark-ui/react" "5.36.2"
     "@emotion/is-prop-valid" "^1.4.0"
