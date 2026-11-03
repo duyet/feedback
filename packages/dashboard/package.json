@@ -48,7 +48,7 @@
     "@types/react": "^19.2.6",
     "eslint": "^9.39.1",
     "eslint-config-next": "^16",
-    "prisma": "6.19.0",
+    "prisma": "6.19.3",
     "ts-node": "^10.9.2",
     "typescript": "5",
     "@feedback/shared": "workspace:*"
